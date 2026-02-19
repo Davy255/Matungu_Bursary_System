@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% block title %}User Profile - Bursary System{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">User Profile</h2>
+                </div>
+                <div class="card-body">
+                    <!-- Profile Header -->
+                    <div class="row mb-4">
+                        <div class="col-md-3 text-center">
+                            {% if profile.profile_photo %}
+                                <img src="{{ profile.profile_photo.url }}" alt="Profile Photo" class="img-fluid rounded-circle" style="max-width: 150px; height: 150px; object-fit: cover;">
+                            {% else %}
+                                <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center" style="width: 150px; height: 150px; margin: 0 auto;">
+                                    <i class="fas fa-user fa-3x text-white"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-9">
+                            <h3>{{ user.get_full_name|default:user.username }}</h3>
+                            <p class="text-muted mb-2"><strong>Username:</strong> {{ user.username }}</p>
+                            <p class="text-muted mb-2"><strong>Email:</strong> {{ user.email }}</p>
+                            <p class="text-muted mb-2">
+                                <strong>User Type:</strong> 
+                                <span class="badge bg-info">{{ profile.get_user_type_display }}</span>
+                            </p>
+                            <p class="text-muted mb-0">
+                                <strong>Status:</strong> 
+                                {% if profile.is_verified %}
+                                    <span class="badge bg-success">Verified</span>
+                                {% else %}
+                                    <span class="badge bg-warning">Pending Verification</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Contact Information -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5 class="mb-3">Contact Information</h5>
+                            <p>
+                                <strong>Phone Number:</strong><br>
+                                {% if profile.phone_number %}
+                                    {{ profile.phone_number }}
+                                    {% if profile.phone_verified %}
+                                        <span class="badge bg-success ms-2">Verified</span>
+                                    {% endif %}
+                                {% else %}
+                                    <span class="text-muted">Not provided</span>
+                                {% endif %}
+                            </p>
+                            <p>
+                                <strong>Email Verification:</strong><br>
+                                {% if profile.email_verified %}
+                                    <span class="badge bg-success">Verified</span>
+                                {% else %}
+                                    <span class="badge bg-warning">Not Verified</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="mb-3">Location Information</h5>
+                            <p>
+                                <strong>County:</strong><br>
+                                {{ profile.get_county_display|default:profile.county }}
+                            </p>
+                            <p>
+                                <strong>Ward:</strong><br>
+                                {{ profile.get_ward_display|default:profile.ward }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Additional Information -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5 class="mb-3">Additional Information</h5>
+                            <p>
+                                <strong>National ID:</strong><br>
+                                {% if profile.national_id %}
+                                    {{ profile.national_id }}
+                                {% else %}
+                                    <span class="text-muted">Not provided</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="mb-3">Account Status</h5>
+                            <p>
+                                <strong>Account Active:</strong><br>
+                                {% if profile.is_active %}
+                                    <span class="badge bg-success">Active</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Inactive</span>
+                                {% endif %}
+                            </p>
+                            <p>
+                                <strong>Joined:</strong><br>
+                                {{ profile.created_at|date:"M d, Y" }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Admin Role (if applicable) -->
+                    {% if admin_role %}
+                        <hr>
+                        <div class="row mb-4">
+                            <div class="col-md-12">
+                                <h5 class="mb-3">Admin Role</h5>
+                                <p>
+                                    <strong>Role:</strong> {{ admin_role.get_role_display }}<br>
+                                    <strong>Scope:</strong> 
+                                    {% if admin_role.scope == 'ward' %}
+                                        Ward Level
+                                    {% elif admin_role.scope == 'county' %}
+                                        County Level
+                                    {% else %}
+                                        System Level
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <hr>
+
+                    <!-- Action Buttons -->
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <a href="{% url 'users:edit_profile' %}" class="btn btn-primary">
+                                <i class="fas fa-edit"></i> Edit Profile
+                            </a>
+                            <a href="{% url 'applications:dashboard' %}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Back to Dashboard
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .card {
+        border: none;
+        border-radius: 10px;
+    }
+    .card-header {
+        border-radius: 10px 10px 0 0;
+    }
+    .text-muted {
+        font-size: 0.95rem;
+    }
+    .badge {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.6rem;
+    }
+    h5 {
+        color: #333;
+        font-weight: 600;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 0.5rem;
+    }
+</style>
+{% endblock %}

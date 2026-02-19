@@ -83,15 +83,15 @@ WSGI_APPLICATION = 'bursary_system.wsgi.application'
 # Database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('DB_NAME', default='bursary_system'),
-        'USER': config('DB_USER', default='root'),
+        'ENGINE': config('DB_ENGINE', default='django.db.backends.sqlite3'),
+        'NAME': config('DB_NAME', default='db.sqlite3'),
+        'USER': config('DB_USER', default=''),
         'PASSWORD': config('DB_PASSWORD', default=''),
-        'HOST': config('DB_HOST', default='localhost'),
-        'PORT': config('DB_PORT', default='3306'),
+        'HOST': config('DB_HOST', default=''),
+        'PORT': config('DB_PORT', default=''),
         'OPTIONS': {
             'charset': 'utf8mb4',
-        },
+        } if 'mysql' in config('DB_ENGINE', default='django.db.backends.sqlite3') else {},
     }
 }
 

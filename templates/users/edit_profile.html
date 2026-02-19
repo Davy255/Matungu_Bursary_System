@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Profile - Bursary System{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">Edit Your Profile</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" class="needs-validation">
+                        {% csrf_token %}
+
+                        <!-- User Information Section -->
+                        <h5 class="mb-3 mt-4">Personal Information</h5>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="{{ user_form.first_name.id_for_label }}" class="form-label">First Name</label>
+                                {{ user_form.first_name }}
+                                {% if user_form.first_name.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ user_form.first_name.errors|first }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ user_form.last_name.id_for_label }}" class="form-label">Last Name</label>
+                                {{ user_form.last_name }}
+                                {% if user_form.last_name.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ user_form.last_name.errors|first }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ user_form.email.id_for_label }}" class="form-label">Email Address</label>
+                            {{ user_form.email }}
+                            {% if user_form.email.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ user_form.email.errors|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <hr>
+
+                        <!-- Contact Information Section -->
+                        <h5 class="mb-3 mt-4">Contact Information</h5>
+                        
+                        <div class="mb-3">
+                            <label for="{{ profile_form.phone_number.id_for_label }}" class="form-label">Phone Number</label>
+                            {{ profile_form.phone_number }}
+                            <small class="form-text text-muted d-block mt-1">Format: +254XXXXXXXXX or 0XXXXXXXXX</small>
+                            {% if profile_form.phone_number.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ profile_form.phone_number.errors|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <hr>
+
+                        <!-- Location Information Section -->
+                        <h5 class="mb-3 mt-4">Location Information</h5>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="{{ profile_form.county.id_for_label }}" class="form-label">County</label>
+                                {{ profile_form.county }}
+                                {% if profile_form.county.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ profile_form.county.errors|first }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ profile_form.ward.id_for_label }}" class="form-label">Ward</label>
+                                {{ profile_form.ward }}
+                                {% if profile_form.ward.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ profile_form.ward.errors|first }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <!-- Additional Information Section -->
+                        <h5 class="mb-3 mt-4">Additional Information</h5>
+                        
+                        <div class="mb-3">
+                            <label for="{{ profile_form.national_id.id_for_label }}" class="form-label">National ID</label>
+                            {{ profile_form.national_id }}
+                            {% if profile_form.national_id.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ profile_form.national_id.errors|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ profile_form.profile_photo.id_for_label }}" class="form-label">Profile Photo</label>
+                            <div class="input-group">
+                                {{ profile_form.profile_photo }}
+                            </div>
+                            <small class="form-text text-muted d-block mt-1">Supported formats: JPG, PNG, GIF (Max 5MB)</small>
+                            {% if profile_form.profile_photo.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ profile_form.profile_photo.errors|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <hr>
+
+                        <!-- Form Errors (if any) -->
+                        {% if user_form.non_field_errors or profile_form.non_field_errors %}
+                            <div class="alert alert-danger" role="alert">
+                                <strong>Errors found:</strong>
+                                {% for error in user_form.non_field_errors %}
+                                    <div>{{ error }}</div>
+                                {% endfor %}
+                                {% for error in profile_form.non_field_errors %}
+                                    <div>{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <!-- Action Buttons -->
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-save"></i> Save Changes
+                                </button>
+                                <a href="{% url 'users:profile' %}" class="btn btn-secondary btn-lg">
+                                    <i class="fas fa-times"></i> Cancel
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .card {
+        border: none;
+        border-radius: 10px;
+    }
+    .card-header {
+        border-radius: 10px 10px 0 0;
+    }
+    h5 {
+        color: #333;
+        font-weight: 600;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 0.5rem;
+    }
+    .form-control, .form-select {
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        padding: 0.6rem;
+        font-size: 0.95rem;
+    }
+    .form-control:focus, .form-select:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    }
+    .form-label {
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 0.5rem;
+    }
+    .invalid-feedback {
+        color: #dc3545;
+        font-size: 0.875rem;
+    }
+    .btn {
+        border-radius: 5px;
+        font-weight: 500;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    .form-text {
+        font-size: 0.875rem;
+    }
+</style>
+{% endblock %}
