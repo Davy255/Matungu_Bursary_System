@@ -1,0 +1,391 @@
+{% extends 'base.html' %}
+
+{% block title %}Track Application Status{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>Track Your Applications</h2>
+            <p class="text-muted">Monitor the status and progress of all your applications</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{% url 'applications:dashboard' %}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    {% if applications %}
+        <!-- Statistics -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card shadow-sm text-center">
+                    <div class="card-body">
+                        <h6 class="text-muted">Total Applications</h6>
+                        <h3 class="text-primary">{{ applications.count }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow-sm text-center">
+                    <div class="card-body">
+                        <h6 class="text-muted">Under Review</h6>
+                        <h3 class="text-info">{{ under_review_count }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow-sm text-center">
+                    <div class="card-body">
+                        <h6 class="text-muted">Approved</h6>
+                        <h3 class="text-success">{{ approved_count }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow-sm text-center">
+                    <div class="card-body">
+                        <h6 class="text-muted">Rejected</h6>
+                        <h3 class="text-danger">{{ rejected_count }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <ul class="nav nav-tabs mb-4" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab">
+                    All Applications ({{ applications.count }})
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="submitted-tab" data-bs-toggle="tab" data-bs-target="#submitted" type="button" role="tab">
+                    Under Review
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="approved-tab" data-bs-toggle="tab" data-bs-target="#approved" type="button" role="tab">
+                    <i class="bi bi-check-circle text-success"></i> Approved
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="rejected-tab" data-bs-toggle="tab" data-bs-target="#rejected" type="button" role="tab">
+                    <i class="bi bi-x-circle text-danger"></i> Rejected
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <!-- All Applications -->
+            <div class="tab-pane fade show active" id="all" role="tabpanel">
+                <div class="row">
+                    {% for app in applications %}
+                        <div class="col-md-6 mb-4">
+                            <div class="card shadow-sm h-100">
+                                <!-- Status Header -->
+                                <div class="card-header {% if app.status == 'Draft' %}bg-warning{% elif app.status == 'Submitted' or app.status == 'Under_Review' %}bg-info{% elif app.status == 'Approved' %}bg-success{% elif app.status == 'Rejected' %}bg-danger{% else %}bg-secondary{% endif %} text-white">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">{{ app.school.name }}</h5>
+                                        <span class="badge bg-light text-dark">
+                                            {% if app.status == 'Draft' %}
+                                                <i class="bi bi-pencil"></i> Draft
+                                            {% elif app.status == 'Submitted' or app.status == 'Under_Review' %}
+                                                <i class="bi bi-clock"></i> Under Review
+                                            {% elif app.status == 'Approved' %}
+                                                <i class="bi bi-check-circle"></i> Approved
+                                            {% elif app.status == 'Rejected' %}
+                                                <i class="bi bi-x-circle"></i> Rejected
+                                            {% else %}
+                                                {{ app.get_status_display }}
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="card-body">
+                                    <!-- Program Info -->
+                                    <div class="mb-3">
+                                        <h6>Program</h6>
+                                        <p class="mb-0">{{ app.program.name }}</p>
+                                    </div>
+
+                                    <!-- Timeline -->
+                                    <div class="mb-3">
+                                        <h6>Application Timeline</h6>
+                                        <div class="timeline-group">
+                                            <div class="timeline-item">
+                                                <div class="timeline-marker">
+                                                    <i class="bi bi-check-circle text-success"></i>
+                                                </div>
+                                                <div class="timeline-content">
+                                                    <p class="mb-0"><strong>Created</strong></p>
+                                                    <small class="text-muted">{{ app.created_date|date:"M d, Y H:i" }}</small>
+                                                </div>
+                                            </div>
+
+                                            {% if app.submitted_date %}
+                                            <div class="timeline-item">
+                                                <div class="timeline-marker">
+                                                    <i class="bi bi-check-circle text-success"></i>
+                                                </div>
+                                                <div class="timeline-content">
+                                                    <p class="mb-0"><strong>Submitted</strong></p>
+                                                    <small class="text-muted">{{ app.submitted_date|date:"M d, Y H:i" }}</small>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+
+                                            {% if app.status == 'Approved' %}
+                                            <div class="timeline-item">
+                                                <div class="timeline-marker">
+                                                    <i class="bi bi-check-circle text-success"></i>
+                                                </div>
+                                                <div class="timeline-content">
+                                                    <p class="mb-0"><strong>Approved</strong></p>
+                                                    <small class="text-muted">Application Approved</small>
+                                                </div>
+                                            </div>
+                                            {% elif app.status == 'Rejected' %}
+                                            <div class="timeline-item">
+                                                <div class="timeline-marker">
+                                                    <i class="bi bi-x-circle text-danger"></i>
+                                                </div>
+                                                <div class="timeline-content">
+                                                    <p class="mb-0"><strong>Rejected</strong></p>
+                                                    <small class="text-muted">Application Rejected</small>
+                                                </div>
+                                            </div>
+                                            {% else %}
+                                            <div class="timeline-item">
+                                                <div class="timeline-marker">
+                                                    <i class="bi bi-clock text-info"></i>
+                                                </div>
+                                                <div class="timeline-content">
+                                                    <p class="mb-0"><strong>Under Review</strong></p>
+                                                    <small class="text-muted">Awaiting decision</small>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Progress Bar -->
+                                    {% if app.status != 'Draft' %}
+                                    <div class="mb-3">
+                                        <h6>Progress</h6>
+                                        <div class="progress" style="height: 20px;">
+                                            {% if app.status == 'Submitted' or app.status == 'Under_Review' %}
+                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" style="width: 50%">50%</div>
+                                            {% elif app.status == 'Approved' %}
+                                                <div class="progress-bar bg-success" style="width: 100%">Approved</div>
+                                            {% elif app.status == 'Rejected' %}
+                                                <div class="progress-bar bg-danger" style="width: 100%">Rejected</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+
+                                    <!-- Document Count -->
+                                    <div class="mb-3 pb-3 border-bottom">
+                                        <small class="text-muted">
+                                            <i class="bi bi-file-earmark"></i>
+                                            {{ app.documents.count }} document(s) uploaded
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <!-- Card Footer Action -->
+                                <div class="card-footer bg-light">
+                                    <div class="d-flex gap-2">
+                                        <a href="{% url 'applications:detail' app.id %}" class="btn btn-sm btn-primary flex-grow-1">
+                                            <i class="bi bi-eye"></i> View Details
+                                        </a>
+                                        {% if app.status == 'Draft' %}
+                                            <a href="{% url 'applications:new_step2' app.id %}" class="btn btn-sm btn-warning">
+                                                <i class="bi bi-pencil"></i> Edit
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Under Review Tab -->
+            <div class="tab-pane fade" id="submitted" role="tabpanel">
+                {% if under_review_count > 0 %}
+                    <div class="alert alert-info mb-4">
+                        <i class="bi bi-info-circle"></i> Your application{% if under_review_count > 1 %}s are{% else %} is{% endif %} being reviewed. We'll notify you once a decision has been made.
+                    </div>
+                    <div class="row">
+                        {% for app in applications %}
+                            {% if app.status == 'Submitted' or app.status == 'Under_Review' %}
+                                <div class="col-md-6 mb-4">
+                                    <div class="card shadow-sm">
+                                        <div class="card-header bg-info text-white">
+                                            <h5 class="mb-0">{{ app.school.name }}</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <p><strong>Program:</strong> {{ app.program.name }}</p>
+                                            <p><strong>Status:</strong> <span class="badge bg-info">Under Review</span></p>
+                                            <p class="text-muted"><small>Submitted: {{ app.submitted_date|date:"M d, Y" }}</small></p>
+                                        </div>
+                                        <div class="card-footer bg-light">
+                                            <a href="{% url 'applications:detail' app.id %}" class="btn btn-sm btn-primary">
+                                                View Details
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-secondary">
+                        <i class="bi bi-info-circle"></i> No applications under review at the moment.
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Approved Tab -->
+            <div class="tab-pane fade" id="approved" role="tabpanel">
+                {% if approved_count > 0 %}
+                    <div class="alert alert-success mb-4">
+                        <i class="bi bi-check-circle"></i> Congratulations! Your application{% if approved_count > 1 %}s have{% else %} has{% endif %} been approved.
+                    </div>
+                    <div class="row">
+                        {% for app in applications %}
+                            {% if app.status == 'Approved' %}
+                                <div class="col-md-6 mb-4">
+                                    <div class="card shadow-sm border-success">
+                                        <div class="card-header bg-success text-white">
+                                            <h5 class="mb-0">
+                                                <i class="bi bi-check-circle"></i> {{ app.school.name }}
+                                            </h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <p><strong>Program:</strong> {{ app.program.name }}</p>
+                                            <p><strong>Status:</strong> <span class="badge bg-success">Approved</span></p>
+                                            <p class="text-muted"><small>Approved decision received</small></p>
+                                        </div>
+                                        <div class="card-footer bg-light">
+                                            <a href="{% url 'applications:detail' app.id %}" class="btn btn-sm btn-success">
+                                                View Details
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-secondary">
+                        <i class="bi bi-info-circle"></i> No approved applications yet. Your applications are still under review.
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Rejected Tab -->
+            <div class="tab-pane fade" id="rejected" role="tabpanel">
+                {% if rejected_count > 0 %}
+                    <div class="row">
+                        {% for app in applications %}
+                            {% if app.status == 'Rejected' %}
+                                <div class="col-md-6 mb-4">
+                                    <div class="card shadow-sm border-danger">
+                                        <div class="card-header bg-danger text-white">
+                                            <h5 class="mb-0">
+                                                <i class="bi bi-x-circle"></i> {{ app.school.name }}
+                                            </h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <p><strong>Program:</strong> {{ app.program.name }}</p>
+                                            <p><strong>Status:</strong> <span class="badge bg-danger">Rejected</span></p>
+                                            <div class="alert alert-warning mt-3 mb-0">
+                                                <small>You can view the review comments and feedback in the application details.</small>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer bg-light">
+                                            <a href="{% url 'applications:detail' app.id %}" class="btn btn-sm btn-danger">
+                                                View Details & Feedback
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-secondary">
+                        <i class="bi bi-info-circle"></i> No rejected applications.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Help Section -->
+        <div class="alert alert-light border mt-4">
+            <h6 class="alert-heading"><i class="bi bi-question-circle"></i> How to Track Your Application</h6>
+            <ul class="mb-0 small">
+                <li><strong>Draft:</strong> Your application is not yet submitted. Click Edit to continue.</li>
+                <li><strong>Under Review:</strong> Your application is being reviewed. We'll notify you of any updates.</li>
+                <li><strong>Approved:</strong> Congratulations! We're excited to have you.</li>
+                <li><strong>Rejected:</strong> Your application was not selected. You can reapply in the future or apply to other schools.</li>
+                <li>Click "View Details" to see the complete application and any reviewer feedback.</li>
+            </ul>
+        </div>
+
+    {% else %}
+        <div class="alert alert-info text-center py-5">
+            <h4><i class="bi bi-inbox"></i> No Applications Yet</h4>
+            <p>You haven't created any applications yet.</p>
+            <a href="{% url 'applications:new_step1' %}" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Create Your First Application
+            </a>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+    .timeline-group {
+        position: relative;
+        padding: 1rem 0;
+    }
+    
+    .timeline-item {
+        display: flex;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .timeline-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    
+    .timeline-marker {
+        flex-shrink: 0;
+        width: 2rem;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+    }
+    
+    .timeline-content {
+        flex-grow: 1;
+    }
+    
+    .timeline-content p {
+        margin-bottom: 0;
+    }
+</style>
+{% endblock %}

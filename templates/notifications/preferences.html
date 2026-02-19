@@ -1,0 +1,300 @@
+{% extends 'base.html' %}
+
+{% block title %}Notification Preferences{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>Notification Preferences</h2>
+            <p class="text-muted">Manage how you receive notifications about your applications</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{% url 'applications:dashboard' %}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    {% if messages %}
+        <div class="row mb-4">
+            <div class="col-12">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags|default:'success' }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- Email Notifications Section -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-envelope"></i> Email Notifications
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-4">Choose which email notifications you'd like to receive:</p>
+                
+                <div class="preference-group">
+                    <div class="form-check form-switch mb-3">
+                        <input 
+                            class="form-check-input" 
+                            type="checkbox" 
+                            id="email_on_submission" 
+                            name="email_on_submission"
+                            {% if preference.email_on_submission %}checked{% endif %}
+                        >
+                        <label class="form-check-label" for="email_on_submission">
+                            <strong>Application Submitted</strong>
+                            <br>
+                            <small class="text-muted">Receive a confirmation email when you submit an application</small>
+                        </label>
+                    </div>
+
+                    <div class="form-check form-switch mb-3">
+                        <input 
+                            class="form-check-input" 
+                            type="checkbox" 
+                            id="email_on_approval" 
+                            name="email_on_approval"
+                            {% if preference.email_on_approval %}checked{% endif %}
+                        >
+                        <label class="form-check-label" for="email_on_approval">
+                            <strong>Application Approved</strong>
+                            <br>
+                            <small class="text-muted">Get notified when your application is approved</small>
+                        </label>
+                    </div>
+
+                    <div class="form-check form-switch mb-3">
+                        <input 
+                            class="form-check-input" 
+                            type="checkbox" 
+                            id="email_on_rejection" 
+                            name="email_on_rejection"
+                            {% if preference.email_on_rejection %}checked{% endif %}
+                        >
+                        <label class="form-check-label" for="email_on_rejection">
+                            <strong>Application Rejected</strong>
+                            <br>
+                            <small class="text-muted">Get notified if your application is rejected</small>
+                        </label>
+                    </div>
+
+                    <div class="form-check form-switch mb-3">
+                        <input 
+                            class="form-check-input" 
+                            type="checkbox" 
+                            id="email_on_comment" 
+                            name="email_on_comment"
+                            {% if preference.email_on_comment %}checked{% endif %}
+                        >
+                        <label class="form-check-label" for="email_on_comment">
+                            <strong>New Comments</strong>
+                            <br>
+                            <small class="text-muted">Receive emails when reviewers add comments to your application</small>
+                        </label>
+                    </div>
+
+                    <div class="form-check form-switch mb-0">
+                        <input 
+                            class="form-check-input" 
+                            type="checkbox" 
+                            id="email_on_update" 
+                            name="email_on_update"
+                            {% if preference.email_on_update %}checked{% endif %}
+                        >
+                        <label class="form-check-label" for="email_on_update">
+                            <strong>Application Updates</strong>
+                            <br>
+                            <small class="text-muted">Get notified about any changes or updates to your applications</small>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SMS Notifications Section -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-chat-dots"></i> SMS Notifications
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-4">Choose which SMS notifications you'd like to receive:</p>
+
+                <div class="alert alert-info mb-4">
+                    <i class="bi bi-info-circle"></i> 
+                    <strong>Note:</strong> SMS notifications help ensure you don't miss critical updates. We'll use the phone number from your profile.
+                </div>
+                
+                <div class="preference-group">
+                    <div class="form-check form-switch mb-3">
+                        <input 
+                            class="form-check-input" 
+                            type="checkbox" 
+                            id="sms_on_submission" 
+                            name="sms_on_submission"
+                            {% if preference.sms_on_submission %}checked{% endif %}
+                        >
+                        <label class="form-check-label" for="sms_on_submission">
+                            <strong>Application Submitted</strong>
+                            <br>
+                            <small class="text-muted">Receive SMS confirmation when you submit an application</small>
+                        </label>
+                    </div>
+
+                    <div class="form-check form-switch mb-3">
+                        <input 
+                            class="form-check-input" 
+                            type="checkbox" 
+                            id="sms_on_approval" 
+                            name="sms_on_approval"
+                            {% if preference.sms_on_approval %}checked{% endif %}
+                        >
+                        <label class="form-check-label" for="sms_on_approval">
+                            <strong>Application Approved</strong>
+                            <br>
+                            <small class="text-muted">Get SMS alert when your application is approved</small>
+                        </label>
+                    </div>
+
+                    <div class="form-check form-switch mb-3">
+                        <input 
+                            class="form-check-input" 
+                            type="checkbox" 
+                            id="sms_on_rejection" 
+                            name="sms_on_rejection"
+                            {% if preference.sms_on_rejection %}checked{% endif %}
+                        >
+                        <label class="form-check-label" for="sms_on_rejection">
+                            <strong>Application Rejected</strong>
+                            <br>
+                            <small class="text-muted">Get SMS alert if your application is rejected</small>
+                        </label>
+                    </div>
+
+                    <div class="form-check form-switch mb-0">
+                        <input 
+                            class="form-check-input" 
+                            type="checkbox" 
+                            id="sms_on_update" 
+                            name="sms_on_update"
+                            {% if preference.sms_on_update %}checked{% endif %}
+                        >
+                        <label class="form-check-label" for="sms_on_update">
+                            <strong>Application Updates</strong>
+                            <br>
+                            <small class="text-muted">Get SMS for critical updates to your applications</small>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Summary -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-bell"></i> Notification Summary
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Email Notifications Active:</h6>
+                        <div id="emailCount" class="badge bg-primary fs-6">0</div>
+                        <small class="text-muted d-block">Out of 5 available</small>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>SMS Notifications Active:</h6>
+                        <div id="smsCount" class="badge bg-success fs-6">0</div>
+                        <small class="text-muted">Out of 4 available</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Help Section -->
+        <div class="alert alert-light border">
+            <h6 class="alert-heading"><i class="bi bi-question-circle"></i> Why These Notifications?</h6>
+            <ul class="mb-0 small">
+                <li><strong>Email notifications</strong> are good for keeping records and detailed information</li>
+                <li><strong>SMS notifications</strong> are best for urgent updates you shouldn't miss</li>
+                <li>We never send spam - only application-related updates</li>
+                <li>You can change these preferences anytime</li>
+            </ul>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="bi bi-check-circle"></i> Save Preferences
+                </button>
+                <a href="{% url 'applications:dashboard' %}" class="btn btn-outline-secondary btn-lg">
+                    <i class="bi bi-x-circle"></i> Cancel
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Update notification counts dynamically
+    function updateCounts() {
+        const emailCheckboxes = ['email_on_submission', 'email_on_approval', 'email_on_rejection', 'email_on_comment', 'email_on_update'];
+        const smsCheckboxes = ['sms_on_submission', 'sms_on_approval', 'sms_on_rejection', 'sms_on_update'];
+        
+        const emailCount = emailCheckboxes.filter(id => document.getElementById(id).checked).length;
+        const smsCount = smsCheckboxes.filter(id => document.getElementById(id).checked).length;
+        
+        document.getElementById('emailCount').textContent = emailCount;
+        document.getElementById('smsCount').textContent = smsCount;
+    }
+    
+    // Initialize counts on page load
+    document.addEventListener('DOMContentLoaded', updateCounts);
+    
+    // Update counts when checkboxes change
+    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', updateCounts);
+    });
+</script>
+
+<style>
+    .form-check-input {
+        transform: scale(1.5);
+        margin-top: 0.3rem;
+        cursor: pointer;
+    }
+    
+    .form-check-label {
+        margin-left: 1rem;
+        cursor: pointer;
+    }
+    
+    .form-check-label strong {
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+    
+    .preference-group .form-check {
+        padding: 1rem;
+        border-radius: 0.5rem;
+        transition: background-color 0.2s;
+    }
+    
+    .preference-group .form-check:hover {
+        background-color: #f5f5f5;
+    }
+</style>
+{% endblock %}

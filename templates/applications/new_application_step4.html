@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+
+{% block title %}New Application - Step 4{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>New Application - Step 4 of 4</h2>
+            <p class="text-muted">Review your application and submit for review.</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <div class="alert alert-info mb-0">
+                <strong>Progress:</strong> 100% Complete
+            </div>
+        </div>
+    </div>
+
+    <!-- School & Program Info -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">School & Program Information</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>School</h6>
+                    <p class="mb-0">{{ application.school.name }}</p>
+                </div>
+                <div class="col-md-6">
+                    <h6>Program</h6>
+                    <p class="mb-0">{{ application.program.name }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Personal Information -->
+    {% if application.date_of_birth %}
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Personal Information</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% if application.ward %}
+                <div class="col-md-12">
+                    <h6><i class="bi bi-geo-alt-fill text-primary"></i> Ward/Constituency</h6>
+                    <p class="mb-0">
+                        <strong>{{ application.ward.name }}</strong><br>
+                        <small class="text-muted">{{ application.ward.constituency }}, {{ application.ward.county }} County</small>
+                    </p>
+                </div>
+                <div class="col-md-12"><hr></div>
+                {% endif %}
+                <div class="col-md-6">
+                    <h6>Date of Birth</h6>
+                    <p class="mb-0">{{ application.date_of_birth|date:"M d, Y" }}</p>
+                </div>
+                <div class="col-md-6">
+                    <h6>National ID</h6>
+                    <p class="mb-0">{{ application.national_id|default:"Not provided" }}</p>
+                </div>
+                <div class="col-md-6 mt-2">
+                    <h6>Gender</h6>
+                    <p class="mb-0">{{ application.get_gender_display|default:"Not provided" }}</p>
+                </div>
+                <div class="col-md-6 mt-2">
+                    <h6>Phone Number</h6>
+                    <p class="mb-0">{{ application.phone_number|default:"Not provided" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Financial Information -->
+    {% if application.family_income %}
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-warning text-dark">
+            <h5 class="mb-0">Financial Information</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Family Income</h6>
+                    <p class="mb-0">Ksh. {{ application.family_income|floatformat:2 }}</p>
+                </div>
+                <div class="col-md-6">
+                    <h6>Income Source</h6>
+                    <p class="mb-0">{{ application.income_source|default:"Not provided" }}</p>
+                </div>
+                <div class="col-md-6 mt-2">
+                    <h6>Number of Dependents</h6>
+                    <p class="mb-0">{{ application.number_of_dependents|default:"Not provided" }}</p>
+                </div>
+                <div class="col-md-6 mt-2">
+                    <h6>Siblings in School</h6>
+                    <p class="mb-0">{{ application.other_siblings_in_school|default:"None" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Academic Information -->
+    {% if application.course_name or application.year_of_study %}
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Academic Information</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Course/Program</h6>
+                    <p class="mb-0">{{ application.course_name|default:"Not provided" }}</p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Program Level</h6>
+                    <p class="mb-0">{{ application.get_program_level_display|default:"Not provided" }}</p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Year of Study</h6>
+                    <p class="mb-0">{{ application.year_of_study|default:"Not provided" }}</p>
+                </div>
+            </div>
+            {% if application.is_orphan %}
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <div class="alert alert-info mb-0">
+                        <i class="bi bi-info-circle"></i> <strong>Orphan Status:</strong> Applicant indicated orphan status
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Uploaded Documents -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Uploaded Documents ({{ documents.count }})</h5>
+        </div>
+        <div class="card-body">
+            {% if documents %}
+                <div class="list-group">
+                    {% for doc in documents %}
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-1"><i class="bi bi-file-pdf text-danger"></i> {{ doc.get_document_type_display }}</h6>
+                                    <small class="text-muted">Uploaded: {{ doc.uploaded_date|date:"M d, Y H:i" }}</small>
+                                </div>
+                                <a class="btn btn-sm btn-outline-primary" href="{{ doc.file.url }}" target="_blank">
+                                    <i class="bi bi-eye"></i> View
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="alert alert-success mt-3 mb-0">
+                    <i class="bi bi-check-circle"></i> All documents successfully uploaded.
+                </div>
+            {% else %}
+                <div class="alert alert-warning mb-0">
+                    <i class="bi bi-exclamation-triangle"></i> 
+                    No documents uploaded. Please upload required documents before submitting.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="alert alert-info mb-3">
+                <strong><i class="bi bi-info-circle"></i> Important:</strong> 
+                Once submitted, your application will be sent to the review team. You can track the status on your dashboard.
+            </div>
+            
+            <form method="post" class="d-inline-block me-2">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success btn-lg">
+                    <i class="bi bi-send"></i> Submit Application
+                </button>
+            </form>
+            
+            <a href="{% url 'applications:new_step3' application.id %}" class="btn btn-outline-secondary btn-lg">
+                <i class="bi bi-arrow-left"></i> Back to Documents
+            </a>
+            
+            <a href="{% url 'applications:dashboard' %}" class="btn btn-outline-danger btn-lg">
+                <i class="bi bi-x-circle"></i> Cancel
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

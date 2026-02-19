@@ -1,0 +1,347 @@
+{% extends 'base.html' %}
+
+{% block title %}Application Details{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>Application Details</h2>
+            <p class="text-muted">View and manage your application</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <div class="alert alert-info mb-0">
+                <strong>Status:</strong> 
+                {% if application.status == 'Draft' %}
+                    <span class="badge bg-warning">Draft</span>
+                {% elif application.status == 'Submitted' %}
+                    <span class="badge bg-info">Submitted</span>
+                {% elif application.status == 'Under_Review' %}
+                    <span class="badge bg-primary">Under Review</span>
+                {% elif application.status == 'Approved' %}
+                    <span class="badge bg-success">Approved</span>
+                {% elif application.status == 'Rejected' %}
+                    <span class="badge bg-danger">Rejected</span>
+                {% else %}
+                    <span class="badge bg-secondary">{{ application.get_status_display }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- School & Program Information -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">School & Program Information</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>School</h6>
+                    <p class="mb-0"><strong>{{ application.school.name }}</strong></p>
+                </div>
+                <div class="col-md-6">
+                    <h6>Program</h6>
+                    <p class="mb-0"><strong>{{ application.program.name }}</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Personal Information -->
+    {% if application.date_of_birth or application.gender or application.national_id or application.phone_number or application.email or application.ward %}
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Personal Information</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% if application.ward %}
+                <div class="col-md-12 mb-3">
+                    <h6><i class="bi bi-geo-alt-fill text-primary"></i> Ward/Constituency</h6>
+                    <p class="mb-0">
+                        <strong>{{ application.ward.name }}</strong><br>
+                        <small class="text-muted">{{ application.ward.constituency }}, {{ application.ward.county }} County</small>
+                    </p>
+                </div>
+                {% endif %}
+                {% if application.date_of_birth %}
+                <div class="col-md-6 mb-3">
+                    <h6>Date of Birth</h6>
+                    <p class="mb-0">{{ application.date_of_birth|date:"M d, Y" }}</p>
+                </div>
+                {% endif %}
+                {% if application.national_id %}
+                <div class="col-md-6 mb-3">
+                    <h6>National ID</h6>
+                    <p class="mb-0">{{ application.national_id }}</p>
+                </div>
+                {% endif %}
+                {% if application.gender %}
+                <div class="col-md-6 mb-3">
+                    <h6>Gender</h6>
+                    <p class="mb-0">{{ application.get_gender_display }}</p>
+                </div>
+                {% endif %}
+                {% if application.phone_number %}
+                <div class="col-md-6 mb-3">
+                    <h6>Phone Number</h6>
+                    <p class="mb-0">{{ application.phone_number }}</p>
+                </div>
+                {% endif %}
+                {% if application.email %}
+                <div class="col-md-6 mb-3">
+                    <h6>Email</h6>
+                    <p class="mb-0">{{ application.email }}</p>
+                </div>
+                {% endif %}
+                {% if application.marital_status %}
+                <div class="col-md-6 mb-3">
+                    <h6>Marital Status</h6>
+                    <p class="mb-0">{{ application.get_marital_status_display }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Financial Information -->
+    {% if application.family_income or application.income_source or application.number_of_dependents or application.other_siblings_in_school %}
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-warning text-dark">
+            <h5 class="mb-0">Financial Information</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% if application.family_income %}
+                <div class="col-md-6 mb-3">
+                    <h6>Family Income</h6>
+                    <p class="mb-0">Ksh. {{ application.family_income|floatformat:2 }}</p>
+                </div>
+                {% endif %}
+                {% if application.income_source %}
+                <div class="col-md-6 mb-3">
+                    <h6>Income Source</h6>
+                    <p class="mb-0">{{ application.income_source }}</p>
+                </div>
+                {% endif %}
+                {% if application.number_of_dependents %}
+                <div class="col-md-6 mb-3">
+                    <h6>Number of Dependents</h6>
+                    <p class="mb-0">{{ application.number_of_dependents }}</p>
+                </div>
+                {% endif %}
+                {% if application.other_siblings_in_school %}
+                <div class="col-md-6 mb-3">
+                    <h6>Siblings in School</h6>
+                    <p class="mb-0">{{ application.other_siblings_in_school }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Academic Information -->
+    {% if application.course_name or application.year_of_study %}
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Academic Information</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% if application.course_name %}
+                <div class="col-md-6 mb-3">
+                    <h6>Course/Program</h6>
+                    <p class="mb-0">{{ application.course_name }}</p>
+                </div>
+                {% endif %}
+                {% if application.program_level %}
+                <div class="col-md-3 mb-3">
+                    <h6>Program Level</h6>
+                    <p class="mb-0">{{ application.get_program_level_display }}</p>
+                </div>
+                {% endif %}
+                {% if application.year_of_study %}
+                <div class="col-md-3 mb-3">
+                    <h6>Year of Study</h6>
+                    <p class="mb-0">{{ application.year_of_study }}</p>
+                </div>
+                {% endif %}
+            </div>
+            {% if application.is_orphan %}
+            <div class="alert alert-info mb-0">
+                <i class="bi bi-info-circle"></i> <strong>Orphan Status:</strong> Applicant indicated orphan status
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Essays/Letters -->
+    {% if application.motivation_letter or application.expected_challenges %}
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-secondary text-white">
+            <h5 class="mb-0">Application Essays</h5>
+        </div>
+        <div class="card-body">
+            {% if application.motivation_letter %}
+            <div class="mb-3">
+                <h6>Motivation Letter</h6>
+                <p class="text-muted">{{ application.motivation_letter|linebreaks }}</p>
+            </div>
+            {% endif %}
+            {% if application.expected_challenges %}
+            <div class="mb-0">
+                <h6>Expected Challenges</h6>
+                <p class="text-muted">{{ application.expected_challenges|linebreaks }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Uploaded Documents -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Uploaded Documents ({{ documents.count }})</h5>
+        </div>
+        <div class="card-body">
+            {% if documents %}
+                <div class="list-group">
+                    {% for doc in documents %}
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-1"><i class="bi bi-file-pdf text-danger"></i> {{ doc.get_document_type_display }}</h6>
+                                    <small class="text-muted">Uploaded: {{ doc.uploaded_date|date:"M d, Y H:i" }}</small>
+                                </div>
+                                <a class="btn btn-sm btn-outline-primary" href="{{ doc.file.url }}" target="_blank">
+                                    <i class="bi bi-eye"></i> View
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-warning mb-0">
+                    <i class="bi bi-exclamation-triangle"></i> 
+                    No documents uploaded yet.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Submission Dates -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-secondary text-white">
+            <h5 class="mb-0">Application Timeline</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Created</h6>
+                    <p class="mb-0">{{ application.created_date|date:"M d, Y H:i" }}</p>
+                </div>
+                {% if application.submitted_date %}
+                <div class="col-md-6">
+                    <h6>Submitted</h6>
+                    <p class="mb-0">{{ application.submitted_date|date:"M d, Y H:i" }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Review Information (if available) -->
+    {% if review %}
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Review Details</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <h6>Academic Score</h6>
+                    <p class="mb-0">{{ review.academic_score }}/100</p>
+                </div>
+                <div class="col-md-4">
+                    <h6>Financial Need Score</h6>
+                    <p class="mb-0">{{ review.financial_need_score }}/100</p>
+                </div>
+                <div class="col-md-4">
+                    <h6>Documents Score</h6>
+                    <p class="mb-0">{{ review.supporting_documents_score }}/100</p>
+                </div>
+            </div>
+            {% if review.comments %}
+            <div class="mt-3 pt-3 border-top">
+                <h6>Review Comments</h6>
+                <p class="text-muted">{{ review.comments|linebreaks }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Comments Section -->
+    {% if comments %}
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-secondary text-white">
+            <h5 class="mb-0">Comments ({{ comments.count }})</h5>
+        </div>
+        <div class="card-body">
+            <div class="list-group">
+                {% for comment in comments %}
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">{% if comment.created_by.is_staff %}<span class="badge bg-danger">Admin</span>{% endif %} {{ comment.created_by.get_full_name|default:comment.created_by.username }}</h6>
+                                <p class="mb-1">{{ comment.comment|linebreaks }}</p>
+                                <small class="text-muted">{{ comment.created_date|date:"M d, Y H:i" }}</small>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Action Buttons -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            {% if application.status == 'Draft' %}
+                <div class="alert alert-info mb-3">
+                    <i class="bi bi-info-circle"></i>
+                    This application is still in draft status. You can continue editing it.
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="{% url 'applications:new_step2' application.id %}" class="btn btn-warning">
+                        <i class="bi bi-pencil"></i> Edit Application
+                    </a>
+                    <a href="{% url 'applications:update_ward' application.id %}" class="btn btn-info">
+                        <i class="bi bi-geo-alt"></i> {% if application.ward %}Update{% else %}Add{% endif %} Ward
+                    </a>
+                    <a href="{% url 'applications:dashboard' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to Dashboard
+                    </a>
+                </div>
+            {% else %}
+                <div class="d-flex gap-2">
+                    <a href="{% url 'applications:update_ward' application.id %}" class="btn btn-info">
+                        <i class="bi bi-geo-alt"></i> {% if application.ward %}Update{% else %}Add{% endif %} Ward
+                    </a>
+                    <a href="{% url 'applications:track' %}" class="btn btn-primary">
+                        <i class="bi bi-search"></i> Track Status
+                    </a>
+                    <a href="{% url 'applications:dashboard' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to Dashboard
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

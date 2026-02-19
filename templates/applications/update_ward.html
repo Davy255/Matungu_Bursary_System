@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Ward - Application{% endblock %}
+
+{% block extra_css %}
+<!-- Select2 CSS for searchable dropdown -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
+<style>
+    .select2-container--bootstrap-5 .select2-selection {
+        min-height: 38px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="bi bi-geo-alt"></i> Update Ward/Constituency</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle"></i> 
+                        <strong>Application:</strong> {{ application.school.name }} - {{ application.program.name }}
+                        <br>
+                        <strong>Status:</strong> {{ application.get_status_display }}
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.ward.id_for_label }}" class="form-label">
+                                {{ form.ward.label }} <span class="text-danger">*</span>
+                            </label>
+                            {{ form.ward }}
+                            {% if form.ward.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.ward.errors }}
+                                </div>
+                            {% endif %}
+                            <small class="form-text text-muted">{{ form.ward.help_text }}</small>
+                        </div>
+
+                        {% if application.ward %}
+                        <div class="alert alert-warning">
+                            <strong>Current Ward:</strong> {{ application.ward.name }} ({{ application.ward.constituency }}, {{ application.ward.county }})
+                        </div>
+                        {% else %}
+                        <div class="alert alert-warning">
+                            <i class="bi bi-exclamation-triangle"></i> No ward currently selected
+                        </div>
+                        {% endif %}
+
+                        <div class="d-flex gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Update Ward
+                            </button>
+                            <a href="{% url 'applications:detail' application.id %}" class="btn btn-outline-secondary">
+                                <i class="bi bi-x"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="alert alert-info mt-3">
+                <i class="bi bi-info-circle"></i> 
+                <strong>Note:</strong> You can update your ward at any time, even after submitting your application. This helps administrators identify your location for better service delivery.
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- jQuery (required for Select2) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Initialize Select2 on ward dropdown
+        $('#id_ward').select2({
+            theme: 'bootstrap-5',
+            placeholder: 'Search for your ward...',
+            allowClear: true,
+            width: '100%',
+            matcher: function(params, data) {
+                // If there are no search terms, return all data
+                if ($.trim(params.term) === '') {
+                    return data;
+                }
+                
+                // Search in the text (ward name, constituency, county)
+                if (data.text.toLowerCase().indexOf(params.term.toLowerCase()) > -1) {
+                    return data;
+                }
+                
+                // Return null if the term doesn't match
+                return null;
+            }
+        });
+    });
+</script>
+{% endblock %}
