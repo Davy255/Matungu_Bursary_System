@@ -15,7 +15,7 @@ from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, 
 from reportlab.lib import colors
 from django.contrib.auth.models import User
 
-from .models import Application, ApplicationDocument, ApplicationReview, ApplicationComment, ApplicationApproval
+from .models import Application, ApplicationDocument, ApplicationReview, ApplicationComment, ApplicationApproval, RegistrationSettings
 from .forms import (
     ApplicationForm, ApplicationDocumentForm, SchoolSelectionForm,
     ApplicationReviewForm, ApplicationCommentForm, ApplicationFilterForm, DocumentFormSet,
@@ -42,6 +42,7 @@ def applicant_dashboard(request):
         return redirect('admin_panel:dashboard')
     
     applications = Application.objects.filter(applicant=request.user).select_related('school', 'program', 'ward')
+    has_applications = applications.exists()
     
     # Get statistics
     stats = {
@@ -65,6 +66,7 @@ def applicant_dashboard(request):
         'applications': applications_page,
         'stats': stats,
         'apps_without_ward': apps_without_ward,
+        'can_create_application': not has_applications,
     }
     return render(request, 'applications/applicant_dashboard.html', context)
 
@@ -76,6 +78,25 @@ def new_application_step1(request):
     
     if profile.user_type != 'Applicant':
         return redirect('admin_panel:dashboard')
+
+    if Application.objects.filter(applicant=request.user).exists():
+        messages.warning(request, 'You already have an application. You can view it from your dashboard.')
+        return redirect('applications:dashboard')
+    
+    # Check if registration is open
+    try:
+        settings = RegistrationSettings.objects.first()
+        if settings:
+            if not settings.is_registration_open:
+                messages.error(request, 'Application submission is currently closed. Please contact the CDF office.')
+                return redirect('applications:dashboard')
+            
+            # Check if deadline has passed
+            if settings.deadline_date and timezone.now() > settings.deadline_date:
+                messages.error(request, 'Application submission deadline has passed.')
+                return redirect('applications:dashboard')
+    except:
+        pass
     
     if request.method == 'POST':
         category_id = request.POST.get('category')
@@ -186,6 +207,21 @@ def new_application_step4(request, application_id):
     documents = application.documents.all()
     
     if request.method == 'POST':
+        # Check if registration is open before submission
+        try:
+            settings = RegistrationSettings.objects.first()
+            if settings:
+                if not settings.is_registration_open:
+                    messages.error(request, 'Application submission is currently closed. Please contact the CDF office.')
+                    return redirect('applications:new_step4', application_id=application_id)
+                
+                # Check if deadline has passed
+                if settings.deadline_date and timezone.now() > settings.deadline_date:
+                    messages.error(request, 'Application submission deadline has passed.')
+                    return redirect('applications:new_step4', application_id=application_id)
+        except:
+            pass
+        
         application.status = 'Submitted'
         application.submitted_date = timezone.now()
         application.save()
@@ -231,6 +267,108 @@ def application_detail(request, application_id):
         'review': review,
     }
     return render(request, 'applications/application_detail.html', context)
+
+
+@login_required
+def download_application_pdf(request, application_id):
+    """Download a single application as PDF"""
+    application = get_object_or_404(Application, id=application_id)
+
+    if request.user != application.applicant and not request.user.is_staff:
+        messages.error(request, 'You do not have permission to download this application.')
+        return redirect('applications:dashboard')
+
+    documents = application.documents.all()
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="application_{application.id}.pdf"'
+
+    doc = SimpleDocTemplate(response, pagesize=A4)
+    elements = []
+    styles = getSampleStyleSheet()
+
+    title_style = ParagraphStyle(
+        'ApplicationTitle',
+        parent=styles['Heading1'],
+        fontSize=16,
+        textColor=colors.HexColor('#1a5490'),
+        spaceAfter=12,
+    )
+
+    elements.append(Paragraph('Bursary Application', title_style))
+    elements.append(Paragraph(f"Applicant: {application.applicant.get_full_name()}", styles['Normal']))
+    elements.append(Paragraph(f"Status: {application.get_status_display()}", styles['Normal']))
+    elements.append(Spacer(1, 0.2 * inch))
+
+    def add_field(label, value):
+        if value is not None and value != '':
+            elements.append(Paragraph(f"<b>{label}:</b> {value}", styles['Normal']))
+
+    elements.append(Paragraph('School and Program', styles['Heading3']))
+    add_field('School', application.school.name)
+    add_field('Program', application.program.name)
+    add_field('Campus', application.campus.name if application.campus else '')
+    elements.append(Spacer(1, 0.15 * inch))
+
+    elements.append(Paragraph('Personal Information', styles['Heading3']))
+    if application.ward:
+        ward_text = f"{application.ward.name} ({application.ward.constituency}, {application.ward.county})"
+        add_field('Ward', ward_text)
+    add_field('Date of Birth', application.date_of_birth.strftime('%d %b %Y') if application.date_of_birth else '')
+    add_field('National ID', application.national_id)
+    add_field('Gender', application.get_gender_display() if application.gender else '')
+    add_field('Marital Status', application.get_marital_status_display() if application.marital_status else '')
+    add_field('Phone Number', application.phone_number)
+    add_field('Email', application.email)
+    elements.append(Spacer(1, 0.15 * inch))
+
+    elements.append(Paragraph('Financial Information', styles['Heading3']))
+    if application.family_income is not None:
+        add_field('Family Income (KES)', f"{application.family_income:,.2f}")
+    add_field('Income Source', application.income_source)
+    add_field('Dependents', application.number_of_dependents)
+    add_field('Siblings in School', application.other_siblings_in_school)
+    elements.append(Spacer(1, 0.15 * inch))
+
+    elements.append(Paragraph('Academic Information', styles['Heading3']))
+    add_field('Course', application.course_name)
+    add_field('Program Level', application.get_program_level_display() if application.program_level else '')
+    add_field('Year of Study', application.year_of_study)
+    add_field('Orphan', 'Yes' if application.is_orphan else 'No')
+    elements.append(Spacer(1, 0.15 * inch))
+
+    elements.append(Paragraph('Application Essays', styles['Heading3']))
+    add_field('Motivation Letter', application.motivation_letter)
+    add_field('Expected Challenges', application.expected_challenges)
+    elements.append(Spacer(1, 0.15 * inch))
+
+    elements.append(Paragraph('Uploaded Documents', styles['Heading3']))
+    if documents:
+        data = [['Document', 'Uploaded']]
+        for doc_item in documents:
+            data.append([
+                doc_item.get_document_type_display(),
+                doc_item.uploaded_date.strftime('%d %b %Y %H:%M'),
+            ])
+        table = Table(data, colWidths=[3.5 * inch, 2.5 * inch])
+        table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1a5490')),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, 0), 10),
+            ('GRID', (0, 0), (-1, -1), 1, colors.black),
+            ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#f5f5f5')]),
+        ]))
+        elements.append(table)
+    else:
+        elements.append(Paragraph('No documents uploaded.', styles['Normal']))
+
+    elements.append(Spacer(1, 0.2 * inch))
+    add_field('Created', application.created_at.strftime('%d %b %Y %H:%M'))
+    add_field('Submitted', application.submitted_date.strftime('%d %b %Y %H:%M') if application.submitted_date else '')
+
+    doc.build(elements)
+    return response
 
 
 @login_required
@@ -479,18 +617,37 @@ def add_application_comment(request, application_id):
 
 
 @login_required
+@login_required
 def track_application(request):
-    """Track application status"""
+    """Track application status with detailed progress"""
     profile = ensure_user_profile(request.user)
     if profile.user_type != 'Applicant':
         return redirect('admin_panel:dashboard')
     
-    applications = Application.objects.filter(applicant=request.user).order_by('-submitted_date')
+    applications = Application.objects.filter(applicant=request.user).order_by('-submitted_date').prefetch_related('documents', 'approvals')
     
     # Calculate stats for each status
     approved_count = applications.filter(status='Approved').count()
     rejected_count = applications.filter(status='Rejected').count()
     under_review_count = applications.filter(status__in=['Submitted', 'Under_Review']).count()
+    
+    # Add progress details to each application
+    for app in applications:
+        # Determine progress stages based on application status
+        app.stage_submitted = app.submitted_date is not None
+        app.stage_under_review = app.status in ['Submitted', 'Under_Review']  # Currently under ward review
+        app.stage_docs_verified = app.status in ['Approved', 'Rejected']  # Ward admin has reviewed docs
+        app.stage_ward_approved = app.status == 'Approved'
+        app.stage_amount_awarded = app.approved_amount is not None if hasattr(app, 'approved_amount') else False
+        
+        # Get document count
+        app.total_docs = app.documents.count()
+        
+        # Get approval history
+        app.approvals_list = list(app.approvals.all().order_by('-approved_date'))
+        if app.approvals_list:
+            app.ward_approval = next((a for a in app.approvals_list if a.approval_level == 'Ward_Admin'), None)
+            app.cdf_approval = next((a for a in app.approvals_list if a.approval_level == 'CDF_Admin'), None)
     
     context = {
         'applications': applications,

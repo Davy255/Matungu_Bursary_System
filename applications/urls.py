@@ -12,6 +12,7 @@ urlpatterns = [
     path('new/<str:application_id>/step3/', views.new_application_step3, name='new_step3'),
     path('new/<str:application_id>/step4/', views.new_application_step4, name='new_step4'),
     path('<str:application_id>/', views.application_detail, name='detail'),
+    path('<str:application_id>/download/', views.download_application_pdf, name='download'),
     path('<str:application_id>/upload-document/', views.upload_document, name='upload_document'),
     path('document/<str:doc_id>/delete/', views.delete_document, name='delete_document'),
     path('<str:application_id>/update-ward/', views.update_ward, name='update_ward'),

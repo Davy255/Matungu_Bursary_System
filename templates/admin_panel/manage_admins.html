@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Admins - Bursary System{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2>Manage Admin Roles</h2>
+                <a href="{% url 'admin_panel:dashboard' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Email</th>
+                                    <th>Role Type</th>
+                                    <th>Ward</th>
+                                    <th>Permissions</th>
+                                    <th>Assigned By</th>
+                                    <th>Assigned Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for admin in admins %}
+                                <tr>
+                                    <td>{{ admin.user.get_full_name }}</td>
+                                    <td>{{ admin.user.email }}</td>
+                                    <td>
+                                        <span class="badge bg-primary">
+                                            {{ admin.get_role_type_display }}
+                                        </span>
+                                    </td>
+                                    <td>{{ admin.ward|default:"-" }}</td>
+                                    <td>
+                                        <small>{{ admin.permissions|truncatechars:50 }}</small>
+                                    </td>
+                                    <td>{{ admin.assigned_by.get_full_name|default:"-" }}</td>
+                                    <td>{{ admin.assigned_date|date:"M d, Y" }}</td>
+                                    <td>
+                                        {% if admin.is_active %}
+                                        <span class="badge bg-success">Active</span>
+                                        {% else %}
+                                        <span class="badge bg-secondary">Inactive</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="8" class="text-center">No admin roles assigned yet</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i> 
+                To assign new admin roles, use the Django Admin interface at <a href="/admin/users/adminrole/">/admin/users/adminrole/</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

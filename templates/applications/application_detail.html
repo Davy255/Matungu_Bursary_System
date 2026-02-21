@@ -10,6 +10,11 @@
             <p class="text-muted">View and manage your application</p>
         </div>
         <div class="col-md-4 text-end">
+            <div class="mb-2">
+                <a href="{% url 'applications:download' application.id %}" class="btn btn-outline-secondary btn-sm">
+                    Download PDF
+                </a>
+            </div>
             <div class="alert alert-info mb-0">
                 <strong>Status:</strong> 
                 {% if application.status == 'Draft' %}

@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard - Bursary System{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h2>Admin Dashboard</h2>
+            <p class="text-muted">Welcome, {{ user.get_full_name }}
+                {% if admin_role.role_type == 'Ward_Admin' %}
+                    ({{ admin_role.ward }} Ward Admin)
+                {% elif admin_role.role_type == 'CDF_Admin' %}
+                    (CDF Admin)
+                {% elif admin_role.role_type == 'Super_Admin' %}
+                    (Super Admin)
+                {% endif %}
+            </p>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row mt-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Applications</h5>
+                    <h2>{{ total_applications }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Pending Review</h5>
+                    <h2>{{ pending_review }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Approved</h5>
+                    <h2>{{ approved }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Rejected</h5>
+                    <h2>{{ rejected }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <a href="{% url 'admin_panel:applications_review' %}" class="btn btn-primary">
+                        <i class="bi bi-list-check"></i> Review Applications ({{ pending_review }})
+                    </a>
+                    <a href="{% url 'admin_panel:approved_applicants' %}" class="btn btn-success">
+                        <i class="bi bi-check-circle"></i> View Approved Applications
+                    </a>
+                    {% if user.is_superuser %}
+                    <a href="{% url 'admin_panel:manage_admins' %}" class="btn btn-secondary">
+                        <i class="bi bi-people"></i> Manage Admins
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CDF Admin Features -->
+    {% if admin_role.role_type == 'CDF_Admin' %}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card border-success">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="bi bi-shield-check"></i> CDF Admin Tools</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-3 mb-3">
+                            <a href="{% url 'admin_panel:cdf_approved_applications' %}" class="card text-decoration-none h-100">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-cash-coin" style="font-size: 2rem; color: #28a745;"></i>
+                                    <h6 class="mt-2">Award Amount</h6>
+                                    <p class="text-muted small">Review and award amounts to approved applicants</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-lg-3 mb-3">
+                            <a href="{% url 'admin_panel:rejected_applicants' %}" class="card text-decoration-none h-100">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-x-circle" style="font-size: 2rem; color: #dc3545;"></i>
+                                    <h6 class="mt-2">Rejected Apps</h6>
+                                    <p class="text-muted small">View rejected applicants by ward</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-lg-3 mb-3">
+                            <a href="{% url 'admin_panel:registration_settings' %}" class="card text-decoration-none h-100">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-gear" style="font-size: 2rem; color: #007bff;"></i>
+                                    <h6 class="mt-2">Registration</h6>
+                                    <p class="text-muted small">Manage registration & deadline</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-lg-3 mb-3">
+                            <a href="{% url 'admin_panel:export_approved_applicants' %}" class="card text-decoration-none h-100">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-download" style="font-size: 2rem; color: #6f42c1;"></i>
+                                    <h6 class="mt-2">Export List</h6>
+                                    <p class="text-muted small">Download approved applicants</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Recent Applications -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Recent Applications</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Application ID</th>
+                                    <th>Applicant</th>
+                                    <th>School</th>
+                                    <th>Ward</th>
+                                    <th>Status</th>
+                                    <th>Submitted</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for app in recent_applications %}
+                                <tr>
+                                    <td>{{ app.id|slice:":8" }}</td>
+                                    <td>{{ app.applicant.get_full_name }}</td>
+                                    <td>{{ app.school.name }}</td>
+                                    <td>{{ app.applicant.profile.ward }}</td>
+                                    <td>
+                                        <span class="badge 
+                                            {% if app.status == 'Approved' %}bg-success
+                                            {% elif app.status == 'Rejected' %}bg-danger
+                                            {% elif app.status == 'Under_Review' %}bg-warning
+                                            {% else %}bg-secondary
+                                            {% endif %}">
+                                            {{ app.get_status_display }}
+                                        </span>
+                                    </td>
+                                    <td>{{ app.submitted_date|date:"M d, Y" }}</td>
+                                    <td>
+                                        <a href="{% url 'admin_panel:applicant_details' app.id %}" class="btn btn-sm btn-info">View</a>
+                                        {% if app.status in 'Submitted,Under_Review' %}
+                                        <a href="{% url 'admin_panel:approve_application' app.id %}" class="btn btn-sm btn-success">Approve</a>
+                                        <a href="{% url 'admin_panel:reject_application' app.id %}" class="btn btn-sm btn-danger">Reject</a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="7" class="text-center">No applications yet</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,286 @@
+{% extends 'base.html' %}
+
+{% block title %}Applicant Details - Bursary System{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2>Application Details</h2>
+                <div>
+                    <a href="{% url 'applications:download' application.id %}" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-download"></i> Download PDF
+                    </a>
+                    <a href="{% url 'admin_panel:applications_review' %}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Application Status Card -->
+        <div class="col-md-12 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Application Status</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Status:</strong> 
+                            <span class="badge 
+                                {% if application.status == 'Approved' %}bg-success
+                                {% elif application.status == 'Rejected' %}bg-danger
+                                {% elif application.status == 'Under_Review' %}bg-warning
+                                {% else %}bg-secondary
+                                {% endif %} fs-6">
+                                {{ application.get_status_display }}
+                            </span>
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Submitted:</strong> {{ application.submitted_date|date:"F d, Y" }}
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Application ID:</strong> {{ application.id|slice:":8" }}
+                        </div>
+                    </div>
+                    {% if application.status in 'Submitted,Under_Review' %}
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <a href="{% url 'admin_panel:approve_application' application.id %}" class="btn btn-success">
+                                <i class="bi bi-check-circle"></i> Approve Application
+                            </a>
+                            <a href="{% url 'admin_panel:reject_application' application.id %}" class="btn btn-danger">
+                                <i class="bi bi-x-circle"></i> Reject Application
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Personal Information -->
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5>Personal Information</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <tr>
+                            <th>Full Name:</th>
+                            <td>{{ application.applicant.get_full_name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email:</th>
+                            <td>{{ application.applicant.email }}</td>
+                        </tr>
+                        <tr>
+                            <th>Phone Number:</th>
+                            <td>{{ application.phone_number }}</td>
+                        </tr>
+                        <tr>
+                            <th>National ID:</th>
+                            <td>{{ application.applicant.profile.national_id }}</td>
+                        </tr>
+                        <tr>
+                            <th>County:</th>
+                            <td>{{ application.applicant.profile.county }}</td>
+                        </tr>
+                        <tr>
+                            <th>Ward:</th>
+                            <td>{{ application.applicant.profile.ward }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Education Information -->
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5>Education Information</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <tr>
+                            <th>School:</th>
+                            <td>{{ application.school.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>School Type:</th>
+                            <td>{{ application.school.get_school_type_display }}</td>
+                        </tr>
+                        <tr>
+                            <th>Program:</th>
+                            <td>{{ application.program.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Year of Study:</th>
+                            <td>{{ application.year_of_study }}</td>
+                        </tr>
+                        <tr>
+                            <th>Admission Number:</th>
+                            <td>{{ application.admission_number }}</td>
+                        </tr>
+                        <tr>
+                            <th>Amount Requested:</th>
+                            <td><strong>KES {{ application.amount_requested|floatformat:2 }}</strong></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Guardian Information -->
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5>Guardian Information</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <tr>
+                            <th>Guardian Name:</th>
+                            <td>{{ application.guardian_name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Guardian Phone:</th>
+                            <td>{{ application.guardian_phone }}</td>
+                        </tr>
+                        <tr>
+                            <th>Relationship:</th>
+                            <td>{{ application.guardian_relationship }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Information -->
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5>Financial Information</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <tr>
+                            <th>Family Income:</th>
+                            <td>KES {{ application.family_income|floatformat:2 }}</td>
+                        </tr>
+                        <tr>
+                            <th>Number of Siblings:</th>
+                            <td>{{ application.number_of_siblings }}</td>
+                        </tr>
+                        <tr>
+                            <th>Other Support:</th>
+                            <td>{{ application.other_support|default:"None specified" }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uploaded Documents -->
+        <div class="col-12 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Uploaded Documents</h5>
+                </div>
+                <div class="card-body">
+                    {% if documents %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Document Type</th>
+                                    <th>File Name</th>
+                                    <th>Uploaded</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for doc in documents %}
+                                <tr>
+                                    <td>{{ doc.get_document_type_display }}</td>
+                                    <td>{{ doc.file.name|slice:"10:" }}</td>
+                                    <td>{{ doc.uploaded_at|date:"M d, Y" }}</td>
+                                    <td>
+                                        <a href="{{ doc.file.url }}" class="btn btn-sm btn-primary" target="_blank">
+                                            <i class="bi bi-download"></i> Download
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-muted">No documents uploaded</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Approval History -->
+        <div class="col-12 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Approval/Review History</h5>
+                </div>
+                <div class="card-body">
+                    {% if approvals %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Reviewer</th>
+                                    <th>Level</th>
+                                    <th>Status</th>
+                                    <th>Amount Approved</th>
+                                    <th>Comments</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for approval in approvals %}
+                                <tr>
+                                    <td>{{ approval.approval_date|date:"M d, Y H:i" }}</td>
+                                    <td>{{ approval.approved_by.get_full_name }}</td>
+                                    <td>{{ approval.get_approval_level_display }}</td>
+                                    <td>
+                                        <span class="badge 
+                                            {% if approval.status == 'Approved' %}bg-success
+                                            {% else %}bg-danger
+                                            {% endif %}">
+                                            {{ approval.status }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {% if approval.amount_approved %}
+                                        KES {{ approval.amount_approved|floatformat:2 }}
+                                        {% else %}
+                                        -
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ approval.reason|default:"-" }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-muted">No review history yet</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

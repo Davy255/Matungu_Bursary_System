@@ -12,10 +12,11 @@ COUNTY_CHOICES = (
 )
 
 WARD_CHOICES = (
-    ('Matungu', 'Matungu'),
-    ('Mumias', 'Mumias'),
-    ('Navakholo', 'Navakholo'),
-    ('Lurambi', 'Lurambi'),
+    ('Mayoni', 'Mayoni'),
+    ('Kholera', 'Kholera'),
+    ('Khalaba', 'Khalaba'),
+    ('Koyonzo', 'Koyonzo'),
+    ('Namamali', 'Namamali'),
 )
 
 USER_TYPE_CHOICES = (
@@ -34,7 +35,13 @@ class UserProfile(models.Model):
         validators=[RegexValidator(r'^(\+254|0)[0-9]{9}$', 'Enter a valid Kenyan phone number')],
         blank=True
     )
-    national_id = models.CharField(max_length=20, blank=True, null=True)
+    national_id = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+        unique=True,  # Ensure one person cannot register multiple accounts with same national ID
+        help_text="National ID number - must be unique to prevent duplicate accounts"
+    )
     county = models.CharField(max_length=50, choices=COUNTY_CHOICES, default='Kakamega')
     ward = models.CharField(max_length=50, choices=WARD_CHOICES, default='Matungu')
     user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES, default='Applicant')
@@ -73,7 +80,10 @@ class AdminRole(models.Model):
     
     class Meta:
         ordering = ['-assigned_date']
-        unique_together = ('user', 'role_type', 'ward')
+        # Enforce one admin per person - each user can only have one admin role
+        constraints = [
+            models.UniqueConstraint(fields=['user'], name='one_admin_per_user')
+        ]
     
     def __str__(self):
         return f"{self.user.get_full_name()} - {self.role_type} ({self.ward})"

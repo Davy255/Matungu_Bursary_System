@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Reject Application - Bursary System{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h4><i class="bi bi-x-circle"></i> Reject Application</h4>
+                </div>
+                <div class="card-body">
+                    <!-- Applicant Information -->
+                    <h5>Applicant Information</h5>
+                    <table class="table table-borderless">
+                        <tr>
+                            <th>Name:</th>
+                            <td>{{ application.applicant.get_full_name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email:</th>
+                            <td>{{ application.applicant.email }}</td>
+                        </tr>
+                        <tr>
+                            <th>Phone:</th>
+                            <td>{{ application.phone_number }}</td>
+                        </tr>
+                        <tr>
+                            <th>Ward:</th>
+                            <td>{{ application.applicant.profile.ward }}</td>
+                        </tr>
+                        <tr>
+                            <th>School:</th>
+                            <td>{{ application.school.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Program:</th>
+                            <td>{{ application.program.name }}</td>
+                        </tr>
+                    </table>
+
+                    <hr>
+
+                    <!-- Rejection Form -->
+                    <h5 class="mt-4">Rejection Details</h5>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="reason" class="form-label">Reason for Rejection <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="reason" name="reason" rows="5" 
+                                      placeholder="Please provide a clear reason for rejecting this application..." required></textarea>
+                            <small class="form-text text-muted">This reason will be sent to the applicant</small>
+                        </div>
+
+                        <div class="alert alert-warning">
+                            <i class="bi bi-exclamation-triangle"></i> <strong>Warning:</strong> 
+                            This action will reject the application and notify the applicant. This cannot be undone.
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                <i class="bi bi-x-circle"></i> Confirm Rejection
+                            </button>
+                            <a href="{% url 'admin_panel:applications_review' %}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Back to Review List
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

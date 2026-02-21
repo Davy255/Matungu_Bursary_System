@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Approved Applicants - Bursary System{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <h2>Approved Applicants</h2>
+                    <p class="text-muted">Total Approved: <strong>{{ total }}</strong></p>
+                </div>
+                <div>
+                    <a href="{% url 'admin_panel:export_csv' %}" class="btn btn-success">
+                        <i class="bi bi-file-earmark-spreadsheet"></i> Export to CSV
+                    </a>
+                    <a href="{% url 'admin_panel:dashboard' %}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Applicant Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Ward</th>
+                                    <th>School</th>
+                                    <th>Program</th>
+                                    <th>Amount Approved</th>
+                                    <th>Approved Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for app in applications %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ app.applicant.get_full_name }}</td>
+                                    <td>{{ app.applicant.email }}</td>
+                                    <td>{{ app.phone_number }}</td>
+                                    <td>{{ app.applicant.profile.ward }}</td>
+                                    <td>{{ app.school.name }}</td>
+                                    <td>{{ app.program.name }}</td>
+                                    <td>
+                                        {% if app.approvals.first.amount_approved %}
+                                        KES {{ app.approvals.first.amount_approved|floatformat:2 }}
+                                        {% else %}
+                                        -
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ app.reviewed_date|date:"M d, Y" }}</td>
+                                    <td>
+                                        <a href="{% url 'admin_panel:applicant_details' app.id %}" class="btn btn-sm btn-info">
+                                            <i class="bi bi-eye"></i> View
+                                        </a>
+                                        <a href="{% url 'applications:download' app.id %}" class="btn btn-sm btn-secondary">
+                                            <i class="bi bi-download"></i> PDF
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="10" class="text-center">No approved applications yet</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

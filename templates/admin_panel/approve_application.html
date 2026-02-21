@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Approve Application - Bursary System{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h4><i class="bi bi-check-circle"></i> Approve Application</h4>
+                </div>
+                <div class="card-body">
+                    <!-- Applicant Information -->
+                    <h5>Applicant Information</h5>
+                    <table class="table table-borderless">
+                        <tr>
+                            <th>Name:</th>
+                            <td>{{ application.applicant.get_full_name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email:</th>
+                            <td>{{ application.applicant.email }}</td>
+                        </tr>
+                        <tr>
+                            <th>Phone:</th>
+                            <td>{{ application.phone_number }}</td>
+                        </tr>
+                        <tr>
+                            <th>Ward:</th>
+                            <td>{{ application.applicant.profile.ward }}</td>
+                        </tr>
+                        <tr>
+                            <th>School:</th>
+                            <td>{{ application.school.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Program:</th>
+                            <td>{{ application.program.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Year of Study:</th>
+                            <td>{{ application.year_of_study }}</td>
+                        </tr>
+                        <tr>
+                            <th>Amount Requested:</th>
+                            <td>KES {{ application.amount_requested|floatformat:2 }}</td>
+                        </tr>
+                    </table>
+
+                    <hr>
+
+                    <!-- Approval Form -->
+                    <h5 class="mt-4">Document Verification & Approval</h5>
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle"></i> <strong>Note:</strong> As Ward Admin, you are verifying documents and approving the application. 
+                        The CDF Office will determine the final amount to award.
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="comments" class="form-label">Verification Comments/Observations</label>
+                            <textarea class="form-control" id="comments" name="comments" rows="4" 
+                                      placeholder="e.g., All documents verified, academic records confirmed, financial need assessed..." required></textarea>
+                            <small class="form-text text-muted">Record your findings from document verification here</small>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="bi bi-check-circle"></i> Approve Application (Document Check Complete)
+                            </button>
+                            <a href="{% url 'admin_panel:applications_review' %}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Back to Review List
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

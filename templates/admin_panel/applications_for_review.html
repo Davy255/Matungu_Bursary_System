@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}Applications for Review - Bursary System{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h2>Applications for Review</h2>
+            <p class="text-muted">
+                {% if user.admin_role.role_type == 'Ward_Admin' %}
+                Showing applications from {{ user.admin_role.ward }} Ward
+                {% else %}
+                Showing all pending applications
+                {% endif %}
+            </p>
+            <p>Total Pending: <strong>{{ total_pending }}</strong></p>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Application ID</th>
+                                    <th>Applicant Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Ward</th>
+                                    <th>School</th>
+                                    <th>Status</th>
+                                    <th>Submitted</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for app in applications %}
+                                <tr>
+                                    <td>{{ app.id|slice:":8" }}</td>
+                                    <td>{{ app.applicant.get_full_name }}</td>
+                                    <td>{{ app.applicant.email }}</td>
+                                    <td>{{ app.phone_number }}</td>
+                                    <td>{{ app.applicant.profile.ward }}</td>
+                                    <td>{{ app.school.name }}</td>
+                                    <td>
+                                        <span class="badge 
+                                            {% if app.status == 'Under_Review' %}bg-warning
+                                            {% else %}bg-secondary
+                                            {% endif %}">
+                                            {{ app.get_status_display }}
+                                        </span>
+                                    </td>
+                                    <td>{{ app.submitted_date|date:"M d, Y" }}</td>
+                                    <td>
+                                        <a href="{% url 'admin_panel:applicant_details' app.id %}" class="btn btn-sm btn-info" title="View Details">
+                                            <i class="bi bi-eye"></i> View
+                                        </a>
+                                        <a href="{% url 'admin_panel:approve_application' app.id %}" class="btn btn-sm btn-success" title="Approve Application">
+                                            <i class="bi bi-check-circle"></i> Approve
+                                        </a>
+                                        <a href="{% url 'admin_panel:reject_application' app.id %}" class="btn btn-sm btn-danger" title="Reject Application">
+                                            <i class="bi bi-x-circle"></i> Reject
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="9" class="text-center">No pending applications to review</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    {% if applications.has_other_pages %}
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            {% if applications.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ applications.previous_page_number }}">Previous</a>
+                            </li>
+                            {% endif %}
+
+                            {% for num in applications.paginator.page_range %}
+                            <li class="page-item {% if applications.number == num %}active{% endif %}">
+                                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                            {% endfor %}
+
+                            {% if applications.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ applications.next_page_number }}">Next</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

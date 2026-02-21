@@ -8,27 +8,126 @@
         <div class="col-md-6">
             <div class="card shadow">
                 <div class="card-body p-5">
-                    <h2 class="card-title text-center mb-4">Login</h2>
+                    <h2 class="card-title text-center mb-2">
+                        <i class="fas fa-sign-in-alt"></i> Login to Your Account
+                    </h2>
+                    <p class="text-center text-muted small mb-4">
+                        Secure access to the Bursary System
+                    </p>
                     
-                    <form method="post">
+                    <!-- Fraud Prevention Alert -->
+                    <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                        <h6 class="alert-heading mb-2">
+                            <i class="fas fa-shield-alt"></i> National ID Verification Required
+                        </h6>
+                        <p class="mb-0 small">
+                            For security and fraud prevention, you must verify your identity using your National ID. 
+                            This ensures only you can access your account.
+                        </p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                    
+                    <form method="post" novalidate>
                         {% csrf_token %}
+                        
+                        <!-- Username Field -->
                         <div class="mb-3">
-                            <label for="id_username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="id_username" name="username" required>
+                            <label for="id_username" class="form-label">
+                                <i class="fas fa-user"></i> Username <span class="text-danger">*</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                class="form-control form-control-lg" 
+                                id="id_username" 
+                                name="username" 
+                                placeholder="Enter your username"
+                                required
+                            >
                         </div>
-                        <div class="mb-3">
-                            <label for="id_password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="id_password" name="password" required>
+                        
+                        <!-- Password Field -->
+                        <div class="mb-4">
+                            <label for="id_password" class="form-label">
+                                <i class="fas fa-lock"></i> Password <span class="text-danger">*</span>
+                            </label>
+                            <input 
+                                type="password" 
+                                class="form-control form-control-lg" 
+                                id="id_password" 
+                                name="password" 
+                                placeholder="Enter your password"
+                                required
+                            >
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                        
+                        <!-- National ID Field - REQUIRED -->
+                        <div class="mb-4">
+                            <label for="id_national_id" class="form-label">
+                                <i class="fas fa-id-card"></i> National ID <span class="text-danger">*</span>
+                                <span class="badge bg-danger ms-2">REQUIRED - Anti-Fraud</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                class="form-control form-control-lg" 
+                                id="id_national_id" 
+                                name="national_id" 
+                                placeholder="Enter your registered National ID"
+                                required
+                            >
+                            <small class="form-text text-muted d-block mt-2">
+                                <i class="fas fa-info-circle"></i> 
+                                Your National ID is required to verify your identity and prevent fraud. 
+                                Enter the same National ID you registered with.
+                            </small>
+                        </div>
+                        
+                        <!-- Login Button -->
+                        <button type="submit" class="btn btn-primary w-100 btn-lg mb-3">
+                            <i class="fas fa-arrow-right"></i> Login
+                        </button>
                     </form>
                     
-                    <p class="text-center mt-3">
-                        Don't have an account? <a href="{% url 'users:register' %}">Register here</a>
-                    </p>
+                    <hr class="my-4">
+                    
+                    <!-- Links -->
+                    <div class="text-center">
+                        <p class="mb-2">
+                            <a href="#" class="text-decoration-none small">
+                                <i class="fas fa-key"></i> Forgot Password?
+                            </a>
+                        </p>
+                        <p class="mb-0">
+                            Don't have an account? 
+                            <a href="{% url 'users:register' %}" class="fw-semibold text-decoration-none">
+                                <i class="fas fa-user-plus"></i> Register here
+                            </a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+// Focus on National ID field for UX
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-focus on National ID field on page load for better UX
+    const nationalIdField = document.getElementById('id_national_id');
+    if (nationalIdField && !nationalIdField.value) {
+        setTimeout(() => nationalIdField.focus(), 100);
+    }
+    console.log('Login page loaded with mandatory National ID verification');
+});
+</script>
+
+<style>
+    .alert-dismissible {
+        margin-bottom: 1rem;
+    }
+    .badge {
+        font-size: 0.65rem;
+        padding: 0.35rem 0.5rem;
+    }
+</style>
 {% endblock %}

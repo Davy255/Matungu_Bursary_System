@@ -13,4 +13,11 @@ urlpatterns = [
     path('export-csv/', views.export_approved_csv, name='export_csv'),
     path('manage-admins/', views.manage_admins, name='manage_admins'),
     path('reports/', views.reports_dashboard, name='reports'),
+    
+    # CDF Admin paths
+    path('cdf/approved-applications/', views.cdf_approved_applications, name='cdf_approved_applications'),
+    path('cdf/applications/<str:application_id>/award-amount/', views.award_application_amount, name='award_amount'),
+    path('cdf/registration-settings/', views.registration_settings, name='registration_settings'),
+    path('cdf/rejected-applicants/', views.rejected_applicants, name='rejected_applicants'),
+    path('cdf/export-approved-applicants/', views.export_approved_applicants, name='export_approved_applicants'),
 ]

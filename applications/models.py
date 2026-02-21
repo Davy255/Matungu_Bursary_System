@@ -252,3 +252,24 @@ class ApplicationApproval(models.Model):
     
     def __str__(self):
         return f"{self.application.applicant.get_full_name()} - {self.approval_level}: {self.status}"
+
+class RegistrationSettings(models.Model):
+    """Global registration settings for the system"""
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    is_registration_open = models.BooleanField(default=True, help_text='Toggle registration status')
+    deadline_date = models.DateTimeField(null=True, blank=True, help_text='Registration deadline date and time')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        verbose_name = "Registration Settings"
+        verbose_name_plural = "Registration Settings"
+    
+    def __str__(self):
+        return f"Registration {'Open' if self.is_registration_open else 'Closed'} - Deadline: {self.deadline_date}"
+    
+    @staticmethod
+    def get_settings():
+        """Get or create default settings"""
+        settings, created = RegistrationSettings.objects.get_or_create(pk=uuid.uuid4())
+        return settings

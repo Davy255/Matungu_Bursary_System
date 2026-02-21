@@ -47,12 +47,13 @@ class NotificationService:
         user = application.applicant
         preference = getattr(user, 'notification_preference', None)
         
-        if preference and preference.email_on_approval:
+        # Always send email on approval (unless user explicitly disabled it)
+        if not preference or preference.email_on_approval:
             NotificationService.send_email(
                 user,
                 'application_approved',
                 application,
-                context={'school': application.school.name}
+                context={'school': application.school.name, 'applicant_name': user.get_full_name()}
             )
         
         if preference and preference.sms_on_approval:
@@ -66,7 +67,7 @@ class NotificationService:
             user=user,
             notification_type='Application_Approved',
             title='Application Approved!',
-            message=f'Congratulations! Your application to {application.school.name} has been approved.'
+            message=f'Congratulations! Your application to {application.school.name} has been approved by the Ward Admin. Amount will be determined by CDF Office.'
         )
     
     @staticmethod
@@ -75,12 +76,13 @@ class NotificationService:
         user = application.applicant
         preference = getattr(user, 'notification_preference', None)
         
-        if preference and preference.email_on_rejection:
+        # Always send email on rejection (unless user explicitly disabled it)
+        if not preference or preference.email_on_rejection:
             NotificationService.send_email(
                 user,
                 'application_rejected',
                 application,
-                context={'school': application.school.name}
+                context={'school': application.school.name, 'applicant_name': user.get_full_name()}
             )
         
         if preference and preference.sms_on_rejection:
@@ -94,7 +96,7 @@ class NotificationService:
             user=user,
             notification_type='Application_Rejected',
             title='Application Status',
-            message=f'Your application to {application.school.name} was not approved. Please contact for more details.'
+            message=f'Your application to {application.school.name} was not approved. Please check your email for the rejection reason.'
         )
     
     @staticmethod
