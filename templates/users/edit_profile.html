@@ -67,6 +67,7 @@
                         <hr>
 
                         <!-- Location Information Section -->
+                        {% if not is_super_admin %}
                         <h5 class="mb-3 mt-4">Location Information</h5>
                         
                         <div class="row mb-3">
@@ -89,6 +90,11 @@
                                 {% endif %}
                             </div>
                         </div>
+                        {% else %}
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle"></i> <strong>Note:</strong> Location information is not required for Super Admins.
+                        </div>
+                        {% endif %}
 
                         <hr>
 

@@ -94,6 +94,27 @@ class AdminRoleAssignmentForm(forms.ModelForm):
             'role_type': forms.Select(),
             'ward': forms.Select(),
         }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Ward is not required for CDF_Admin
+        self.fields['ward'].required = False
+        self.fields['ward'].help_text = 'Required for Ward Admin only. Leave blank for CDF Admin.'
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        role_type = cleaned_data.get('role_type')
+        ward = cleaned_data.get('ward')
+        
+        # Ward is required for Ward_Admin but not for CDF_Admin
+        if role_type == 'Ward_Admin' and not ward:
+            raise forms.ValidationError('Ward is required for Ward Admin role.')
+        
+        # CDF_Admin should not have a specific ward
+        if role_type == 'CDF_Admin' and ward:
+            cleaned_data['ward'] = None  # Clear ward for CDF Admin
+        
+        return cleaned_data
 
 
 class AdminPermissionForm(forms.Form):

@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Verifications - Bursary System{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2><i class="bi bi-shield-check"></i> Manage Verifications</h2>
+                <a href="{% url 'admin_panel:dashboard' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card border-warning">
+                <div class="card-body">
+                    <h5 class="card-title text-warning">
+                        <i class="bi bi-person-badge"></i> Pending Admin Verifications
+                    </h5>
+                    <h2 class="mb-0">{{ unverified_admins.count }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-info">
+                <div class="card-body">
+                    <h5 class="card-title text-info">
+                        <i class="bi bi-people"></i> Pending User Verifications
+                    </h5>
+                    <h2 class="mb-0">{{ unverified_users.count }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unverified Admins -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0"><i class="bi bi-person-badge"></i> Unverified Admins</h5>
+                </div>
+                <div class="card-body">
+                    {% if unverified_admins %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role Type</th>
+                                    <th>Ward</th>
+                                    <th>Assigned By</th>
+                                    <th>Assigned Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for admin in unverified_admins %}
+                                <tr>
+                                    <td>{{ admin.user.get_full_name }}</td>
+                                    <td>{{ admin.user.email }}</td>
+                                    <td><span class="badge bg-primary">{{ admin.get_role_type_display }}</span></td>
+                                    <td>{{ admin.ward|default:"-" }}</td>
+                                    <td>{{ admin.assigned_by.get_full_name }}</td>
+                                    <td>{{ admin.assigned_date|date:"M d, Y" }}</td>
+                                    <td>
+                                        <a href="{% url 'users:verify_admin' admin.id %}" class="btn btn-sm btn-success">
+                                            <i class="bi bi-check-circle"></i> Verify
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-muted text-center mb-0">No unverified admins at the moment.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unverified Users -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="bi bi-people"></i> Unverified Users</h5>
+                </div>
+                <div class="card-body">
+                    {% if unverified_users %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>National ID</th>
+                                    <th>Ward</th>
+                                    <th>User Type</th>
+                                    <th>Registered Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for profile in unverified_users %}
+                                <tr>
+                                    <td>{{ profile.user.get_full_name }}</td>
+                                    <td>{{ profile.user.email }}</td>
+                                    <td>{{ profile.national_id|default:"-" }}</td>
+                                    <td>{{ profile.ward }}</td>
+                                    <td><span class="badge bg-secondary">{{ profile.user_type }}</span></td>
+                                    <td>{{ profile.created_at|date:"M d, Y" }}</td>
+                                    <td>
+                                        <a href="{% url 'users:verify_user' profile.user.id %}" class="btn btn-sm btn-success">
+                                            <i class="bi bi-check-circle"></i> Verify
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-muted text-center mb-0">No unverified users at the moment.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recently Verified -->
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="bi bi-shield-check"></i> Recently Verified Admins</h5>
+                </div>
+                <div class="card-body">
+                    {% if recently_verified_admins %}
+                    <div class="list-group">
+                        {% for admin in recently_verified_admins %}
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <strong>{{ admin.user.get_full_name }}</strong>
+                                    <br>
+                                    <small class="text-muted">
+                                        {{ admin.get_role_type_display }} {% if admin.ward %}({{ admin.ward }}){% endif %}
+                                    </small>
+                                    <br>
+                                    <small class="text-success">
+                                        Verified by {{ admin.verified_by.get_full_name }} on {{ admin.verified_date|date:"M d, Y" }}
+                                    </small>
+                                </div>
+                                <a href="{% url 'users:unverify_admin' admin.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Remove verification?')">
+                                    <i class="bi bi-x-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="text-muted mb-0">No recently verified admins.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="bi bi-person-check"></i> Recently Verified Users</h5>
+                </div>
+                <div class="card-body">
+                    {% if recently_verified_users %}
+                    <div class="list-group">
+                        {% for profile in recently_verified_users %}
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <strong>{{ profile.user.get_full_name }}</strong>
+                                    <br>
+                                    <small class="text-muted">
+                                        {{ profile.user_type }} ({{ profile.ward }})
+                                    </small>
+                                    <br>
+                                    <small class="text-success">
+                                        Verified by {{ profile.verified_by.get_full_name }} on {{ profile.verification_date|date:"M d, Y" }}
+                                    </small>
+                                </div>
+                                <a href="{% url 'users:unverify_user' profile.user.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Remove verification?')">
+                                    <i class="bi bi-x-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="text-muted mb-0">No recently verified users.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

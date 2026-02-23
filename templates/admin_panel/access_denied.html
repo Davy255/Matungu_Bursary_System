@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Access Denied - Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-danger shadow">
+                <div class="card-body p-5 text-center">
+                    <i class="fas fa-lock" style="font-size: 3rem; color: #dc3545; margin-bottom: 1rem;"></i>
+                    <h2 class="card-title text-danger mb-3">Access Denied</h2>
+                    <p class="card-text text-muted mb-4">
+                        {{ message }}
+                    </p>
+                    
+                    <div class="alert alert-info text-start">
+                        <h6 class="alert-heading"><i class="fas fa-info-circle"></i> Troubleshooting:</h6>
+                        <ul class="mb-0">
+                            <li>Try logging out and logging back in</li>
+                            <li>Clear your browser cookies and try again</li>
+                            <li>Contact your Super Admin if the issue persists</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'users:logout' %}" class="btn btn-primary">
+                            <i class="fas fa-sign-out-alt"></i> Logout & Try Again
+                        </a>
+                        <a href="{% url 'index' %}" class="btn btn-secondary">
+                            <i class="fas fa-home"></i> Go Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

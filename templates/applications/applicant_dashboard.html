@@ -39,6 +39,56 @@
         </div>
     </div>
 
+    <!-- Application Deadline Timer -->
+    {% if deadline_info %}
+    <div class="card mb-4 border-warning">
+        <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h5 class="card-title mb-2">
+                        <i class="fas fa-clock"></i> Application Deadline
+                    </h5>
+                    <p class="text-muted mb-0">
+                        Submit your application before the deadline closes
+                    </p>
+                </div>
+                <div class="text-end">
+                    {% if deadline_info.is_open %}
+                    <div id="countdown-timer" class="countdown-display">
+                        <div class="time-unit">
+                            <span id="days" class="time-value">0</span>
+                            <span class="time-label">Days</span>
+                        </div>
+                        <span class="time-separator">:</span>
+                        <div class="time-unit">
+                            <span id="hours" class="time-value">0</span>
+                            <span class="time-label">Hours</span>
+                        </div>
+                        <span class="time-separator">:</span>
+                        <div class="time-unit">
+                            <span id="minutes" class="time-value">0</span>
+                            <span class="time-label">Mins</span>
+                        </div>
+                        <span class="time-separator">:</span>
+                        <div class="time-unit">
+                            <span id="seconds" class="time-value">0</span>
+                            <span class="time-label">Secs</span>
+                        </div>
+                    </div>
+                    <small class="text-muted d-block mt-2">
+                        Deadline: <span id="deadline-date">Loading...</span>
+                    </small>
+                    {% else %}
+                    <div class="alert alert-danger mb-0">
+                        <strong>Application deadline has passed</strong>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
     <!-- Ward Warning -->
     {% if stats.without_ward > 0 %}
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -198,4 +248,189 @@
         </div>
     </div>
 </div>
+
+<style>
+    /* Countdown Timer Styling */
+    .countdown-display {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #e74c3c;
+    }
+
+    .time-unit {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 60px;
+    }
+
+    .time-value {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #e74c3c;
+        line-height: 1;
+    }
+
+    .time-label {
+        font-size: 0.65rem;
+        color: #95a5a6;
+        margin-top: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .time-separator {
+        color: #bdc3c7;
+        margin: 0 2px;
+        line-height: 1;
+    }
+
+    @media (max-width: 576px) {
+        .countdown-display {
+            font-size: 1rem;
+        }
+        .time-value {
+            font-size: 1.2rem;
+        }
+        .time-unit {
+            min-width: 45px;
+        }
+    }
+
+    .dashboard-stat {
+        background: white;
+        border: 1px solid #ecf0f1;
+        border-radius: 8px;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .dashboard-stat:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .dashboard-stat h3 {
+        color: #7f8c8d;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .dashboard-stat .number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        text-transform: uppercase;
+    }
+
+    .status-draft {
+        background-color: #ecf0f1;
+        color: #7f8c8d;
+    }
+
+    .status-submitted {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .status-under_review {
+        background-color: #f39c12;
+        color: white;
+    }
+
+    .status-approved {
+        background-color: #27ae60;
+        color: white;
+    }
+
+    .status-rejected {
+        background-color: #e74c3c;
+        color: white;
+    }
+
+    .status-needs_clarification {
+        background-color: #9b59b6;
+        color: white;
+    }
+
+    .status-appeal {
+        background-color: #16a085;
+        color: white;
+    }
+</style>
+
+<script>
+// Application Deadline Countdown Timer
+document.addEventListener('DOMContentLoaded', function() {
+    {% if deadline_info %}
+    const deadlineStr = "{{ deadline_info.deadline }}";
+    const deadlineDate = new Date(deadlineStr);
+    
+    // Display the deadline date
+    const deadlineDateElement = document.getElementById('deadline-date');
+    if (deadlineDateElement) {
+        deadlineDateElement.textContent = deadlineDate.toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+    
+    // Update countdown every second
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = deadlineDate.getTime() - now;
+        
+        if (distance < 0) {
+            // Deadline has passed
+            document.getElementById('countdown-timer').innerHTML = 
+                '<div class="alert alert-danger mb-0"><strong>Application deadline has passed</strong></div>';
+            return;
+        }
+        
+        // Calculate time units
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        // Update the display
+        document.getElementById('days').textContent = String(days).padStart(2, '0');
+        document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+        document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        
+        // Change color based on time remaining
+        const timerElement = document.getElementById('countdown-timer');
+        if (days === 0 && hours <= 6) {
+            timerElement.style.color = '#e74c3c'; // Red alert
+        } else if (days <= 2) {
+            timerElement.style.color = '#f39c12'; // Orange warning
+        }
+    }
+    
+    // Initial update
+    updateCountdown();
+    
+    // Update every second
+    setInterval(updateCountdown, 1000);
+    {% endif %}
+});
+</script>
 {% endblock %}

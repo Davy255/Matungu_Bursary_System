@@ -37,7 +37,7 @@
                                 </a>
                             </h6>
                             <p class="text-muted mb-2">Total Applicants: <strong>{{ stat.total_applicants }}</strong></p>
-                            <p class="text-muted mb-2">Amount Requested: <strong>KES {{ stat.total_amount_requested|floatformat:2 }}</strong></p>
+                            <p class="text-muted mb-2">Total Awarded: <strong>KES {{ stat.total_awarded|floatformat:2 }}</strong></p>
                             <div class="progress" style="height: 20px;">
                                 {% if stat.total_applicants > 0 %}
                                     {% widthratio stat.awarded_count stat.total_applicants 100 as awarded_percent %}

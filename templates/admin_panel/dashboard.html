@@ -8,12 +8,16 @@
         <div class="col-12">
             <h2>Admin Dashboard</h2>
             <p class="text-muted">Welcome, {{ user.get_full_name }}
-                {% if admin_role.role_type == 'Ward_Admin' %}
-                    ({{ admin_role.ward }} Ward Admin)
-                {% elif admin_role.role_type == 'CDF_Admin' %}
-                    (CDF Admin)
-                {% elif admin_role.role_type == 'Super_Admin' %}
-                    (Super Admin)
+                {% if user.is_superuser %}
+                    <span class="badge bg-danger">Super Admin</span>
+                {% elif admin_role %}
+                    {% if admin_role.role_type == 'Ward_Admin' %}
+                        <span class="badge bg-warning">{{ admin_role.ward }} Ward Admin</span>
+                    {% elif admin_role.role_type == 'CDF_Admin' %}
+                        <span class="badge bg-info">CDF Admin</span>
+                    {% endif %}
+                {% else %}
+                    <span class="badge bg-secondary">Administrator</span>
                 {% endif %}
             </p>
         </div>
@@ -72,6 +76,9 @@
                     {% if user.is_superuser %}
                     <a href="{% url 'admin_panel:manage_admins' %}" class="btn btn-secondary">
                         <i class="bi bi-people"></i> Manage Admins
+                    </a>
+                    <a href="{% url 'users:manage_verifications' %}" class="btn btn-success">
+                        <i class="bi bi-shield-check"></i> Manage Verifications
                     </a>
                     {% endif %}
                 </div>

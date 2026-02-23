@@ -50,14 +50,19 @@
                             <label for="id_password" class="form-label">
                                 <i class="fas fa-lock"></i> Password <span class="text-danger">*</span>
                             </label>
-                            <input 
-                                type="password" 
-                                class="form-control form-control-lg" 
-                                id="id_password" 
-                                name="password" 
-                                placeholder="Enter your password"
-                                required
-                            >
+                            <div class="input-group">
+                                <input 
+                                    type="password" 
+                                    class="form-control form-control-lg" 
+                                    id="id_password" 
+                                    name="password" 
+                                    placeholder="Enter your password"
+                                    required
+                                >
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword" title="Show/Hide password">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
                         </div>
                         
                         <!-- National ID Field - REQUIRED -->
@@ -92,7 +97,7 @@
                     <!-- Links -->
                     <div class="text-center">
                         <p class="mb-2">
-                            <a href="#" class="text-decoration-none small">
+                            <a href="{% url 'users:password_reset' %}" class="text-decoration-none small">
                                 <i class="fas fa-key"></i> Forgot Password?
                             </a>
                         </p>
@@ -110,8 +115,32 @@
 </div>
 
 <script>
+// Password visibility toggle
+function setupPasswordToggle(toggleButtonId, inputFieldId) {
+    const toggleBtn = document.getElementById(toggleButtonId);
+    const inputField = document.getElementById(inputFieldId);
+    
+    if (toggleBtn && inputField) {
+        toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const isPassword = inputField.type === 'password';
+            inputField.type = isPassword ? 'text' : 'password';
+            
+            // Update icon
+            const icon = toggleBtn.querySelector('i');
+            if (icon) {
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
+            }
+        });
+    }
+}
+
 // Focus on National ID field for UX
 document.addEventListener('DOMContentLoaded', function() {
+    // Setup password toggle
+    setupPasswordToggle('togglePassword', 'id_password');
+    
     // Auto-focus on National ID field on page load for better UX
     const nationalIdField = document.getElementById('id_national_id');
     if (nationalIdField && !nationalIdField.value) {

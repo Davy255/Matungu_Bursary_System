@@ -38,8 +38,11 @@ def applicant_dashboard(request):
     """Applicant dashboard showing their applications"""
     profile = ensure_user_profile(request.user)
     
-    if profile.user_type != 'Applicant':
-        return redirect('admin_panel:dashboard')
+    # If user is an admin, redirect to admin panel (unless it's already failing there)
+    if profile.user_type != 'Applicant' and not request.GET.get('avoid_redirect'):
+        # Only redirect if they're actually a staff member with admin role
+        if hasattr(request.user, 'admin_role') and request.user.admin_role:
+            return redirect('admin_panel:dashboard')
     
     applications = Application.objects.filter(applicant=request.user).select_related('school', 'program', 'ward')
     has_applications = applications.exists()
@@ -57,6 +60,18 @@ def applicant_dashboard(request):
     # Get applications without ward for the warning
     apps_without_ward = applications.filter(ward__isnull=True)
     
+    # Get application deadline
+    deadline_info = None
+    try:
+        settings = RegistrationSettings.objects.first()
+        if settings and settings.deadline_date:
+            deadline_info = {
+                'deadline': settings.deadline_date.isoformat(),
+                'is_open': settings.is_registration_open and timezone.now() <= settings.deadline_date
+            }
+    except:
+        pass
+    
     # Pagination
     paginator = Paginator(applications, 10)
     page_number = request.GET.get('page')
@@ -67,6 +82,7 @@ def applicant_dashboard(request):
         'stats': stats,
         'apps_without_ward': apps_without_ward,
         'can_create_application': not has_applications,
+        'deadline_info': deadline_info,
     }
     return render(request, 'applications/applicant_dashboard.html', context)
 
@@ -143,6 +159,21 @@ def new_application_step2(request, application_id):
     
     application = get_object_or_404(Application, id=application_id, applicant=request.user)
     
+    # Check if application deadline has passed
+    try:
+        settings = RegistrationSettings.objects.first()
+        if settings:
+            if not settings.is_registration_open:
+                messages.error(request, 'Application submission is currently closed. Please contact the CDF office.')
+                return redirect('applications:dashboard')
+            
+            # Check if deadline has passed
+            if settings.deadline_date and timezone.now() > settings.deadline_date:
+                messages.error(request, 'Application submission deadline has passed.')
+                return redirect('applications:dashboard')
+    except:
+        pass
+    
     if request.method == 'POST':
         form = ApplicationForm(request.POST, instance=application)
         if form.is_valid():
@@ -170,6 +201,21 @@ def new_application_step3(request, application_id):
         return redirect('admin_panel:dashboard')
     
     application = get_object_or_404(Application, id=application_id, applicant=request.user)
+    
+    # Check if application deadline has passed
+    try:
+        settings = RegistrationSettings.objects.first()
+        if settings:
+            if not settings.is_registration_open:
+                messages.error(request, 'Application submission is currently closed. Please contact the CDF office.')
+                return redirect('applications:dashboard')
+            
+            # Check if deadline has passed
+            if settings.deadline_date and timezone.now() > settings.deadline_date:
+                messages.error(request, 'Application submission deadline has passed.')
+                return redirect('applications:dashboard')
+    except:
+        pass
     
     if request.method == 'POST':
         form = ApplicationDocumentForm(request.POST, request.FILES)
@@ -638,7 +684,7 @@ def track_application(request):
         app.stage_under_review = app.status in ['Submitted', 'Under_Review']  # Currently under ward review
         app.stage_docs_verified = app.status in ['Approved', 'Rejected']  # Ward admin has reviewed docs
         app.stage_ward_approved = app.status == 'Approved'
-        app.stage_amount_awarded = app.approved_amount is not None if hasattr(app, 'approved_amount') else False
+        app.stage_amount_awarded = app.approved_amount is not None
         
         # Get document count
         app.total_docs = app.documents.count()

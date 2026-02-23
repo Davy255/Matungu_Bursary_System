@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Assign Admin Role - Bursary System{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="bi bi-person-badge"></i> Assign Admin Role</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">
+                        Assign administrative roles to users. Ward Admins can review and approve applications from their specific ward, 
+                        while CDF Admins can award amounts to approved applications from all wards.
+                    </p>
+
+                    <form method="post" id="assignAdminForm">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.user.id_for_label }}" class="form-label">Select User *</label>
+                            {{ form.user }}
+                            {% if form.user.errors %}
+                                <div class="text-danger small">{{ form.user.errors }}</div>
+                            {% endif %}
+                            <small class="form-text text-muted">{{ form.user.help_text }}</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.role_type.id_for_label }}" class="form-label">Admin Role Type *</label>
+                            {{ form.role_type }}
+                            {% if form.role_type.errors %}
+                                <div class="text-danger small">{{ form.role_type.errors }}</div>
+                            {% endif %}
+                            <small class="form-text text-muted">
+                                <strong>Ward Admin:</strong> Reviews and approves applications from a specific ward<br>
+                                <strong>CDF Admin:</strong> Awards bursary amounts to all approved applications
+                            </small>
+                        </div>
+
+                        <div class="mb-3" id="wardFieldContainer">
+                            <label for="{{ form.ward.id_for_label }}" class="form-label">
+                                Ward <span id="wardRequired" class="text-danger">*</span>
+                            </label>
+                            {{ form.ward }}
+                            {% if form.ward.errors %}
+                                <div class="text-danger small">{{ form.ward.errors }}</div>
+                            {% endif %}
+                            <small class="form-text text-muted" id="wardHelpText">{{ form.ward.help_text }}</small>
+                        </div>
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Assign Role
+                            </button>
+                            <a href="{% url 'admin_panel:manage_admins' %}" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Info Card -->
+            <div class="card mt-4 border-info">
+                <div class="card-body">
+                    <h6 class="card-title text-info"><i class="bi bi-info-circle"></i> Important Notes</h6>
+                    <ul class="mb-0 small">
+                        <li><strong>Ward Admin:</strong> Can only view and approve applications from their assigned ward</li>
+                        <li><strong>CDF Admin:</strong> Has access to all wards and can award final bursary amounts</li>
+                        <li>A user cannot be assigned both Ward Admin and CDF Admin roles simultaneously</li>
+                        <li>Once assigned, the user will be able to access the admin panel</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const roleTypeSelect = document.getElementById('{{ form.role_type.id_for_label }}');
+    const wardFieldContainer = document.getElementById('wardFieldContainer');
+    const wardSelect = document.getElementById('{{ form.ward.id_for_label }}');
+    const wardRequired = document.getElementById('wardRequired');
+    const wardHelpText = document.getElementById('wardHelpText');
+    
+    function toggleWardField() {
+        const selectedRole = roleTypeSelect.value;
+        
+        if (selectedRole === 'CDF_Admin') {
+            // Hide ward field for CDF Admin
+            wardFieldContainer.style.display = 'none';
+            wardSelect.required = false;
+            wardSelect.value = '';  // Clear selection
+        } else {
+            // Show ward field for Ward Admin
+            wardFieldContainer.style.display = 'block';
+            wardSelect.required = true;
+        }
+    }
+    
+    // Initial state
+    toggleWardField();
+    
+    // Listen for changes
+    roleTypeSelect.addEventListener('change', toggleWardField);
+});
+</script>
+{% endblock %}

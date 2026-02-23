@@ -23,21 +23,47 @@
                             {% endif %}
                         </div>
                         <div class="col-md-9">
-                            <h3>{{ user.get_full_name|default:user.username }}</h3>
+                            <h3>
+                                {{ user.get_full_name|default:user.username }}
+                                {% if profile.is_verified %}
+                                    <i class="bi bi-patch-check-fill text-success" title="Verified Account"></i>
+                                {% endif %}
+                            </h3>
                             <p class="text-muted mb-2"><strong>Username:</strong> {{ user.username }}</p>
                             <p class="text-muted mb-2"><strong>Email:</strong> {{ user.email }}</p>
                             <p class="text-muted mb-2">
                                 <strong>User Type:</strong> 
                                 <span class="badge bg-info">{{ profile.get_user_type_display }}</span>
                             </p>
-                            <p class="text-muted mb-0">
-                                <strong>Status:</strong> 
+                            <p class="text-muted mb-2">
+                                <strong>Verification Status:</strong> 
                                 {% if profile.is_verified %}
-                                    <span class="badge bg-success">Verified</span>
+                                    <span class="badge bg-success">
+                                        <i class="bi bi-check-circle"></i> Verified
+                                    </span>
+                                    {% if profile.verified_by and profile.verification_date %}
+                                        <br>
+                                        <small class="text-muted">
+                                            Verified by {{ profile.verified_by.get_full_name }} on {{ profile.verification_date|date:"M d, Y" }}
+                                        </small>
+                                    {% endif %}
                                 {% else %}
-                                    <span class="badge bg-warning">Pending Verification</span>
+                                    <span class="badge bg-warning">
+                                        <i class="bi bi-hourglass-split"></i> Pending Verification
+                                    </span>
+                                    <br>
+                                    <small class="text-muted">Your account is awaiting admin verification</small>
                                 {% endif %}
                             </p>
+                            {% if user.admin_role %}
+                            <p class="text-muted mb-0">
+                                <strong>Admin Role:</strong> 
+                                <span class="badge bg-primary">{{ user.admin_role.get_role_type_display }}</span>
+                                {% if user.admin_role.is_verified %}
+                                    <i class="bi bi-shield-check text-success" title="Verified Admin"></i>
+                                {% endif %}
+                            </p>
+                            {% endif %}
                         </div>
                     </div>
 
@@ -69,14 +95,20 @@
                         </div>
                         <div class="col-md-6">
                             <h5 class="mb-3">Location Information</h5>
-                            <p>
-                                <strong>County:</strong><br>
-                                {{ profile.get_county_display|default:profile.county }}
-                            </p>
-                            <p>
-                                <strong>Ward:</strong><br>
-                                {{ profile.get_ward_display|default:profile.ward }}
-                            </p>
+                            {% if is_super_admin %}
+                                <p class="text-muted">
+                                    <em>Location information is not required for Super Admins</em>
+                                </p>
+                            {% else %}
+                                <p>
+                                    <strong>County:</strong><br>
+                                    {{ profile.get_county_display|default:profile.county }}
+                                </p>
+                                <p>
+                                    <strong>Ward:</strong><br>
+                                    {{ profile.get_ward_display|default:profile.ward }}
+                                </p>
+                            {% endif %}
                         </div>
                     </div>
 

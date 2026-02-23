@@ -46,7 +46,8 @@ class UserProfile(models.Model):
     ward = models.CharField(max_length=50, choices=WARD_CHOICES, default='Matungu')
     user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES, default='Applicant')
     profile_photo = models.ImageField(upload_to='profiles/', blank=True, null=True)
-    is_verified = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False, help_text="Profile verified by admin")
+    verified_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='verified_users')
     verification_date = models.DateTimeField(blank=True, null=True)
     email_verified = models.BooleanField(default=False)
     phone_verified = models.BooleanField(default=False)
@@ -72,10 +73,19 @@ class AdminRole(models.Model):
         choices=[('Ward_Admin', 'Ward Admin'), ('CDF_Admin', 'CDF Admin')],
         help_text="Select the level of administration"
     )
-    ward = models.CharField(max_length=50, choices=WARD_CHOICES)
+    ward = models.CharField(
+        max_length=50, 
+        choices=WARD_CHOICES, 
+        blank=True, 
+        null=True,
+        help_text="Required for Ward Admin only. Leave blank for CDF Admin."
+    )
     assigned_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name='assigned_admin_roles')
     assigned_date = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
+    is_verified = models.BooleanField(default=False, help_text="Verified by Super Admin")
+    verified_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='verified_admins')
+    verified_date = models.DateTimeField(null=True, blank=True)
     permissions = models.JSONField(default=list, help_text="List of specific permissions")
     
     class Meta:
@@ -86,7 +96,8 @@ class AdminRole(models.Model):
         ]
     
     def __str__(self):
-        return f"{self.user.get_full_name()} - {self.role_type} ({self.ward})"
+        ward_display = f" ({self.ward})" if self.ward else ""
+        return f"{self.user.get_full_name()} - {self.role_type}{ward_display}"
 
 
 class Notification(models.Model):

@@ -18,7 +18,7 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = config(
     'ALLOWED_HOSTS',
-    default='localhost,127.0.0.1',
+    default='localhost,127.0.0.1,172.31.230.205,172.31.231.21',
     cast=lambda v: [s.strip() for s in v.split(',') if s.strip()]
 )
 
@@ -195,6 +195,10 @@ MAX_UPLOAD_SIZE = 5242880  # 5MB
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'applications:dashboard'
 LOGOUT_REDIRECT_URL = 'users:login'
+
+# Session security: auto-logout after 10 minutes of inactivity
+SESSION_COOKIE_AGE = 600  # 10 minutes in seconds
+SESSION_SAVE_EVERY_REQUEST = True  # Refresh expiry on each request
 
 # Pagination
 PAGINATE_BY = 20

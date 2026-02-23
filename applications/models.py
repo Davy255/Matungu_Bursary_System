@@ -129,6 +129,15 @@ class Application(models.Model):
     
     def __str__(self):
         return f"{self.applicant.get_full_name()} - {self.school.name} ({self.status})"
+    
+    @property
+    def approved_amount(self):
+        """Get the approved amount from ApplicationApproval model"""
+        approval = self.approvals.filter(
+            status='Approved',
+            amount_approved__isnull=False
+        ).order_by('-approved_date').first()
+        return approval.amount_approved if approval else None
 
 
 class ApplicationDocument(models.Model):
