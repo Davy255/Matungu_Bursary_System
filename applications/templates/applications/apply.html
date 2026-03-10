@@ -198,11 +198,35 @@
     box-shadow: 0 4px 14px rgba(37,99,235,.35);
   }
   .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(37,99,235,.4); }
+  .btn-draft {
+    width: 100%; padding: 13px; margin-top: .75rem;
+    background: #fff; color: #0284c7;
+    border: 2px solid #0ea5e9; border-radius: 12px;
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+    transition: all .25s; display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .btn-draft:hover { background: #f0f9ff; transform: translateY(-1px); }
   .btn-cancel {
     display: block; text-align: center; margin-top: .85rem;
     color: #64748b; font-size: .9rem; text-decoration: none; font-weight: 600;
   }
   .btn-cancel:hover { color: #1e293b; }
+  /* ── Deadline banner ── */
+  .deadline-banner {
+    background: linear-gradient(135deg,#fef3c7,#fde68a);
+    border: 2px solid #f59e0b; border-radius: 12px;
+    padding: 14px 18px; margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 12px;
+    font-size: .92rem; font-weight: 600; color: #78350f;
+  }
+  .deadline-banner i { font-size: 1.3rem; color: #d97706; }
+  .draft-banner {
+    background: #e0f2fe; border: 2px solid #0ea5e9; border-radius: 12px;
+    padding: 14px 18px; margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 12px;
+    font-size: .92rem; font-weight: 600; color: #075985;
+  }
+  .draft-banner i { font-size: 1.3rem; }
 </style>
 {% endblock %}
 
@@ -212,9 +236,29 @@
   <!-- Hero header -->
   <div class="apply-hero">
     <div class="hero-icon"><i class="fas fa-file-alt"></i></div>
-    <h1>Apply for Bursary</h1>
+    <h1>{% if application %}Edit Draft Application{% else %}Apply for Bursary{% endif %}</h1>
     <p>Fill in the details below to apply for financial assistance from Matungu Constituency</p>
+    {% if settings.application_deadline %}
+      <p style="margin-top:.5rem;font-size:.9rem;opacity:.9;">
+        <i class="fas fa-clock"></i>
+        Deadline: <strong>{{ settings.application_deadline|date:"N j, Y, P" }}</strong>
+      </p>
+    {% endif %}
   </div>
+
+  {% if application %}
+    <div class="draft-banner">
+      <i class="fas fa-pencil-alt"></i>
+      <span>You are editing a saved draft &mdash; <strong>{{ application.application_number }}</strong>. Complete all fields and click <em>Save &amp; Upload Documents</em> when ready.</span>
+    </div>
+  {% endif %}
+
+  {% if settings.application_deadline %}
+    <div class="deadline-banner" id="deadline-banner">
+      <i class="fas fa-hourglass-half"></i>
+      <span>Application deadline: <strong>{{ settings.application_deadline|date:"N j, Y, P" }}</strong> &mdash; Time remaining: <span id="dl-countdown">calculating&hellip;</span></span>
+    </div>
+  {% endif %}
 
   {% if messages %}
     {% for message in messages %}
@@ -227,6 +271,7 @@
 
   <form method="post" id="applyForm">
     {% csrf_token %}
+    <input type="hidden" name="action" id="form-action" value="submit">
 
     <!-- ── CARD 1: School Category & School ── -->
     <div class="form-card">
@@ -393,9 +438,13 @@
     </div><!-- /card 3 -->
 
     <!-- ── Submit ── -->
-    <button type="submit" class="btn-submit">
+    <button type="submit" class="btn-submit" onclick="document.getElementById('form-action').value='submit'">
       <i class="fas fa-paper-plane"></i>
       Save Application &amp; Upload Documents
+    </button>
+    <button type="submit" class="btn-draft" onclick="document.getElementById('form-action').value='save_draft'">
+      <i class="fas fa-save"></i>
+      Save as Draft &mdash; Continue Later
     </button>
     <a href="{% url 'users:dashboard' %}" class="btn-cancel">
       <i class="fas fa-arrow-left"></i> Back to Dashboard
@@ -497,5 +546,25 @@
   function setAmount(val) {
     document.getElementById('{{ form.amount_requested.id_for_label }}').value = val;
   }
+
+  // Deadline countdown
+  {% if settings.application_deadline %}
+  (function() {
+    const deadline = new Date("{{ settings.application_deadline|date:'c' }}");
+    const el = document.getElementById('dl-countdown');
+    if (!el) return;
+    function tick() {
+      const diff = deadline - Date.now();
+      if (diff <= 0) { el.textContent = 'DEADLINE PASSED'; el.style.color='#dc2626'; return; }
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      el.textContent = (d > 0 ? d + 'd ' : '') + h + 'h ' + m + 'm ' + s + 's';
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+  {% endif %}
 </script>
 {% endblock %}

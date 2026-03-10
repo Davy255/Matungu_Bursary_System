@@ -212,6 +212,68 @@
     .no-applications a:hover {
         text-decoration: underline;
     }
+    /* Deadline / announcement banners */
+    .deadline-card {
+        background: linear-gradient(135deg,#1e3a5f,#2563eb);
+        color: #fff; border-radius: 16px; padding: 1.8rem 2rem;
+        margin-bottom: 2rem; display: flex; align-items: center;
+        gap: 1.5rem; flex-wrap: wrap;
+        box-shadow: 0 8px 24px rgba(37,99,235,.3);
+    }
+    .deadline-card .dl-icon {
+        width: 60px; height: 60px; border-radius: 14px;
+        background: rgba(255,255,255,.15);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.8rem; flex-shrink: 0;
+    }
+    .deadline-card h3 { margin: 0 0 .25rem; font-size: 1.1rem; opacity: .85; }
+    .deadline-card .dl-date { font-size: .95rem; opacity: .8; margin-top: .2rem; }
+    .countdown-grid {
+        display: flex; gap: .6rem; margin-top: .6rem; flex-wrap: wrap;
+    }
+    .countdown-unit {
+        background: rgba(255,255,255,.15); border-radius: 10px;
+        padding: .5rem .8rem; text-align: center; min-width: 56px;
+    }
+    .countdown-unit .cu-val { font-size: 1.6rem; font-weight: 800; line-height: 1; }
+    .countdown-unit .cu-lbl { font-size: .65rem; text-transform: uppercase; opacity: .75; letter-spacing: .05em; }
+    .closed-banner {
+        background: #fee2e2; color: #991b1b; border: 2px solid #fca5a5;
+        border-radius: 12px; padding: 1rem 1.4rem; margin-bottom: 1.5rem;
+        font-weight: 600; display: flex; align-items: center; gap: 10px;
+    }
+    .announcement-banner {
+        background: #eff6ff; color: #1e40af; border: 2px solid #bfdbfe;
+        border-radius: 12px; padding: 1rem 1.4rem; margin-bottom: 1.5rem;
+        font-size: .92rem;
+    }
+    /* Draft section */
+    .drafts-section {
+        background: #fff; padding: 2rem; border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,.1);
+        margin-bottom: 1.5rem; border-left: 4px solid #f59e0b;
+    }
+    .draft-row {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 12px 0; border-bottom: 1px solid #f1f5f9; flex-wrap: wrap; gap: .5rem;
+    }
+    .draft-row:last-child { border-bottom: none; }
+    .draft-info { flex: 1; min-width: 0; }
+    .draft-num { font-weight: 700; color: #1e293b; font-size: .95rem; }
+    .draft-meta { font-size: .8rem; color: #64748b; margin-top: 2px; }
+    .draft-actions { display: flex; gap: .5rem; }
+    .btn-continue {
+        padding: 7px 16px; background: #0ea5e9; color: #fff;
+        border-radius: 8px; text-decoration: none; font-size: .85rem; font-weight: 700;
+        display: flex; align-items: center; gap: 6px; transition: background .2s;
+    }
+    .btn-continue:hover { background: #0284c7; color: #fff; }
+    .status-badge.status-draft { background: #fef3c7; color: #92400e; }
+    .status-badge.status-submitted { background: #dbeafe; color: #1e40af; }
+    .status-badge.status-under_review { background: #f3e8ff; color: #6b21a8; }
+    .status-badge.status-approved { background: #d1fae5; color: #065f46; }
+    .status-badge.status-rejected { background: #fee2e2; color: #991b1b; }
+    .status-badge.status-disbursed { background: #ecfdf5; color: #047857; }
 </style>
 {% endblock %}
 
@@ -228,45 +290,79 @@
     </div>
 {% endif %}
 
+{% if bursary_settings.announcement %}
+    <div class="announcement-banner">
+        <i class="fas fa-bullhorn"></i>&nbsp;
+        {{ bursary_settings.announcement }}
+    </div>
+{% endif %}
+
+{% if not bursary_settings.is_accepting_applications %}
+    <div class="closed-banner">
+        <i class="fas fa-lock"></i>
+        Applications are currently <strong>closed</strong>. Please check back later.
+    </div>
+{% elif bursary_settings.application_deadline %}
+    <!-- Deadline countdown card -->
+    <div class="deadline-card" id="deadline-card">
+        <div class="dl-icon"><i class="fas fa-hourglass-half"></i></div>
+        <div>
+            <h3>Application Deadline — {{ bursary_settings.academic_year }}</h3>
+            <div class="dl-date">
+                <i class="fas fa-calendar-alt"></i>
+                {{ bursary_settings.application_deadline|date:"l, N j, Y, P" }}
+            </div>
+            <div class="countdown-grid" id="countdown-grid">
+                <div class="countdown-unit"><div class="cu-val" id="cd-d">--</div><div class="cu-lbl">Days</div></div>
+                <div class="countdown-unit"><div class="cu-val" id="cd-h">--</div><div class="cu-lbl">Hours</div></div>
+                <div class="countdown-unit"><div class="cu-val" id="cd-m">--</div><div class="cu-lbl">Mins</div></div>
+                <div class="countdown-unit"><div class="cu-val" id="cd-s">--</div><div class="cu-lbl">Secs</div></div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
 <div class="stats-grid">
     <div class="stat-card stat-card-primary">
         <div class="stat-icon stat-icon-primary">
-            <i class="fas fa-file-alt"></i>
+            <i class="fas fa-paper-plane"></i>
         </div>
-        <div class="stat-value">{{ applications.count|default:0 }}</div>
-        <div class="stat-label">Total Applications</div>
+        <div class="stat-value">{{ applications|length }}</div>
+        <div class="stat-label">Submitted</div>
+    </div>
+    
+    <div class="stat-card stat-card-warning">
+        <div class="stat-icon stat-icon-warning">
+            <i class="fas fa-save"></i>
+        </div>
+        <div class="stat-value">{{ drafts|length }}</div>
+        <div class="stat-label">Saved Drafts</div>
     </div>
     
     <div class="stat-card stat-card-success">
         <div class="stat-icon stat-icon-success">
             <i class="fas fa-check-circle"></i>
         </div>
-        <div class="stat-value">0</div>
+        <div class="stat-value">{{ applications|dictsortreversed:"status"|length }}</div>
         <div class="stat-label">Approved</div>
-    </div>
-    
-    <div class="stat-card stat-card-warning">
-        <div class="stat-icon stat-icon-warning">
-            <i class="fas fa-clock"></i>
-        </div>
-        <div class="stat-value">{{ applications.count|default:0 }}</div>
-        <div class="stat-label">Pending Review</div>
     </div>
     
     <div class="stat-card stat-card-info">
         <div class="stat-icon stat-icon-info">
             <i class="fas fa-school"></i>
         </div>
-        <div class="stat-value">3</div>
+        <div class="stat-value">402</div>
         <div class="stat-label">Available Schools</div>
     </div>
 </div>
 
 <div class="action-grid">
+    {% if bursary_settings.is_accepting_applications %}
     <a href="{% url 'applications:apply' %}" class="action-btn btn-primary">
         <i class="fas fa-plus-circle"></i>
         New Application
     </a>
+    {% endif %}
     <a href="{% url 'applications:my_applications' %}" class="action-btn btn-secondary">
         <i class="fas fa-file-alt"></i>
         My Applications
@@ -281,12 +377,47 @@
     </a>
 </div>
 
+{% if drafts %}
+<!-- Saved Drafts Section -->
+<div class="drafts-section">
+    <div class="section-header">
+        <div class="section-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706);">
+            <i class="fas fa-save"></i>
+        </div>
+        <h2>Saved Drafts <span style="font-size:.85rem;color:#64748b;font-weight:500;">({{ drafts|length }})</span></h2>
+    </div>
+    {% for draft in drafts %}
+    <div class="draft-row">
+        <div class="draft-info">
+            <div class="draft-num">{{ draft.application_number }}</div>
+            <div class="draft-meta">
+                {% if draft.school %}
+                    <i class="fas fa-university"></i> {{ draft.school.name }} &bull;
+                {% else %}
+                    <i class="fas fa-university"></i> School not selected &bull;
+                {% endif %}
+                <i class="fas fa-clock"></i> Last edited {{ draft.updated_at|date:"N j, Y, P" }}
+            </div>
+        </div>
+        <div class="draft-actions">
+            {% if bursary_settings.is_accepting_applications %}
+            <a href="{% url 'applications:edit_draft' draft.pk %}" class="btn-continue">
+                <i class="fas fa-pencil-alt"></i> Continue
+            </a>
+            {% endif %}
+            <span class="status-badge status-draft">Draft</span>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
 <div class="applications-section">
     <div class="section-header">
         <div class="section-icon">
             <i class="fas fa-history"></i>
         </div>
-        <h2>Recent Applications</h2>
+        <h2>Submitted Applications</h2>
     </div>
     
     {% if applications %}
@@ -304,13 +435,13 @@
                 {% for app in applications %}
                 <tr>
                     <td><strong>{{ app.application_number }}</strong></td>
-                    <td>{{ app.school.name }}</td>
+                    <td>{{ app.school.name|default:"—" }}</td>
                     <td>
-                        <span class="status-badge status-pending">
+                        <span class="status-badge status-{{ app.status }}">
                             {{ app.get_status_display }}
                         </span>
                     </td>
-                    <td>{{ app.created_at|date:"M d, Y" }}</td>
+                    <td>{{ app.submitted_at|date:"M d, Y"|default:app.created_at|date:"M d, Y" }}</td>
                     <td>
                         <a href="{% url 'applications:view_application' app.pk %}" style="color: #2563eb; text-decoration: none; font-weight: 600;">
                             <i class="fas fa-eye"></i> View
@@ -323,8 +454,38 @@
     {% else %}
         <div class="no-applications">
             <i class="fas fa-inbox"></i>
-            <p>No applications yet. <a href="{% url 'applications:apply' %}">Start your first application now!</a></p>
+            <p>No submitted applications yet. <a href="{% url 'applications:apply' %}">Start your first application now!</a></p>
         </div>
     {% endif %}
 </div>
+{% endblock %}
+
+{% block extra_js %}
+{% if bursary_settings.application_deadline and bursary_settings.is_accepting_applications %}
+<script>
+(function() {
+    const deadline = new Date("{{ bursary_settings.application_deadline|date:'c' }}");
+    const dEl = document.getElementById('cd-d');
+    const hEl = document.getElementById('cd-h');
+    const mEl = document.getElementById('cd-m');
+    const sEl = document.getElementById('cd-s');
+    if (!dEl) return;
+    function pad(n) { return n < 10 ? '0'+n : String(n); }
+    function tick() {
+        const diff = deadline - Date.now();
+        if (diff <= 0) {
+            dEl.textContent = hEl.textContent = mEl.textContent = sEl.textContent = '00';
+            document.getElementById('deadline-card').style.background = 'linear-gradient(135deg,#7f1d1d,#991b1b)';
+            return;
+        }
+        dEl.textContent = Math.floor(diff / 86400000);
+        hEl.textContent = pad(Math.floor((diff % 86400000) / 3600000));
+        mEl.textContent = pad(Math.floor((diff % 3600000) / 60000));
+        sEl.textContent = pad(Math.floor((diff % 60000) / 1000));
+    }
+    tick();
+    setInterval(tick, 1000);
+})();
+</script>
+{% endif %}
 {% endblock %}

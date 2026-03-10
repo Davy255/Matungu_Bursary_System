@@ -1,47 +1,136 @@
-from django.shortcuts import render
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import JsonResponse
 from django.utils import timezone
-from .models import Application, ApplicationDocument
+from .models import Application, ApplicationDocument, BursarySettings
 from .forms import ApplicationForm, ApplicationDocumentForm
 from schools.models import School
 import uuid
 import json
 
+
+def _schools_json():
+    """Build schools-by-category dict for JS autocomplete."""
+    schools_by_category = {}
+    for school in School.objects.filter(is_active=True).values('id', 'name', 'school_type').order_by('name'):
+        cat = school['school_type']
+        schools_by_category.setdefault(cat, [])
+        schools_by_category[cat].append({'id': school['id'], 'name': school['name']})
+    return json.dumps(schools_by_category)
+
+
+def _save_draft(post_data, user, application=None):
+    """Save (or update) a draft from raw POST data without full validation."""
+    if application is None:
+        application = Application(
+            applicant=user,
+            application_number=f"BUR-{timezone.now().year}-{uuid.uuid4().hex[:8].upper()}",
+            status='draft',
+        )
+
+    # School FK
+    school_id = post_data.get('school', '').strip()
+    if school_id:
+        try:
+            application.school = School.objects.get(pk=int(school_id))
+        except (School.DoesNotExist, ValueError):
+            application.school = None
+    else:
+        application.school = None
+
+    application.course_name      = post_data.get('course_name', '').strip()
+    application.admission_number = post_data.get('admission_number', '').strip()
+    application.year_of_study    = post_data.get('year_of_study', '').strip()
+
+    # Numeric fields — keep existing value if blank
+    for attr, key in [('family_income', 'family_income'), ('amount_requested', 'amount_requested')]:
+        val = post_data.get(key, '').strip()
+        if val:
+            try:
+                setattr(application, attr, float(val))
+            except ValueError:
+                pass
+
+    application.reason = post_data.get('reason', '').strip()
+    application.save()
+    return application
+
+
 @login_required
 def apply(request):
-	"""Create new bursary application"""
-	# Check if user has profile
-	if not hasattr(request.user, 'profile'):
-		messages.warning(request, 'Please complete your profile before applying.')
-		return redirect('users:profile')
-    
-	if request.method == 'POST':
-		form = ApplicationForm(request.POST)
-		if form.is_valid():
-			application = form.save(commit=False)
-			application.applicant = request.user
-			application.application_number = f"BUR-{timezone.now().year}-{uuid.uuid4().hex[:8].upper()}"
-			application.status = 'draft'
-			application.save()
-			messages.success(request, 'Application created! Please upload required documents.')
-			return redirect('applications:upload_documents', pk=application.pk)
-	else:
-		form = ApplicationForm()
+    """Create new bursary application."""
+    if not hasattr(request.user, 'profile'):
+        messages.warning(request, 'Please complete your profile before applying.')
+        return redirect('users:profile')
 
-	# Build schools-by-category JSON for JS filtering
-	schools_by_category = {}
-	for school in School.objects.filter(is_active=True).values('id', 'name', 'school_type').order_by('name'):
-		cat = school['school_type']
-		schools_by_category.setdefault(cat, [])
-		schools_by_category[cat].append({'id': school['id'], 'name': school['name']})
-    
-	return render(request, 'applications/apply.html', {
-		'form': form,
-		'schools_json': json.dumps(schools_by_category),
-	})
+    settings_obj = BursarySettings.get_settings()
+    if not settings_obj.is_accepting_applications:
+        messages.error(request, 'Applications are currently closed.')
+        return redirect('users:dashboard')
+
+    if request.method == 'POST':
+        action = request.POST.get('action', 'submit')
+
+        if action == 'save_draft':
+            application = _save_draft(request.POST, request.user)
+            messages.success(request, 'Draft saved! You can continue editing it from your dashboard.')
+            return redirect('users:dashboard')
+
+        # Full submit path
+        form = ApplicationForm(request.POST)
+        if form.is_valid():
+            application = form.save(commit=False)
+            application.applicant = request.user
+            application.application_number = f"BUR-{timezone.now().year}-{uuid.uuid4().hex[:8].upper()}"
+            application.status = 'draft'
+            application.save()
+            messages.success(request, 'Application saved! Please upload required documents.')
+            return redirect('applications:upload_documents', pk=application.pk)
+    else:
+        form = ApplicationForm()
+
+    return render(request, 'applications/apply.html', {
+        'form': form,
+        'schools_json': _schools_json(),
+        'settings': settings_obj,
+    })
+
+
+@login_required
+def edit_draft(request, pk):
+    """Continue editing a saved draft."""
+    application = get_object_or_404(Application, pk=pk, applicant=request.user, status='draft')
+
+    settings_obj = BursarySettings.get_settings()
+    if not settings_obj.is_accepting_applications:
+        messages.error(request, 'Applications are currently closed.')
+        return redirect('users:dashboard')
+
+    if request.method == 'POST':
+        action = request.POST.get('action', 'submit')
+
+        if action == 'save_draft':
+            _save_draft(request.POST, request.user, application=application)
+            messages.success(request, 'Draft updated! You can continue editing from your dashboard.')
+            return redirect('users:dashboard')
+
+        form = ApplicationForm(request.POST, instance=application)
+        if form.is_valid():
+            app = form.save(commit=False)
+            app.status = 'draft'
+            app.save()
+            messages.success(request, 'Application updated! Please upload / review required documents.')
+            return redirect('applications:upload_documents', pk=application.pk)
+    else:
+        form = ApplicationForm(instance=application)
+
+    return render(request, 'applications/apply.html', {
+        'form': form,
+        'schools_json': _schools_json(),
+        'application': application,   # lets template know it's an edit
+        'settings': settings_obj,
+    })
 
 @login_required
 def upload_documents(request, pk):

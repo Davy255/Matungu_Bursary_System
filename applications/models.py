@@ -41,20 +41,20 @@ class Application(models.Model):
     application_number = models.CharField(max_length=50, unique=True)
     
     # School Information
-    school = models.ForeignKey(School, on_delete=models.PROTECT)
+    school = models.ForeignKey(School, on_delete=models.PROTECT, null=True, blank=True)
     campus = models.ForeignKey(Campus, on_delete=models.PROTECT, null=True, blank=True)
     program = models.ForeignKey(Program, on_delete=models.PROTECT, null=True, blank=True)
-    course_name = models.CharField(max_length=200, blank=True, help_text="Name of your course/programme")
-    admission_number = models.CharField(max_length=50)
-    year_of_study = models.CharField(max_length=1, choices=ACADEMIC_YEARS)
+    course_name = models.CharField(max_length=200, blank=True, default='', help_text="Name of your course/programme")
+    admission_number = models.CharField(max_length=50, blank=True, default='')
+    year_of_study = models.CharField(max_length=1, choices=ACADEMIC_YEARS, blank=True, default='')
     
     # Financial Information
-    family_income = models.DecimalField(max_digits=10, decimal_places=2)
-    amount_requested = models.DecimalField(max_digits=10, decimal_places=2)
+    family_income = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    amount_requested = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     amount_approved = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     
     # Application Details
-    reason = models.TextField(help_text="Reason for applying")
+    reason = models.TextField(blank=True, default='', help_text="Reason for applying")
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
     
     # Timestamps
@@ -134,3 +134,41 @@ class ApplicationApproval(models.Model):
 
     class Meta:
         ordering = ['-approved_at']
+
+
+class BursarySettings(models.Model):
+    """Singleton model for bursary configuration set by admins."""
+    academic_year = models.CharField(
+        max_length=20, default='2025/2026',
+        help_text='e.g. 2025/2026'
+    )
+    application_deadline = models.DateTimeField(
+        null=True, blank=True,
+        help_text='Deadline for submitting bursary applications'
+    )
+    is_accepting_applications = models.BooleanField(
+        default=True,
+        help_text='Uncheck to close applications even before the deadline'
+    )
+    max_amount = models.DecimalField(
+        max_digits=10, decimal_places=2, null=True, blank=True,
+        help_text='Maximum bursary amount an applicant can request'
+    )
+    announcement = models.TextField(
+        blank=True, default='',
+        help_text='Optional notice shown on the dashboard (HTML allowed)'
+    )
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'Bursary Settings'
+        verbose_name_plural = 'Bursary Settings'
+
+    def __str__(self):
+        return f'Bursary Settings ({self.academic_year})'
+
+    @classmethod
+    def get_settings(cls):
+        """Always return the single settings instance, creating it if needed."""
+        obj, _ = cls.objects.get_or_create(pk=1)
+        return obj

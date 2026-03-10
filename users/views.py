@@ -60,11 +60,16 @@ def user_logout(request):
 @login_required
 def dashboard(request):
     """User dashboard"""
+    from applications.models import Application, BursarySettings
     has_profile = hasattr(request.user, 'profile')
-    applications = request.user.applications.all()[:5]
+    drafts = request.user.applications.filter(status='draft').order_by('-updated_at')
+    submitted = request.user.applications.exclude(status='draft').order_by('-submitted_at')
+    bursary_settings = BursarySettings.get_settings()
     return render(request, 'users/dashboard.html', {
         'has_profile': has_profile,
-        'applications': applications
+        'applications': submitted[:5],
+        'drafts': drafts,
+        'bursary_settings': bursary_settings,
     })
 
 @login_required
