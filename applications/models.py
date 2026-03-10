@@ -43,7 +43,8 @@ class Application(models.Model):
     # School Information
     school = models.ForeignKey(School, on_delete=models.PROTECT)
     campus = models.ForeignKey(Campus, on_delete=models.PROTECT, null=True, blank=True)
-    program = models.ForeignKey(Program, on_delete=models.PROTECT)
+    program = models.ForeignKey(Program, on_delete=models.PROTECT, null=True, blank=True)
+    course_name = models.CharField(max_length=200, blank=True, help_text="Name of your course/programme")
     admission_number = models.CharField(max_length=50)
     year_of_study = models.CharField(max_length=1, choices=ACADEMIC_YEARS)
     

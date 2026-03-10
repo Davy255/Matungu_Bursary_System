@@ -2,11 +2,13 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import JsonResponse
 from django.utils import timezone
 from .models import Application, ApplicationDocument
 from .forms import ApplicationForm, ApplicationDocumentForm
 from schools.models import School
 import uuid
+import json
 
 @login_required
 def apply(request):
@@ -21,7 +23,6 @@ def apply(request):
 		if form.is_valid():
 			application = form.save(commit=False)
 			application.applicant = request.user
-			# Generate unique application number
 			application.application_number = f"BUR-{timezone.now().year}-{uuid.uuid4().hex[:8].upper()}"
 			application.status = 'draft'
 			application.save()
@@ -29,8 +30,18 @@ def apply(request):
 			return redirect('applications:upload_documents', pk=application.pk)
 	else:
 		form = ApplicationForm()
+
+	# Build schools-by-category JSON for JS filtering
+	schools_by_category = {}
+	for school in School.objects.filter(is_active=True).values('id', 'name', 'school_type').order_by('name'):
+		cat = school['school_type']
+		schools_by_category.setdefault(cat, [])
+		schools_by_category[cat].append({'id': school['id'], 'name': school['name']})
     
-	return render(request, 'applications/apply.html', {'form': form})
+	return render(request, 'applications/apply.html', {
+		'form': form,
+		'schools_json': json.dumps(schools_by_category),
+	})
 
 @login_required
 def upload_documents(request, pk):
