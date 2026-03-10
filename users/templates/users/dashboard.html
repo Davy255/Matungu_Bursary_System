@@ -358,10 +358,24 @@
 
 <div class="action-grid">
     {% if bursary_settings.is_accepting_applications %}
-    <a href="{% url 'applications:apply' %}" class="action-btn btn-primary">
-        <i class="fas fa-plus-circle"></i>
-        New Application
-    </a>
+        {% if has_application %}
+            {% if drafts %}
+            <a href="{% url 'applications:edit_draft' drafts.0.pk %}" class="action-btn btn-primary">
+                <i class="fas fa-pencil-alt"></i>
+                Continue Draft
+            </a>
+            {% else %}
+            <span class="action-btn btn-primary" style="opacity:.5;cursor:not-allowed;" title="You already have an application for this cycle">
+                <i class="fas fa-ban"></i>
+                Application Submitted
+            </span>
+            {% endif %}
+        {% else %}
+        <a href="{% url 'applications:apply' %}" class="action-btn btn-primary">
+            <i class="fas fa-plus-circle"></i>
+            New Application
+        </a>
+        {% endif %}
     {% endif %}
     <a href="{% url 'applications:my_applications' %}" class="action-btn btn-secondary">
         <i class="fas fa-file-alt"></i>

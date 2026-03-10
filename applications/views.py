@@ -69,6 +69,18 @@ def apply(request):
         messages.error(request, 'Applications are currently closed.')
         return redirect('users:dashboard')
 
+    # One application per user — redirect to existing one
+    existing = Application.objects.filter(applicant=request.user).order_by('-created_at').first()
+    if existing:
+        if existing.status == 'draft':
+            messages.info(request, 'You have an unfinished draft. Please complete it before starting a new one.')
+            return redirect('applications:edit_draft', pk=existing.pk)
+        else:
+            messages.warning(request,
+                f'You already have an application ({existing.application_number}). '
+                'Only one application per person is allowed per cycle.')
+            return redirect('applications:view_application', pk=existing.pk)
+
     if request.method == 'POST':
         action = request.POST.get('action', 'submit')
 

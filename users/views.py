@@ -65,11 +65,13 @@ def dashboard(request):
     drafts = request.user.applications.filter(status='draft').order_by('-updated_at')
     submitted = request.user.applications.exclude(status='draft').order_by('-submitted_at')
     bursary_settings = BursarySettings.get_settings()
+    has_application = request.user.applications.exists()
     return render(request, 'users/dashboard.html', {
         'has_profile': has_profile,
         'applications': submitted[:5],
         'drafts': drafts,
         'bursary_settings': bursary_settings,
+        'has_application': has_application,
     })
 
 @login_required
