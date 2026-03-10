@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="820" viewBox="0 0 1800 820">
+  <rect width="1800" height="820" fill="#ffffff"/>
+  <text x="900" y="48" text-anchor="middle" font-family="Arial" font-size="34" font-weight="700" fill="#0f172a">Table 7: Expanded Risk Register</text>
+
+  <rect x="40" y="90" width="1720" height="690" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+  <rect x="40" y="90" width="1720" height="90" fill="#f59e0b"/>
+
+  <line x1="430" y1="90" x2="430" y2="780" stroke="#1e293b" stroke-width="2"/>
+  <line x1="650" y1="90" x2="650" y2="780" stroke="#1e293b" stroke-width="2"/>
+  <line x1="860" y1="90" x2="860" y2="780" stroke="#1e293b" stroke-width="2"/>
+  <line x1="1430" y1="90" x2="1430" y2="780" stroke="#1e293b" stroke-width="2"/>
+
+  <line x1="40" y1="180" x2="1760" y2="180" stroke="#1e293b" stroke-width="2"/>
+  <line x1="40" y1="280" x2="1760" y2="280" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="40" y1="380" x2="1760" y2="380" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="40" y1="480" x2="1760" y2="480" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="40" y1="580" x2="1760" y2="580" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="40" y1="680" x2="1760" y2="680" stroke="#cbd5e1" stroke-width="1.5"/>
+
+  <text x="235" y="145" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#111827">Risk</text>
+  <text x="540" y="145" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#111827">Probability</text>
+  <text x="755" y="145" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#111827">Impact</text>
+  <text x="1145" y="145" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#111827">Response Strategy</text>
+  <text x="1595" y="145" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#111827">Owner</text>
+
+  <text x="55" y="245" font-family="Arial" font-size="21" fill="#0f172a">Scope creep</text>
+  <text x="540" y="245" text-anchor="middle" font-family="Arial" font-size="21" fill="#0f172a">Medium</text>
+  <text x="755" y="245" text-anchor="middle" font-family="Arial" font-size="21" fill="#0f172a">High</text>
+  <text x="875" y="245" font-family="Arial" font-size="21" fill="#0f172a">Change control and approved CRs</text>
+  <text x="1450" y="245" font-family="Arial" font-size="21" fill="#0f172a">PM</text>
+
+  <text x="55" y="345" font-family="Arial" font-size="21" fill="#0f172a">Delayed approvals</text>
+  <text x="540" y="345" text-anchor="middle" font-family="Arial" font-size="21" fill="#0f172a">Medium</text>
+  <text x="755" y="345" text-anchor="middle" font-family="Arial" font-size="21" fill="#0f172a">Medium</text>
+  <text x="875" y="345" font-family="Arial" font-size="21" fill="#0f172a">Early reviews and escalation path</text>
+  <text x="1450" y="345" font-family="Arial" font-size="21" fill="#0f172a">Sponsor / PM</text>
+
+  <text x="55" y="445" font-family="Arial" font-size="21" fill="#0f172a">Technical debt</text>
+  <text x="540" y="445" text-anchor="middle" font-family="Arial" font-size="21" fill="#0f172a">Medium</text>
+  <text x="755" y="445" text-anchor="middle" font-family="Arial" font-size="21" fill="#0f172a">High</text>
+  <text x="875" y="445" font-family="Arial" font-size="21" fill="#0f172a">Coding standards and peer reviews</text>
+  <text x="1450" y="445" font-family="Arial" font-size="21" fill="#0f172a">Tech Lead</text>
+
+  <text x="55" y="545" font-family="Arial" font-size="21" fill="#0f172a">Data migration issues</text>
+  <text x="540" y="545" text-anchor="middle" font-family="Arial" font-size="21" fill="#0f172a">Low</text>
+  <text x="755" y="545" text-anchor="middle" font-family="Arial" font-size="21" fill="#0f172a">High</text>
+  <text x="875" y="545" font-family="Arial" font-size="21" fill="#0f172a">Pilot migration and rollback plan</text>
+  <text x="1450" y="545" font-family="Arial" font-size="21" fill="#0f172a">Dev / DBA</text>
+
+  <text x="55" y="645" font-family="Arial" font-size="21" fill="#0f172a">User resistance</text>
+  <text x="540" y="645" text-anchor="middle" font-family="Arial" font-size="21" fill="#0f172a">Medium</text>
+  <text x="755" y="645" text-anchor="middle" font-family="Arial" font-size="21" fill="#0f172a">Medium</text>
+  <text x="875" y="645" font-family="Arial" font-size="21" fill="#0f172a">Early training and user champions</text>
+  <text x="1450" y="645" font-family="Arial" font-size="21" fill="#0f172a">PM</text>
+
+  <text x="55" y="745" font-family="Arial" font-size="21" fill="#0f172a">Security breach</text>
+  <text x="540" y="745" text-anchor="middle" font-family="Arial" font-size="21" fill="#0f172a">Low</text>
+  <text x="755" y="745" text-anchor="middle" font-family="Arial" font-size="21" fill="#0f172a">High</text>
+  <text x="875" y="745" font-family="Arial" font-size="21" fill="#0f172a">Access control, patching, backups</text>
+  <text x="1450" y="745" font-family="Arial" font-size="21" fill="#0f172a">Tech Lead</text>
+</svg>

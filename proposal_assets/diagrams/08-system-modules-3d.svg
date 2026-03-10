@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1900 1280" width="1900" height="1280">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f1f5f9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+    </linearGradient>
+
+    <linearGradient id="blueTop" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="slateTop" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#64748b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#334155;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="tealTop" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#5eead4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#14b8a6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="greenTop" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#86efac;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#22c55e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="purpleTop" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#c4b5fd;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+
+    <marker id="arrowBlue" markerWidth="12" markerHeight="12" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#2563eb" />
+    </marker>
+  </defs>
+
+  <rect width="1900" height="1280" fill="url(#bg)"/>
+
+  <text x="950" y="58" font-family="Segoe UI, Arial, sans-serif" font-size="54" font-weight="700" text-anchor="middle" fill="#1e293b">
+    Matungu Bursary System - 3D System Modules Diagram
+  </text>
+  <text x="950" y="95" font-family="Segoe UI, Arial, sans-serif" font-size="24" text-anchor="middle" fill="#475569">
+    End Users -> Web Application Modules -> Data and External Services
+  </text>
+
+  <!-- End users layer -->
+  <g transform="translate(170,130)">
+    <rect x="0" y="0" width="1500" height="150" fill="url(#blueTop)" filter="drop-shadow(0px 8px 8px rgba(0,0,0,0.25))"/>
+    <polygon points="1500,0 1560,-40 1560,110 1500,150" fill="#1d4ed8"/>
+    <polygon points="0,0 60,-40 1560,-40 1500,0" fill="#93c5fd"/>
+
+    <text x="750" y="66" font-family="Arial" font-size="42" font-weight="700" text-anchor="middle" fill="#ffffff">END USERS</text>
+    <text x="750" y="108" font-family="Arial" font-size="28" font-weight="700" text-anchor="middle" fill="#ffffff">
+      Students | Reviewers | Admins | Super Admin
+    </text>
+  </g>
+
+  <line x1="950" y1="290" x2="950" y2="360" stroke="#2563eb" stroke-width="8" marker-end="url(#arrowBlue)"/>
+
+  <!-- App layer -->
+  <g transform="translate(120,380)">
+    <rect x="0" y="0" width="1660" height="250" fill="url(#slateTop)" filter="drop-shadow(0px 8px 8px rgba(0,0,0,0.25))"/>
+    <polygon points="1660,0 1720,-40 1720,210 1660,250" fill="#1e293b"/>
+    <polygon points="0,0 60,-40 1720,-40 1660,0" fill="#94a3b8"/>
+
+    <text x="830" y="66" font-family="Arial" font-size="40" font-weight="700" text-anchor="middle" fill="#ffffff">WEB APPLICATION LAYER (DJANGO)</text>
+    <text x="830" y="112" font-family="Arial" font-size="30" font-weight="700" text-anchor="middle" fill="#e2e8f0">
+      users | applications | schools | admin_panel | notifications
+    </text>
+    <text x="830" y="158" font-family="Arial" font-size="24" text-anchor="middle" fill="#e2e8f0">
+      Authentication - Application Workflow - Review and Approval - Reporting
+    </text>
+    <text x="830" y="202" font-family="Arial" font-size="24" text-anchor="middle" fill="#e2e8f0">
+      Role-Based Access Control - Template Views - Business Logic
+    </text>
+  </g>
+
+  <!-- Arrows to module blocks -->
+  <line x1="330" y1="670" x2="330" y2="760" stroke="#2563eb" stroke-width="7" marker-end="url(#arrowBlue)"/>
+  <line x1="720" y1="670" x2="720" y2="760" stroke="#2563eb" stroke-width="7" marker-end="url(#arrowBlue)"/>
+  <line x1="1120" y1="670" x2="1120" y2="760" stroke="#2563eb" stroke-width="7" marker-end="url(#arrowBlue)"/>
+  <line x1="1520" y1="670" x2="1520" y2="760" stroke="#2563eb" stroke-width="7" marker-end="url(#arrowBlue)"/>
+
+  <!-- users module -->
+  <g transform="translate(40,780)">
+    <rect x="0" y="0" width="430" height="340" fill="url(#tealTop)" filter="drop-shadow(0px 8px 8px rgba(0,0,0,0.25))"/>
+    <polygon points="430,0 480,-32 480,308 430,340" fill="#0f766e"/>
+    <polygon points="0,0 50,-32 480,-32 430,0" fill="#99f6e4"/>
+
+    <text x="215" y="56" font-family="Arial" font-size="34" font-weight="700" text-anchor="middle" fill="#ffffff">USERS MODULE</text>
+    <text x="20" y="108" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Registration and Login</text>
+    <text x="20" y="144" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Role Management</text>
+    <text x="20" y="180" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Profile Management</text>
+    <text x="20" y="216" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Password Reset (Email Code)</text>
+    <text x="20" y="272" font-family="Arial" font-size="20" fill="#ecfeff">Tables: users_user, users_userprofile,</text>
+    <text x="20" y="302" font-family="Arial" font-size="20" fill="#ecfeff">users_adminrole, users_passwordreset</text>
+  </g>
+
+  <!-- applications module -->
+  <g transform="translate(520,780)">
+    <rect x="0" y="0" width="430" height="340" fill="url(#greenTop)" filter="drop-shadow(0px 8px 8px rgba(0,0,0,0.25))"/>
+    <polygon points="430,0 480,-32 480,308 430,340" fill="#15803d"/>
+    <polygon points="0,0 50,-32 480,-32 430,0" fill="#bbf7d0"/>
+
+    <text x="215" y="56" font-family="Arial" font-size="34" font-weight="700" text-anchor="middle" fill="#ffffff">APPLICATIONS MODULE</text>
+    <text x="20" y="108" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Application Submission</text>
+    <text x="20" y="144" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Document Upload</text>
+    <text x="20" y="180" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Review and Scoring</text>
+    <text x="20" y="216" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Approval and Disbursement</text>
+    <text x="20" y="272" font-family="Arial" font-size="20" fill="#ecfdf5">Tables: applications_ward, application,</text>
+    <text x="20" y="302" font-family="Arial" font-size="20" fill="#ecfdf5">document, review, approval</text>
+  </g>
+
+  <!-- schools module -->
+  <g transform="translate(1000,780)">
+    <rect x="0" y="0" width="430" height="340" fill="url(#tealTop)" filter="drop-shadow(0px 8px 8px rgba(0,0,0,0.25))"/>
+    <polygon points="430,0 480,-32 480,308 430,340" fill="#0f766e"/>
+    <polygon points="0,0 50,-32 480,-32 430,0" fill="#99f6e4"/>
+
+    <text x="215" y="56" font-family="Arial" font-size="34" font-weight="700" text-anchor="middle" fill="#ffffff">SCHOOLS MODULE</text>
+    <text x="20" y="108" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">School Registry</text>
+    <text x="20" y="144" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Campus Management</text>
+    <text x="20" y="180" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Program Catalog</text>
+    <text x="20" y="216" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">School Search and Filtering</text>
+    <text x="20" y="272" font-family="Arial" font-size="20" fill="#ecfeff">Tables: schools_school,</text>
+    <text x="20" y="302" font-family="Arial" font-size="20" fill="#ecfeff">schools_campus, schools_program</text>
+  </g>
+
+  <!-- notifications/admin module -->
+  <g transform="translate(1480,780)">
+    <rect x="0" y="0" width="380" height="340" fill="url(#purpleTop)" filter="drop-shadow(0px 8px 8px rgba(0,0,0,0.25))"/>
+    <polygon points="380,0 430,-32 430,308 380,340" fill="#6d28d9"/>
+    <polygon points="0,0 50,-32 430,-32 380,0" fill="#ddd6fe"/>
+
+    <text x="190" y="56" font-family="Arial" font-size="30" font-weight="700" text-anchor="middle" fill="#ffffff">ADMIN + NOTIFICATION</text>
+    <text x="20" y="108" font-family="Arial" font-size="23" font-weight="700" fill="#ffffff">Reviewer/Admin Dashboard</text>
+    <text x="20" y="144" font-family="Arial" font-size="23" font-weight="700" fill="#ffffff">Role-Based Decisions</text>
+    <text x="20" y="180" font-family="Arial" font-size="23" font-weight="700" fill="#ffffff">Email Notifications</text>
+    <text x="20" y="216" font-family="Arial" font-size="23" font-weight="700" fill="#ffffff">Status Alerts</text>
+    <text x="20" y="272" font-family="Arial" font-size="20" fill="#f5f3ff">Table: notifications_notification</text>
+  </g>
+
+  <!-- Footer relationships -->
+  <text x="950" y="1178" font-family="Arial" font-size="24" font-weight="700" text-anchor="middle" fill="#1e293b">
+    INTEGRATION FLOW: users -> applications -> review/approval -> notifications
+  </text>
+  <text x="950" y="1212" font-family="Arial" font-size="22" text-anchor="middle" fill="#334155">
+    applications module consumes schools data and writes transactional records to MySQL
+  </text>
+</svg>

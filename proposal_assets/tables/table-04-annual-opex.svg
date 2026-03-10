@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="520" viewBox="0 0 1100 520">
+  <rect width="1100" height="520" fill="#ffffff"/>
+  <text x="550" y="46" text-anchor="middle" font-family="Arial" font-size="34" font-weight="700" fill="#0f172a">Table 4: Annual Operational Cost (OPEX)</text>
+
+  <rect x="80" y="90" width="940" height="390" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+  <rect x="80" y="90" width="940" height="80" fill="#6366f1"/>
+  <line x1="700" y1="90" x2="700" y2="480" stroke="#1e293b" stroke-width="2"/>
+  <line x1="80" y1="170" x2="1020" y2="170" stroke="#1e293b" stroke-width="2"/>
+  <line x1="80" y1="240" x2="1020" y2="240" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="80" y1="310" x2="1020" y2="310" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="80" y1="380" x2="1020" y2="380" stroke="#cbd5e1" stroke-width="1.5"/>
+
+  <text x="390" y="138" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Item</text>
+  <text x="860" y="138" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Annual Cost (KES)</text>
+
+  <text x="100" y="215" font-family="Arial" font-size="22" fill="#0f172a">Hosting and maintenance</text>
+  <text x="860" y="215" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">180,000</text>
+
+  <text x="100" y="285" font-family="Arial" font-size="22" fill="#0f172a">Email and communication services</text>
+  <text x="860" y="285" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">60,000</text>
+
+  <text x="100" y="355" font-family="Arial" font-size="22" fill="#0f172a">Support and minor enhancements</text>
+  <text x="860" y="355" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">300,000</text>
+
+  <text x="100" y="425" font-family="Arial" font-size="22" fill="#0f172a">Backup and monitoring</text>
+  <text x="860" y="425" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">60,000</text>
+
+  <rect x="80" y="430" width="940" height="50" fill="#e0e7ff"/>
+  <text x="100" y="465" font-family="Arial" font-size="24" font-weight="700" fill="#312e81">Total Annual OPEX</text>
+  <text x="860" y="465" text-anchor="middle" font-family="Arial" font-size="26" font-weight="700" fill="#312e81">600,000</text>
+</svg>

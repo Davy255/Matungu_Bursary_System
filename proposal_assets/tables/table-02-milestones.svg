@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="700" viewBox="0 0 1400 700">
+  <rect width="1400" height="700" fill="#ffffff"/>
+  <text x="700" y="50" text-anchor="middle" font-family="Arial" font-size="34" font-weight="700" fill="#0f172a">Table 2: Project Milestones</text>
+
+  <rect x="60" y="90" width="1280" height="560" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+  <rect x="60" y="90" width="1280" height="80" fill="#14b8a6"/>
+
+  <line x1="520" y1="90" x2="520" y2="650" stroke="#1e293b" stroke-width="2"/>
+  <line x1="760" y1="90" x2="760" y2="650" stroke="#1e293b" stroke-width="2"/>
+
+  <line x1="60" y1="170" x2="1340" y2="170" stroke="#1e293b" stroke-width="2"/>
+  <line x1="60" y1="250" x2="1340" y2="250" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="60" y1="330" x2="1340" y2="330" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="60" y1="410" x2="1340" y2="410" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="60" y1="490" x2="1340" y2="490" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="60" y1="570" x2="1340" y2="570" stroke="#cbd5e1" stroke-width="1.5"/>
+
+  <text x="290" y="140" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Milestone</text>
+  <text x="640" y="140" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Target Week</text>
+  <text x="1050" y="140" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Success Criteria</text>
+
+  <text x="80" y="220" font-family="Arial" font-size="22" fill="#0f172a">M1: Charter Approval</text>
+  <text x="640" y="220" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">W2</text>
+  <text x="780" y="220" font-family="Arial" font-size="22" fill="#0f172a">Sponsor signs project charter</text>
+
+  <text x="80" y="300" font-family="Arial" font-size="22" fill="#0f172a">M2: Requirements Sign-off</text>
+  <text x="640" y="300" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">W5</text>
+  <text x="780" y="300" font-family="Arial" font-size="22" fill="#0f172a">SRS approved by stakeholders</text>
+
+  <text x="80" y="380" font-family="Arial" font-size="22" fill="#0f172a">M3: Design Sign-off</text>
+  <text x="640" y="380" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">W8</text>
+  <text x="780" y="380" font-family="Arial" font-size="22" fill="#0f172a">Architecture and UI approved</text>
+
+  <text x="80" y="460" font-family="Arial" font-size="22" fill="#0f172a">M4: Feature Complete</text>
+  <text x="640" y="460" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">W15</text>
+  <text x="780" y="460" font-family="Arial" font-size="22" fill="#0f172a">All planned modules implemented</text>
+
+  <text x="80" y="540" font-family="Arial" font-size="22" fill="#0f172a">M5: UAT Pass</text>
+  <text x="640" y="540" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">W17</text>
+  <text x="780" y="540" font-family="Arial" font-size="22" fill="#0f172a">Critical defects closed</text>
+
+  <text x="80" y="620" font-family="Arial" font-size="22" fill="#0f172a">M6/M7: Go-Live + Final Acceptance</text>
+  <text x="640" y="620" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">W18-W20</text>
+  <text x="780" y="620" font-family="Arial" font-size="22" fill="#0f172a">Deployment stable and handover signed</text>
+</svg>

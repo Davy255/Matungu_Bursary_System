@@ -1,0 +1,315 @@
+{% extends 'base.html' %}
+
+{% block title %}My Applications{% endblock %}
+
+{% block extra_css %}
+<style>
+    .applications-wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .page-header {
+        background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
+        padding: 2.5rem;
+        border-radius: 16px;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .page-header-content h2 {
+        font-size: 2rem;
+        color: #0f172a;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+    }
+    .page-header-content p {
+        color: #1e293b;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+    .btn-new-application {
+        padding: 14px 28px;
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    .btn-new-application:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    .application-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1.5rem;
+        transition: all 0.3s;
+        border: 2px solid transparent;
+        position: relative;
+        overflow: hidden;
+    }
+    .application-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 4px;
+    }
+    .application-card.status-draft::before { background: #f59e0b; }
+    .application-card.status-submitted::before { background: #06b6d4; }
+    .application-card.status-under_review::before { background: #2563eb; }
+    .application-card.status-approved::before { background: #10b981; }
+    .application-card.status-rejected::before { background: #ef4444; }
+    
+    .application-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border-color: #2563eb;
+    }
+    .application-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #e2e8f0;
+    }
+    .application-number {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #1e293b;
+        margin-bottom: 0.5rem;
+    }
+    .status-badge {
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .status-draft {
+        background: #fef3c7;
+        color: #92400e;
+    }
+    .status-submitted {
+        background: #cffafe;
+        color: #164e63;
+    }
+    .status-under_review {
+        background: #dbeafe;
+        color: #1e40af;
+    }
+    .status-approved {
+        background: #d1fae5;
+        color: #065f46;
+    }
+    .status-rejected {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+    .application-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .detail-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .detail-label {
+        color: #475569;
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .detail-value {
+        color: #1e293b;
+        font-weight: 600;
+        font-size: 1.05rem;
+    }
+    .application-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+    .action-btn {
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s;
+        font-size: 0.95rem;
+    }
+    .btn-view {
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .btn-view:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    }
+    .btn-upload {
+        background: white;
+        color: #2563eb;
+        border: 2px solid #2563eb;
+    }
+    .btn-upload:hover {
+        background: #2563eb;
+        color: white;
+    }
+    .no-applications {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    .no-applications-icon {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 1.5rem;
+        background: linear-gradient(135deg, #cffafe, #a5f3fc);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: #0891b2;
+    }
+    .no-applications h3 {
+        font-size: 1.5rem;
+        color: #1e293b;
+        margin-bottom: 0.5rem;
+    }
+    .no-applications p {
+        color: #475569;
+        margin-bottom: 2rem;
+        font-size: 1.05rem;
+        font-weight: 500;
+    }
+    @media (max-width: 768px) {
+        .page-header {
+            flex-direction: column;
+            gap: 1rem;
+            text-align: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="applications-wrapper">
+    <div class="page-header">
+        <div class="page-header-content">
+            <h2><i class="fas fa-file-alt"></i> My Applications</h2>
+            <p>Track and manage your bursary applications</p>
+        </div>
+        <a href="{% url 'applications:apply' %}" class="btn-new-application">
+            <i class="fas fa-plus-circle"></i>
+            New Application
+        </a>
+    </div>
+    
+    {% if applications %}
+        {% for app in applications %}
+            <div class="application-card status-{{ app.status }}">
+                <div class="application-header">
+                    <div>
+                        <div class="application-number">
+                            <i class="fas fa-hashtag"></i>{{ app.application_number }}
+                        </div>
+                    </div>
+                    <span class="status-badge status-{{ app.status }}">
+                        <i class="fas fa-{% if app.status == 'draft' %}edit{% elif app.status == 'submitted' %}paper-plane{% elif app.status == 'under_review' %}clock{% elif app.status == 'approved' %}check-circle{% else %}times-circle{% endif %}"></i>
+                        {{ app.get_status_display }}
+                    </span>
+                </div>
+                
+                <div class="application-details">
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-school"></i>
+                            School
+                        </div>
+                        <div class="detail-value">{{ app.school.name }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-book"></i>
+                            Program
+                        </div>
+                        <div class="detail-value">{{ app.program.name }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-money-bill-wave"></i>
+                            Amount Requested
+                        </div>
+                        <div class="detail-value">KES {{ app.amount_requested|floatformat:2 }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-calendar"></i>
+                            Submitted Date
+                        </div>
+                        <div class="detail-value">
+                            {% if app.submitted_at %}
+                                {{ app.submitted_at|date:"M d, Y" }}
+                            {% else %}
+                                <span style="color: #f59e0b;">Not submitted</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="application-actions">
+                    <a href="{% url 'applications:view_application' app.pk %}" class="action-btn btn-view">
+                        <i class="fas fa-eye"></i>
+                        View Details
+                    </a>
+                    {% if app.status == 'draft' %}
+                        <a href="{% url 'applications:upload_documents' app.pk %}" class="action-btn btn-upload">
+                            <i class="fas fa-upload"></i>
+                            Upload Documents
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="no-applications">
+            <div class="no-applications-icon">
+                <i class="fas fa-inbox"></i>
+            </div>
+            <h3>No Applications Yet</h3>
+            <p>You haven't submitted any bursary applications. Start your journey to educational funding today!</p>
+            <a href="{% url 'applications:apply' %}" class="btn-new-application">
+                <i class="fas fa-plus-circle"></i>
+                Create Your First Application
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

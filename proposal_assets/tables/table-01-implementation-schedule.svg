@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="980" viewBox="0 0 1800 980">
+  <rect width="1800" height="980" fill="#ffffff"/>
+  <text x="900" y="48" text-anchor="middle" font-family="Arial" font-size="34" font-weight="700" fill="#0f172a">Table 1: Detailed Implementation Schedule</text>
+
+  <!-- Table frame -->
+  <rect x="40" y="80" width="1720" height="860" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Header background -->
+  <rect x="40" y="80" width="1720" height="85" fill="#0ea5e9"/>
+
+  <!-- Vertical lines -->
+  <line x1="230" y1="80" x2="230" y2="940" stroke="#1e293b" stroke-width="2"/>
+  <line x1="760" y1="80" x2="760" y2="940" stroke="#1e293b" stroke-width="2"/>
+  <line x1="950" y1="80" x2="950" y2="940" stroke="#1e293b" stroke-width="2"/>
+  <line x1="1160" y1="80" x2="1160" y2="940" stroke="#1e293b" stroke-width="2"/>
+  <line x1="1460" y1="80" x2="1460" y2="940" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Horizontal lines -->
+  <line x1="40" y1="165" x2="1760" y2="165" stroke="#1e293b" stroke-width="2"/>
+  <line x1="40" y1="260" x2="1760" y2="260" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="40" y1="355" x2="1760" y2="355" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="40" y1="450" x2="1760" y2="450" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="40" y1="545" x2="1760" y2="545" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="40" y1="640" x2="1760" y2="640" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="40" y1="735" x2="1760" y2="735" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="40" y1="830" x2="1760" y2="830" stroke="#cbd5e1" stroke-width="1.5"/>
+
+  <!-- Header text -->
+  <text x="135" y="132" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Phase</text>
+  <text x="495" y="132" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Activities</text>
+  <text x="855" y="132" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Duration</text>
+  <text x="1055" y="132" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Timeline</text>
+  <text x="1310" y="132" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Deliverables</text>
+  <text x="1610" y="132" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Owner</text>
+
+  <!-- Rows -->
+  <text x="55" y="215" font-family="Arial" font-size="20" font-weight="700" fill="#0f172a">Phase 1</text>
+  <text x="250" y="215" font-family="Arial" font-size="20" fill="#0f172a">Initiation, charter, stakeholder mapping</text>
+  <text x="855" y="215" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">2 weeks</text>
+  <text x="1055" y="215" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">W1-W2</text>
+  <text x="1175" y="215" font-family="Arial" font-size="20" fill="#0f172a">Approved project charter</text>
+  <text x="1475" y="215" font-family="Arial" font-size="20" fill="#0f172a">Project Manager</text>
+
+  <text x="55" y="310" font-family="Arial" font-size="20" font-weight="700" fill="#0f172a">Phase 2</text>
+  <text x="250" y="310" font-family="Arial" font-size="20" fill="#0f172a">Requirements gathering and validation</text>
+  <text x="855" y="310" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">3 weeks</text>
+  <text x="1055" y="310" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">W3-W5</text>
+  <text x="1175" y="310" font-family="Arial" font-size="20" fill="#0f172a">SRS document</text>
+  <text x="1475" y="310" font-family="Arial" font-size="20" fill="#0f172a">BA / PM</text>
+
+  <text x="55" y="405" font-family="Arial" font-size="20" font-weight="700" fill="#0f172a">Phase 3</text>
+  <text x="250" y="405" font-family="Arial" font-size="20" fill="#0f172a">System and UI design, DB modeling</text>
+  <text x="855" y="405" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">3 weeks</text>
+  <text x="1055" y="405" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">W6-W8</text>
+  <text x="1175" y="405" font-family="Arial" font-size="20" fill="#0f172a">Design pack + ERD</text>
+  <text x="1475" y="405" font-family="Arial" font-size="20" fill="#0f172a">Analyst / Dev</text>
+
+  <text x="55" y="500" font-family="Arial" font-size="20" font-weight="700" fill="#0f172a">Phase 4</text>
+  <text x="250" y="500" font-family="Arial" font-size="20" fill="#0f172a">Development Sprint 1 (users, profiles)</text>
+  <text x="855" y="500" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">3 weeks</text>
+  <text x="1055" y="500" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">W9-W11</text>
+  <text x="1175" y="500" font-family="Arial" font-size="20" fill="#0f172a">Core user features</text>
+  <text x="1475" y="500" font-family="Arial" font-size="20" fill="#0f172a">Dev Team</text>
+
+  <text x="55" y="595" font-family="Arial" font-size="20" font-weight="700" fill="#0f172a">Phase 5</text>
+  <text x="250" y="595" font-family="Arial" font-size="20" fill="#0f172a">Development Sprint 2 (application workflow)</text>
+  <text x="855" y="595" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">4 weeks</text>
+  <text x="1055" y="595" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">W12-W15</text>
+  <text x="1175" y="595" font-family="Arial" font-size="20" fill="#0f172a">Complete process flow</text>
+  <text x="1475" y="595" font-family="Arial" font-size="20" fill="#0f172a">Dev Team</text>
+
+  <text x="55" y="690" font-family="Arial" font-size="20" font-weight="700" fill="#0f172a">Phase 6</text>
+  <text x="250" y="690" font-family="Arial" font-size="20" fill="#0f172a">Unit, integration, UAT and fixes</text>
+  <text x="855" y="690" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">2 weeks</text>
+  <text x="1055" y="690" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">W16-W17</text>
+  <text x="1175" y="690" font-family="Arial" font-size="20" fill="#0f172a">Test report + bug closure</text>
+  <text x="1475" y="690" font-family="Arial" font-size="20" fill="#0f172a">QA / Users</text>
+
+  <text x="55" y="785" font-family="Arial" font-size="20" font-weight="700" fill="#0f172a">Phase 7</text>
+  <text x="250" y="785" font-family="Arial" font-size="20" fill="#0f172a">Deployment and data migration</text>
+  <text x="855" y="785" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">1 week</text>
+  <text x="1055" y="785" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">W18</text>
+  <text x="1175" y="785" font-family="Arial" font-size="20" fill="#0f172a">Production release</text>
+  <text x="1475" y="785" font-family="Arial" font-size="20" fill="#0f172a">DevOps / PM</text>
+
+  <text x="55" y="880" font-family="Arial" font-size="20" font-weight="700" fill="#0f172a">Phase 8</text>
+  <text x="250" y="880" font-family="Arial" font-size="20" fill="#0f172a">Training, handover, acceptance sign-off</text>
+  <text x="855" y="880" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">2 weeks</text>
+  <text x="1055" y="880" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">W19-W20</text>
+  <text x="1175" y="880" font-family="Arial" font-size="20" fill="#0f172a">Go-live acceptance</text>
+  <text x="1475" y="880" font-family="Arial" font-size="20" fill="#0f172a">PM / Sponsor</text>
+</svg>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1050" viewBox="0 0 1800 1050">
+  <rect width="1800" height="1050" fill="#ffffff"/>
+  <text x="900" y="48" text-anchor="middle" font-family="Arial" font-size="34" font-weight="700" fill="#0f172a">Table 3: Budget Breakdown (KES)</text>
+
+  <rect x="40" y="80" width="1720" height="920" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+  <rect x="40" y="80" width="1720" height="80" fill="#ef4444"/>
+
+  <line x1="500" y1="80" x2="500" y2="1000" stroke="#1e293b" stroke-width="2"/>
+  <line x1="1000" y1="80" x2="1000" y2="1000" stroke="#1e293b" stroke-width="2"/>
+  <line x1="1250" y1="80" x2="1250" y2="1000" stroke="#1e293b" stroke-width="2"/>
+  <line x1="1450" y1="80" x2="1450" y2="1000" stroke="#1e293b" stroke-width="2"/>
+
+  <line x1="40" y1="160" x2="1760" y2="160" stroke="#1e293b" stroke-width="2"/>
+  <line x1="40" y1="230" x2="1760" y2="230" stroke="#cbd5e1" stroke-width="1.2"/>
+  <line x1="40" y1="300" x2="1760" y2="300" stroke="#cbd5e1" stroke-width="1.2"/>
+  <line x1="40" y1="370" x2="1760" y2="370" stroke="#cbd5e1" stroke-width="1.2"/>
+  <line x1="40" y1="440" x2="1760" y2="440" stroke="#cbd5e1" stroke-width="1.2"/>
+  <line x1="40" y1="510" x2="1760" y2="510" stroke="#cbd5e1" stroke-width="1.2"/>
+  <line x1="40" y1="580" x2="1760" y2="580" stroke="#cbd5e1" stroke-width="1.2"/>
+  <line x1="40" y1="650" x2="1760" y2="650" stroke="#cbd5e1" stroke-width="1.2"/>
+  <line x1="40" y1="720" x2="1760" y2="720" stroke="#cbd5e1" stroke-width="1.2"/>
+  <line x1="40" y1="790" x2="1760" y2="790" stroke="#cbd5e1" stroke-width="1.2"/>
+  <line x1="40" y1="860" x2="1760" y2="860" stroke="#cbd5e1" stroke-width="1.2"/>
+  <line x1="40" y1="930" x2="1760" y2="930" stroke="#1e293b" stroke-width="2"/>
+
+  <text x="270" y="130" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Cost Category</text>
+  <text x="750" y="130" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Description</text>
+  <text x="1125" y="130" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Unit Cost</text>
+  <text x="1350" y="130" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Qty/Months</text>
+  <text x="1605" y="130" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Total (KES)</text>
+
+  <text x="55" y="205" font-family="Arial" font-size="20" fill="#0f172a">Project Management</text><text x="515" y="205" font-family="Arial" font-size="20" fill="#0f172a">PM allowance</text><text x="1125" y="205" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">90,000</text><text x="1350" y="205" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">5</text><text x="1605" y="205" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">450,000</text>
+  <text x="55" y="275" font-family="Arial" font-size="20" fill="#0f172a">Backend Development</text><text x="515" y="275" font-family="Arial" font-size="20" fill="#0f172a">Python/Django developer</text><text x="1125" y="275" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">120,000</text><text x="1350" y="275" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">5</text><text x="1605" y="275" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">600,000</text>
+  <text x="55" y="345" font-family="Arial" font-size="20" fill="#0f172a">Frontend Development</text><text x="515" y="345" font-family="Arial" font-size="20" fill="#0f172a">UI integration and templates</text><text x="1125" y="345" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">90,000</text><text x="1350" y="345" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">5</text><text x="1605" y="345" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">450,000</text>
+  <text x="55" y="415" font-family="Arial" font-size="20" fill="#0f172a">QA and Testing</text><text x="515" y="415" font-family="Arial" font-size="20" fill="#0f172a">Test planning and execution</text><text x="1125" y="415" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">70,000</text><text x="1350" y="415" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">3</text><text x="1605" y="415" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">210,000</text>
+  <text x="55" y="485" font-family="Arial" font-size="20" fill="#0f172a">UI/UX Support</text><text x="515" y="485" font-family="Arial" font-size="20" fill="#0f172a">Design refinement and usability tests</text><text x="1125" y="485" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">60,000</text><text x="1350" y="485" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">2</text><text x="1605" y="485" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">120,000</text>
+  <text x="55" y="555" font-family="Arial" font-size="20" fill="#0f172a">Infrastructure</text><text x="515" y="555" font-family="Arial" font-size="20" fill="#0f172a">Hosting/VPS + domain + SSL</text><text x="1125" y="555" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">120,000</text><text x="1350" y="555" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">1</text><text x="1605" y="555" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">120,000</text>
+  <text x="55" y="625" font-family="Arial" font-size="20" fill="#0f172a">Email Service</text><text x="515" y="625" font-family="Arial" font-size="20" fill="#0f172a">SMTP/transactional setup</text><text x="1125" y="625" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">36,000</text><text x="1350" y="625" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">1</text><text x="1605" y="625" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">36,000</text>
+  <text x="55" y="695" font-family="Arial" font-size="20" fill="#0f172a">Security and Backup</text><text x="515" y="695" font-family="Arial" font-size="20" fill="#0f172a">Backups and hardening</text><text x="1125" y="695" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">60,000</text><text x="1350" y="695" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">1</text><text x="1605" y="695" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">60,000</text>
+  <text x="55" y="765" font-family="Arial" font-size="20" fill="#0f172a">Training and Change Mgmt</text><text x="515" y="765" font-family="Arial" font-size="20" fill="#0f172a">Training materials and sessions</text><text x="1125" y="765" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">80,000</text><text x="1350" y="765" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">1</text><text x="1605" y="765" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">80,000</text>
+  <text x="55" y="835" font-family="Arial" font-size="20" fill="#0f172a">Documentation</text><text x="515" y="835" font-family="Arial" font-size="20" fill="#0f172a">Technical and user manuals</text><text x="1125" y="835" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">45,000</text><text x="1350" y="835" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">1</text><text x="1605" y="835" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">45,000</text>
+  <text x="55" y="905" font-family="Arial" font-size="20" fill="#0f172a">Contingency (10%)</text><text x="515" y="905" font-family="Arial" font-size="20" fill="#0f172a">Risk reserve</text><text x="1125" y="905" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">-</text><text x="1350" y="905" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">-</text><text x="1605" y="905" text-anchor="middle" font-family="Arial" font-size="20" fill="#0f172a">217,100</text>
+
+  <rect x="40" y="930" width="1720" height="70" fill="#fee2e2"/>
+  <text x="55" y="975" font-family="Arial" font-size="24" font-weight="700" fill="#7f1d1d">Grand Total</text>
+  <text x="1605" y="975" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#7f1d1d">2,388,100</text>
+</svg>

@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2200 1400" width="2200" height="1400">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f1f5f9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+    </linearGradient>
+
+    <linearGradient id="blueTop" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="slateTop" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#64748b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#334155;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="tealTop" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#5eead4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#14b8a6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="greenTop" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#86efac;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#22c55e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="purpleTop" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#c4b5fd;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+
+    <marker id="arrowBlue" markerWidth="12" markerHeight="12" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#2563eb" />
+    </marker>
+  </defs>
+
+  <rect width="1900" height="1250" fill="url(#bg)"/>
+
+  <text x="950" y="58" font-family="Segoe UI, Arial, sans-serif" font-size="54" font-weight="700" text-anchor="middle" fill="#1e293b">
+    Matungu Bursary System - 3D Database Structure
+  </text>
+  <text x="950" y="95" font-family="Segoe UI, Arial, sans-serif" font-size="24" text-anchor="middle" fill="#475569">
+    MySQL Core - Domain Tables - Relationship Flow
+  </text>
+
+  <!-- Top block: Database Engine -->
+  <g transform="translate(170,130)">
+    <rect x="0" y="0" width="1500" height="150" fill="url(#blueTop)" filter="drop-shadow(0px 8px 8px rgba(0,0,0,0.25))"/>
+    <polygon points="1500,0 1560,-40 1560,110 1500,150" fill="#1d4ed8"/>
+    <polygon points="0,0 60,-40 1560,-40 1500,0" fill="#93c5fd"/>
+
+    <text x="750" y="68" font-family="Arial" font-size="42" font-weight="700" text-anchor="middle" fill="#ffffff">MYSQL DATABASE LAYER</text>
+    <text x="750" y="110" font-family="Arial" font-size="28" font-weight="700" text-anchor="middle" fill="#ffffff">Transactional Core for Users, Applications, Schools, Notifications</text>
+  </g>
+
+  <!-- Arrow down -->
+  <line x1="950" y1="290" x2="950" y2="360" stroke="#2563eb" stroke-width="8" marker-end="url(#arrowBlue)"/>
+
+  <!-- Middle block: Main table family -->
+  <g transform="translate(120,380)">
+    <rect x="0" y="0" width="1660" height="220" fill="url(#slateTop)" filter="drop-shadow(0px 8px 8px rgba(0,0,0,0.25))"/>
+    <polygon points="1660,0 1720,-40 1720,180 1660,220" fill="#1e293b"/>
+    <polygon points="0,0 60,-40 1720,-40 1660,0" fill="#94a3b8"/>
+
+    <text x="830" y="66" font-family="Arial" font-size="40" font-weight="700" text-anchor="middle" fill="#ffffff">MAIN RELATIONAL TABLES</text>
+    <text x="830" y="108" font-family="Arial" font-size="29" font-weight="700" text-anchor="middle" fill="#e2e8f0">
+      users_user - applications_application - schools_school - notifications_notification
+    </text>
+    <text x="830" y="150" font-family="Arial" font-size="24" text-anchor="middle" fill="#e2e8f0">
+      PK/FK Constraints - OneToOne and ManyToOne - Indexed Query Paths
+    </text>
+    <text x="830" y="188" font-family="Arial" font-size="24" text-anchor="middle" fill="#e2e8f0">
+      Audit Timestamps - Status Tracking - Data Integrity Rules
+    </text>
+  </g>
+
+  <!-- Arrows to domain blocks -->
+  <line x1="420" y1="640" x2="330" y2="740" stroke="#2563eb" stroke-width="7" marker-end="url(#arrowBlue)"/>
+  <line x1="790" y1="640" x2="790" y2="740" stroke="#2563eb" stroke-width="7" marker-end="url(#arrowBlue)"/>
+  <line x1="1140" y1="640" x2="1140" y2="740" stroke="#2563eb" stroke-width="7" marker-end="url(#arrowBlue)"/>
+  <line x1="1510" y1="640" x2="1600" y2="740" stroke="#2563eb" stroke-width="7" marker-end="url(#arrowBlue)"/>
+
+  <!-- USERS domain block -->
+  <g transform="translate(40,760)">
+    <rect x="0" y="0" width="420" height="360" fill="url(#tealTop)" filter="drop-shadow(0px 8px 8px rgba(0,0,0,0.25))"/>
+    <polygon points="420,0 470,-32 470,328 420,360" fill="#0f766e"/>
+    <polygon points="0,0 50,-32 470,-32 420,0" fill="#99f6e4"/>
+
+    <text x="210" y="56" font-family="Arial" font-size="36" font-weight="700" text-anchor="middle" fill="#ffffff">USERS DOMAIN</text>
+    <text x="20" y="106" font-family="Arial" font-size="27" font-weight="700" fill="#ffffff">users_user</text>
+    <text x="20" y="146" font-family="Arial" font-size="27" font-weight="700" fill="#ffffff">users_userprofile</text>
+    <text x="20" y="186" font-family="Arial" font-size="27" font-weight="700" fill="#ffffff">users_adminrole</text>
+    <text x="20" y="226" font-family="Arial" font-size="27" font-weight="700" fill="#ffffff">users_passwordreset</text>
+    <text x="20" y="286" font-family="Arial" font-size="22" fill="#ecfeff">Auth, profile, roles, reset tokens</text>
+  </g>
+
+  <!-- APPLICATIONS domain block -->
+  <g transform="translate(540,760)">
+    <rect x="0" y="0" width="560" height="360" fill="url(#greenTop)" filter="drop-shadow(0px 8px 8px rgba(0,0,0,0.25))"/>
+    <polygon points="560,0 610,-32 610,328 560,360" fill="#15803d"/>
+    <polygon points="0,0 50,-32 610,-32 560,0" fill="#bbf7d0"/>
+
+    <text x="280" y="56" font-family="Arial" font-size="36" font-weight="700" text-anchor="middle" fill="#ffffff">APPLICATIONS DOMAIN</text>
+    <text x="20" y="106" font-family="Arial" font-size="27" font-weight="700" fill="#ffffff">applications_ward</text>
+    <text x="20" y="146" font-family="Arial" font-size="27" font-weight="700" fill="#ffffff">applications_application</text>
+    <text x="20" y="186" font-family="Arial" font-size="27" font-weight="700" fill="#ffffff">applications_applicationdocument</text>
+    <text x="20" y="226" font-family="Arial" font-size="27" font-weight="700" fill="#ffffff">applications_applicationreview</text>
+    <text x="20" y="266" font-family="Arial" font-size="27" font-weight="700" fill="#ffffff">applications_applicationapproval</text>
+    <text x="20" y="316" font-family="Arial" font-size="22" fill="#ecfdf5">Workflow: submit - review - approve - disburse</text>
+  </g>
+
+  <!-- SCHOOLS domain block -->
+  <g transform="translate(1190,760)">
+    <rect x="0" y="0" width="330" height="360" fill="url(#tealTop)" filter="drop-shadow(0px 8px 8px rgba(0,0,0,0.25))"/>
+    <polygon points="330,0 380,-32 380,328 330,360" fill="#0f766e"/>
+    <polygon points="0,0 50,-32 380,-32 330,0" fill="#99f6e4"/>
+
+    <text x="165" y="56" font-family="Arial" font-size="34" font-weight="700" text-anchor="middle" fill="#ffffff">SCHOOLS DOMAIN</text>
+    <text x="20" y="106" font-family="Arial" font-size="26" font-weight="700" fill="#ffffff">schools_school</text>
+    <text x="20" y="146" font-family="Arial" font-size="26" font-weight="700" fill="#ffffff">schools_campus</text>
+    <text x="20" y="186" font-family="Arial" font-size="26" font-weight="700" fill="#ffffff">schools_program</text>
+    <text x="20" y="246" font-family="Arial" font-size="21" fill="#ecfeff">Institution catalog and</text>
+    <text x="20" y="278" font-family="Arial" font-size="21" fill="#ecfeff">program reference data</text>
+  </g>
+
+  <!-- NOTIFICATIONS block -->
+  <g transform="translate(1570,760)">
+    <rect x="0" y="0" width="290" height="360" fill="url(#purpleTop)" filter="drop-shadow(0px 8px 8px rgba(0,0,0,0.25))"/>
+    <polygon points="290,0 340,-32 340,328 290,360" fill="#6d28d9"/>
+    <polygon points="0,0 50,-32 340,-32 290,0" fill="#ddd6fe"/>
+
+    <text x="145" y="56" font-family="Arial" font-size="31" font-weight="700" text-anchor="middle" fill="#ffffff">NOTIFICATIONS</text>
+    <text x="20" y="116" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">notifications_notification</text>
+    <text x="20" y="186" font-family="Arial" font-size="21" fill="#f5f3ff">User alerts by application</text>
+    <text x="20" y="218" font-family="Arial" font-size="21" fill="#f5f3ff">status and actions</text>
+  </g>
+
+  <!-- Relationship notes -->
+  <text x="950" y="1180" font-family="Arial" font-size="24" font-weight="700" text-anchor="middle" fill="#1e293b">
+    FK FLOW: applications_application -&gt; users_user, schools_school, schools_campus, schools_program
+  </text>
+  <text x="950" y="1215" font-family="Arial" font-size="22" text-anchor="middle" fill="#334155">
+    applications_applicationreview / approval -&gt; applications_application and users_user
+  </text>
+</svg>

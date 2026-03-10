@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}Application Details{% endblock %}
+
+{% block extra_css %}
+<style>
+    .application-container {
+        max-width: 900px;
+        margin: 30px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .section {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #dee2e6;
+    }
+    .status-badge {
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .status-draft { background: #ffc107; color: #000; }
+    .status-submitted { background: #17a2b8; color: white; }
+    .status-under_review { background: #007bff; color: white; }
+    .status-approved { background: #28a745; color: white; }
+    .status-rejected { background: #dc3545; color: white; }
+    .document-item {
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .btn {
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        margin-right: 10px;
+    }
+    .btn-primary {
+        background: #667eea;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="application-container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <h2>Application {{ application.application_number }}</h2>
+        <span class="status-badge status-{{ application.status }}">{{ application.get_status_display }}</span>
+    </div>
+    
+    <div class="section">
+        <h3>Applicant Information</h3>
+        <p><strong>Name:</strong> {{ application.applicant.get_full_name|default:application.applicant.username }}</p>
+        <p><strong>Email:</strong> {{ application.applicant.email }}</p>
+    </div>
+    
+    <div class="section">
+        <h3>School Information</h3>
+        <p><strong>School:</strong> {{ application.school.name }}</p>
+        {% if application.campus %}<p><strong>Campus:</strong> {{ application.campus.name }}</p>{% endif %}
+        <p><strong>Program:</strong> {{ application.program.name }} ({{ application.program.get_level_display }})</p>
+        <p><strong>Admission Number:</strong> {{ application.admission_number }}</p>
+        <p><strong>Year of Study:</strong> {{ application.get_year_of_study_display }}</p>
+    </div>
+    
+    <div class="section">
+        <h3>Financial Information</h3>
+        <p><strong>Family Income:</strong> KES {{ application.family_income|floatformat:2 }}</p>
+        <p><strong>Amount Requested:</strong> KES {{ application.amount_requested|floatformat:2 }}</p>
+        {% if application.amount_approved %}
+            <p><strong>Amount Approved:</strong> KES {{ application.amount_approved|floatformat:2 }}</p>
+        {% endif %}
+    </div>
+    
+    <div class="section">
+        <h3>Reason for Application</h3>
+        <p>{{ application.reason }}</p>
+    </div>
+    
+    <div class="section">
+        <h3>Documents</h3>
+        {% if documents %}
+            {% for doc in documents %}
+                <div class="document-item">
+                    <div>
+                        <strong>{{ doc.get_document_type_display }}</strong><br>
+                        <small>{{ doc.file_name }} ({{ doc.file_size|filesizeformat }})</small><br>
+                        <small>Uploaded: {{ doc.uploaded_at|date:"M d, Y H:i" }}</small>
+                    </div>
+                    <a href="{{ doc.file.url }}" target="_blank" class="btn btn-primary" style="padding: 8px 16px; font-size: 14px;">View</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No documents uploaded</p>
+        {% endif %}
+    </div>
+    
+    <div class="section">
+        <h3>Timeline</h3>
+        <p><strong>Created:</strong> {{ application.created_at|date:"M d, Y H:i" }}</p>
+        {% if application.submitted_at %}<p><strong>Submitted:</strong> {{ application.submitted_at|date:"M d, Y H:i" }}</p>{% endif %}
+        {% if application.reviewed_at %}<p><strong>Reviewed:</strong> {{ application.reviewed_at|date:"M d, Y H:i" }}</p>{% endif %}
+        {% if application.approved_at %}<p><strong>Approved:</strong> {{ application.approved_at|date:"M d, Y H:i" }}</p>{% endif %}
+    </div>
+    
+    <div>
+        {% if application.status == 'draft' %}
+            <a href="{% url 'applications:upload_documents' application.pk %}" class="btn btn-primary">Upload Documents</a>
+        {% endif %}
+        <a href="{% url 'applications:my_applications' %}" class="btn btn-primary">Back to My Applications</a>
+    </div>
+</div>
+{% endblock %}

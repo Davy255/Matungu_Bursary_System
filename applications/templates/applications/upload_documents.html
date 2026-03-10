@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload Documents{% endblock %}
+
+{% block extra_css %}
+<style>
+    .upload-container {
+        max-width: 800px;
+        margin: 30px auto;
+    }
+    .upload-form {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+    .documents-list {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .form-control {
+        margin-bottom: 15px;
+        width: 100%;
+    }
+    .btn {
+        padding: 12px 24px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+    }
+    .btn-primary {
+        background: #667eea;
+        color: white;
+    }
+    .btn-success {
+        background: #28a745;
+        color: white;
+    }
+    .document-item {
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="upload-container">
+    <h2>Upload Documents for Application {{ application.application_number }}</h2>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div style="padding: 10px; background: {% if message.tags == 'error' %}#f8d7da{% else %}#d4edda{% endif %}; border-radius: 5px; margin-bottom: 15px;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    <div class="upload-form">
+        <h3>Upload New Document</h3>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+                <div>
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        {{ field.errors }}
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Upload Document</button>
+        </form>
+    </div>
+    
+    <div class="documents-list">
+        <h3>Uploaded Documents</h3>
+        {% if documents %}
+            {% for doc in documents %}
+                <div class="document-item">
+                    <div>
+                        <strong>{{ doc.get_document_type_display }}</strong><br>
+                        <small>{{ doc.file_name }} ({{ doc.file_size|filesizeformat }})</small><br>
+                        <small>Uploaded: {{ doc.uploaded_at|date:"M d, Y H:i" }}</small>
+                    </div>
+                    <a href="{{ doc.file.url }}" target="_blank" class="btn btn-primary" style="padding: 8px 16px; font-size: 14px;">View</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No documents uploaded yet. Required: ID/Birth Certificate, Admission Letter, Fee Structure</p>
+        {% endif %}
+        
+        <div style="margin-top: 30px; border-top: 1px solid #dee2e6; padding-top: 20px;">
+            <a href="{% url 'applications:submit_application' application.pk %}" class="btn btn-success">Submit Application</a>
+            <a href="{% url 'users:dashboard' %}" style="margin-left: 10px;">Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

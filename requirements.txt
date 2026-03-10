@@ -1,0 +1,26 @@
+# Django Framework
+Django==5.0.2
+djangorestframework==3.14.0
+django-cors-headers==4.2.0
+
+# MySQL Database Connector
+mysqlclient==2.2.0
+PyMySQL==1.1.1
+
+# Environment Variables
+python-decouple==3.8
+python-dotenv==1.0.0
+
+# Image Processing
+Pillow==12.1.1
+
+# Production Server
+gunicorn==21.2.0
+
+# Async Tasks (Optional)
+celery==5.3.1
+redis==5.0.0
+
+# Development Tools (Optional)
+black==24.1.1
+flake8==7.0.0

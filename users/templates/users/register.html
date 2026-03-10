@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - Bursary System{% endblock %}
+
+{% block extra_css %}
+<style>
+    .auth-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 150px);
+        padding: 3rem 1rem;
+        width: 100%;
+    }
+    .register-container {
+        max-width: 550px;
+        width: 100%;
+        padding: 3rem;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        margin: 0 auto;
+    }
+    .register-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    .register-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 1rem;
+        background: linear-gradient(135deg, #10b981, #059669);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        color: white;
+        box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+    }
+    .register-header h2 {
+        font-size: 1.8rem;
+        color: #1e293b;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+    }
+    .register-header p {
+        color: #1e293b;
+        font-size: 0.95rem;
+        font-weight: 500;
+    }
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #1e293b;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 15px;
+        transition: all 0.3s;
+        font-family: 'Inter', sans-serif;
+    }
+    .form-group input:focus,
+    .form-group select:focus {
+        outline: none;
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+    .form-group .helptext {
+        display: block;
+        font-size: 0.85rem;
+        color: #475569;
+        margin-top: 0.5rem;
+        font-weight: 500;
+    }
+    .btn-register {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        margin-top: 1rem;
+    }
+    .btn-register:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    .errorlist {
+        color: #ef4444;
+        list-style: none;
+        padding: 10px;
+        background: #fee2e2;
+        border-radius: 8px;
+        margin-top: 0.5rem;
+        font-size: 0.85rem;
+    }
+    .errorlist li {
+        margin: 3px 0;
+    }
+    .login-link {
+        text-align: center;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #e2e8f0;
+        color: #475569;
+        font-weight: 500;
+    }
+    .login-link a {
+        color: #10b981;
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    .login-link a:hover {
+        color: #059669;
+    }
+    @media (max-width: 640px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+    <div class="register-container">
+        <div class="register-header">
+            <div class="register-icon">
+                <i class="fas fa-user-plus"></i>
+            </div>
+            <h2>Create Account</h2>
+            <p>Register to start your bursary application journey</p>
+        </div>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="form-row">
+                {% for field in form %}
+                    {% if forloop.counter0 < 2 %}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endif %}
+                            {% if field.errors %}
+                                <ul class="errorlist">
+                                    {% for error in field.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            
+            {% for field in form %}
+                {% if forloop.counter0 >= 2 %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <span class="helptext">{{ field.help_text }}</span>
+                        {% endif %}
+                        {% if field.errors %}
+                            <ul class="errorlist">
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+            
+            {% if form.non_field_errors %}
+                <ul class="errorlist">
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            
+            <button type="submit" class="btn-register">
+                <i class="fas fa-user-plus"></i>
+                Create Account
+            </button>
+        </form>
+        
+        <div class="login-link">
+            Already have an account? <a href="{% url 'users:login' %}"><i class="fas fa-sign-in-alt"></i> Login Here</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

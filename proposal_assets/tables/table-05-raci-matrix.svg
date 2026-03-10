@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="760" viewBox="0 0 1700 760">
+  <rect width="1700" height="760" fill="#ffffff"/>
+  <text x="850" y="48" text-anchor="middle" font-family="Arial" font-size="34" font-weight="700" fill="#0f172a">Table 5: RACI Matrix (Summary)</text>
+
+  <rect x="40" y="90" width="1620" height="620" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+  <rect x="40" y="90" width="1620" height="90" fill="#14b8a6"/>
+
+  <line x1="520" y1="90" x2="520" y2="710" stroke="#1e293b" stroke-width="2"/>
+  <line x1="700" y1="90" x2="700" y2="710" stroke="#1e293b" stroke-width="2"/>
+  <line x1="860" y1="90" x2="860" y2="710" stroke="#1e293b" stroke-width="2"/>
+  <line x1="1020" y1="90" x2="1020" y2="710" stroke="#1e293b" stroke-width="2"/>
+  <line x1="1180" y1="90" x2="1180" y2="710" stroke="#1e293b" stroke-width="2"/>
+  <line x1="1340" y1="90" x2="1340" y2="710" stroke="#1e293b" stroke-width="2"/>
+  <line x1="1500" y1="90" x2="1500" y2="710" stroke="#1e293b" stroke-width="2"/>
+
+  <line x1="40" y1="180" x2="1660" y2="180" stroke="#1e293b" stroke-width="2"/>
+  <line x1="40" y1="275" x2="1660" y2="275" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="40" y1="370" x2="1660" y2="370" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="40" y1="465" x2="1660" y2="465" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="40" y1="560" x2="1660" y2="560" stroke="#cbd5e1" stroke-width="1.5"/>
+
+  <text x="280" y="145" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Deliverable</text>
+  <text x="610" y="145" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Sponsor</text>
+  <text x="780" y="145" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Supervisor</text>
+  <text x="940" y="145" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">PM</text>
+  <text x="1100" y="145" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Dev Team</text>
+  <text x="1260" y="145" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">QA</text>
+  <text x="1420" y="145" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Users</text>
+  <text x="1580" y="145" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Legend</text>
+
+  <text x="55" y="240" font-family="Arial" font-size="22" fill="#0f172a">Requirements approval</text>
+  <text x="610" y="240" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#b91c1c">A</text>
+  <text x="780" y="240" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#0f766e">C</text>
+  <text x="940" y="240" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#1d4ed8">R</text>
+  <text x="1100" y="240" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#0f766e">C</text>
+  <text x="1260" y="240" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#0f766e">C</text>
+  <text x="1420" y="240" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#0f766e">C</text>
+  <text x="1520" y="240" font-family="Arial" font-size="18" fill="#0f172a">A=Accountable</text>
+
+  <text x="55" y="335" font-family="Arial" font-size="22" fill="#0f172a">System design</text>
+  <text x="610" y="335" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#0f766e">C</text>
+  <text x="780" y="335" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#b91c1c">A</text>
+  <text x="940" y="335" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#1d4ed8">R</text>
+  <text x="1100" y="335" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#1d4ed8">R</text>
+  <text x="1260" y="335" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#0f766e">C</text>
+  <text x="1420" y="335" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#64748b">I</text>
+  <text x="1520" y="335" font-family="Arial" font-size="18" fill="#0f172a">R=Responsible</text>
+
+  <text x="55" y="430" font-family="Arial" font-size="22" fill="#0f172a">Development</text>
+  <text x="610" y="430" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#64748b">I</text>
+  <text x="780" y="430" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#0f766e">C</text>
+  <text x="940" y="430" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#0f766e">C</text>
+  <text x="1100" y="430" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#1d4ed8">R</text>
+  <text x="1260" y="430" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#0f766e">C</text>
+  <text x="1420" y="430" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#64748b">I</text>
+  <text x="1520" y="430" font-family="Arial" font-size="18" fill="#0f172a">C=Consulted</text>
+
+  <text x="55" y="525" font-family="Arial" font-size="22" fill="#0f172a">Testing and UAT</text>
+  <text x="610" y="525" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#64748b">I</text>
+  <text x="780" y="525" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#0f766e">C</text>
+  <text x="940" y="525" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#1d4ed8">R</text>
+  <text x="1100" y="525" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#0f766e">C</text>
+  <text x="1260" y="525" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#1d4ed8">R</text>
+  <text x="1420" y="525" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#1d4ed8">R</text>
+  <text x="1520" y="525" font-family="Arial" font-size="18" fill="#0f172a">I=Informed</text>
+
+  <text x="55" y="620" font-family="Arial" font-size="22" fill="#0f172a">Deployment and handover</text>
+  <text x="610" y="620" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#b91c1c">A</text>
+  <text x="780" y="620" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#0f766e">C</text>
+  <text x="940" y="620" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#1d4ed8">R</text>
+  <text x="1100" y="620" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#1d4ed8">R</text>
+  <text x="1260" y="620" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#1d4ed8">R</text>
+  <text x="1420" y="620" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#0f766e">C</text>
+</svg>

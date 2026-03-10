@@ -1,0 +1,272 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1200" width="1400" height="1200">
+  <defs>
+    <!-- Gradients for modules -->
+    <linearGradient id="moduleBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="moduleTeal" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#5eead4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#14b8a6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="moduleOrange" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="modulePurple" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#c084fc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9333ea;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="moduleGreen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#86efac;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#22c55e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="moduleRed" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#fca5a5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ef4444;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Shadow -->
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="5" dy="7" stdDeviation="4" flood-opacity="0.35"/>
+    </filter>
+    
+    <!-- Arrow -->
+    <marker id="arrowBlack" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#1e293b" />
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1400" height="1200" fill="#f1f5f9"/>
+  
+  <!-- Title -->
+  <text x="700" y="50" font-family="Segoe UI, Arial, sans-serif" font-size="36" font-weight="bold" 
+        text-anchor="middle" fill="#0f172a">
+    System Modules Architecture
+  </text>
+  <text x="700" y="85" font-family="Segoe UI" font-size="20" text-anchor="middle" fill="#475569">
+    Django Application Structure - Bursary Management System
+  </text>
+  
+  <!-- Core Configuration Module (Center Top) -->
+  <g transform="translate(500, 130)">
+    <rect x="0" y="0" width="400" height="100" fill="#ef4444" stroke="#991b1b" stroke-width="3" rx="8"/>
+    <rect x="0" y="30" width="400" height="70" fill="white" stroke="#991b1b" stroke-width="2"/>
+    
+    <text x="200" y="20" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" fill="white">
+      bursary_system (Core Config)
+    </text>
+    
+    <text x="15" y="55" font-family="Arial" font-size="13" fill="#1e293b">📋 settings.py</text>
+    <text x="120" y="55" font-family="Arial" font-size="13" fill="#1e293b">🔗 urls.py</text>
+    <text x="220" y="55" font-family="Arial" font-size="13" fill="#1e293b">⚙️ wsgi.py</text>
+    <text x="310" y="55" font-family="Arial" font-size="13" fill="#1e293b">🚀 asgi.py</text>
+    
+    <text x="15" y="80" font-family="Arial" font-size="12" fill="#64748b">Main Django project configuration</text>
+  </g>
+  
+  <!-- Users Module (Left Top) -->
+  <g transform="translate(80, 280)">
+    <rect x="0" y="0" width="340" height="280" fill="#60a5fa" stroke="#1e40af" stroke-width="3" rx="8"/>
+    <rect x="0" y="30" width="340" height="250" fill="white" stroke="#1e40af" stroke-width="2"/>
+    
+    <text x="170" y="20" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="white">
+      👤 users (User Management)
+    </text>
+    
+    <text x="15" y="50" font-family="Arial" font-size="13" font-weight="bold" fill="#1e293b">Models:</text>
+    <text x="15" y="70" font-family="Arial" font-size="12" fill="#475569">• UserProfile</text>
+    <text x="15" y="88" font-family="Arial" font-size="12" fill="#475569">• AdminRole (Super/CDF/Ward)</text>
+    <text x="15" y="106" font-family="Arial" font-size="12" fill="#475569">• PasswordReset</text>
+    
+    <text x="15" y="135" font-family="Arial" font-size="13" font-weight="bold" fill="#1e293b">Views &amp; Functions:</text>
+    <text x="15" y="155" font-family="Arial" font-size="12" fill="#475569">• Registration &amp; Email Verify</text>
+    <text x="15" y="173" font-family="Arial" font-size="12" fill="#475569">• Login/Logout</text>
+    <text x="15" y="191" font-family="Arial" font-size="12" fill="#475569">• Password Reset (6-digit)</text>
+    <text x="15" y="209" font-family="Arial" font-size="12" fill="#475569">• Profile Management</text>
+    <text x="15" y="227" font-family="Arial" font-size="12" fill="#475569">• Admin Role Assignment</text>
+    <text x="15" y="245" font-family="Arial" font-size="12" fill="#475569">• Dashboard (role-based)</text>
+    <text x="15" y="263" font-family="Arial" font-size="11" fill="#64748b" font-style="italic">User authentication core</text>
+  </g>
+  
+  <!-- Applications Module (Center) -->
+  <g transform="translate(480, 280)">
+    <rect x="0" y="0" width="440" height="350" fill="#5eead4" stroke="#0f766e" stroke-width="3" rx="8"/>
+    <rect x="0" y="30" width="440" height="320" fill="white" stroke="#0f766e" stroke-width="2"/>
+    
+    <text x="220" y="20" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="white">
+      📄 applications (Core Module)
+    </text>
+    
+    <text x="15" y="50" font-family="Arial" font-size="13" font-weight="bold" fill="#1e293b">Models:</text>
+    <text x="15" y="70" font-family="Arial" font-size="12" fill="#475569">• Application (central table)</text>
+    <text x="15" y="88" font-family="Arial" font-size="12" fill="#475569">• ApplicationDocument (file uploads)</text>
+    <text x="15" y="106" font-family="Arial" font-size="12" fill="#475569">• ApplicationReview (scoring 0-100)</text>
+    <text x="15" y="124" font-family="Arial" font-size="12" fill="#475569">• ApplicationApproval (3-level approval)</text>
+    <text x="15" y="142" font-family="Arial" font-size="12" fill="#475569">• Ward (location tracking)</text>
+    
+    <text x="15" y="170" font-family="Arial" font-size="13" font-weight="bold" fill="#1e293b">Views &amp; Functions:</text>
+    <text x="15" y="190" font-family="Arial" font-size="12" fill="#475569">• New Application (4-step wizard)</text>
+    <text x="15" y="208" font-family="Arial" font-size="12" fill="#475569">• Document Upload (PDF/Image)</text>
+    <text x="15" y="226" font-family="Arial" font-size="12" fill="#475569">• Submit for Review</text>
+    <text x="15" y="244" font-family="Arial" font-size="12" fill="#475569">• Track Application Status</text>
+    <text x="15" y="262" font-family="Arial" font-size="12" fill="#475569">• Edit/Update Application</text>
+    <text x="15" y="280" font-family="Arial" font-size="12" fill="#475569">• Status Timeline View</text>
+    
+    <text x="15" y="305" font-family="Arial" font-size="11" fill="#dc2626" font-weight="bold">⭐ Heart of the system</text>
+  </g>
+  
+  <!-- Schools Module (Right Top) -->
+  <g transform="translate(980, 280)">
+    <rect x="0" y="0" width="340" height="240" fill="#86efac" stroke="#15803d" stroke-width="3" rx="8"/>
+    <rect x="0" y="30" width="340" height="210" fill="white" stroke="#15803d" stroke-width="2"/>
+    
+    <text x="170" y="20" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="white">
+      🏫 schools (School Management)
+    </text>
+    
+    <text x="15" y="50" font-family="Arial" font-size="13" font-weight="bold" fill="#1e293b">Models:</text>
+    <text x="15" y="70" font-family="Arial" font-size="12" fill="#475569">• School</text>
+    <text x="15" y="88" font-family="Arial" font-size="12" fill="#475569">• Campus (multi-campus support)</text>
+    <text x="15" y="106" font-family="Arial" font-size="12" fill="#475569">• Program (courses offered)</text>
+    
+    <text x="15" y="135" font-family="Arial" font-size="13" font-weight="bold" fill="#1e293b">Views &amp; Functions:</text>
+    <text x="15" y="155" font-family="Arial" font-size="12" fill="#475569">• School List (filterable)</text>
+    <text x="15" y="173" font-family="Arial" font-size="12" fill="#475569">• Program Catalog</text>
+    <text x="15" y="191" font-family="Arial" font-size="12" fill="#475569">• AJAX school search in forms</text>
+    <text x="15" y="213" font-family="Arial" font-size="11" fill="#64748b" font-style="italic">School &amp; program management</text>
+  </g>
+  
+  <!-- Admin Panel Module (Left Bottom) -->
+  <g transform="translate(80, 680)">
+    <rect x="0" y="0" width="420" height="380" fill="#c084fc" stroke="#6b21a8" stroke-width="3" rx="8"/>
+    <rect x="0" y="30" width="420" height="350" fill="white" stroke="#6b21a8" stroke-width="2"/>
+    
+    <text x="210" y="20" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="white">
+      🛡️ admin_panel (Admin Dashboard)
+    </text>
+    
+    <text x="15" y="50" font-family="Arial" font-size="13" font-weight="bold" fill="#1e293b">Views &amp; Functions:</text>
+    <text x="15" y="70" font-family="Arial" font-size="12" fill="#475569">• Admin Dashboard (role-specific)</text>
+    <text x="15" y="88" font-family="Arial" font-size="12" fill="#475569">• Applications for Review (filtered)</text>
+    <text x="15" y="106" font-family="Arial" font-size="12" fill="#475569">• Score Application (0-100 points)</text>
+    <text x="15" y="124" font-family="Arial" font-size="12" fill="#475569">• Approve/Reject with Amount</text>
+    <text x="15" y="142" font-family="Arial" font-size="12" fill="#475569">• Document Verification</text>
+    <text x="15" y="160" font-family="Arial" font-size="12" fill="#475569">• Manage Admins (Super only)</text>
+    <text x="15" y="178" font-family="Arial" font-size="12" fill="#475569">• Assign Roles &amp; Permissions</text>
+    <text x="15" y="196" font-family="Arial" font-size="12" fill="#475569">• Reports &amp; Statistics</text>
+    <text x="15" y="214" font-family="Arial" font-size="12" fill="#475569">• Export to Excel/PDF</text>
+    
+    <text x="15" y="245" font-family="Arial" font-size="13" font-weight="bold" fill="#1e293b">Permission System:</text>
+    <text x="15" y="265" font-family="Arial" font-size="11" fill="#475569">• Super Admin: Full access</text>
+    <text x="15" y="283" font-family="Arial" font-size="11" fill="#475569">• CDF Admin: View all, approve</text>
+    <text x="15" y="301" font-family="Arial" font-size="11" fill="#475569">• Ward Admin: View ward apps only</text>
+    
+    <text x="15" y="330" font-family="Arial" font-size="11" fill="#64748b" font-style="italic">🔒 Role-based access control</text>
+  </g>
+  
+  <!-- Notifications Module (Center Bottom) -->
+  <g transform="translate(560, 680)">
+    <rect x="0" y="0" width="340" height="300" fill="#fbbf24" stroke="#c2410c" stroke-width="3" rx="8"/>
+    <rect x="0" y="30" width="340" height="270" fill="white" stroke="#c2410c" stroke-width="2"/>
+    
+    <text x="170" y="20" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="white">
+      🔔 notifications (Messaging)
+    </text>
+    
+    <text x="15" y="50" font-family="Arial" font-size="13" font-weight="bold" fill="#1e293b">Models:</text>
+    <text x="15" y="70" font-family="Arial" font-size="12" fill="#475569">• Notification</text>
+    <text x="15" y="88" font-family="Arial" font-size="12" fill="#475569">• EmailLog</text>
+    <text x="15" y="106" font-family="Arial" font-size="12" fill="#475569">• SMSLog</text>
+    
+    <text x="15" y="135" font-family="Arial" font-size="13" font-weight="bold" fill="#1e293b">Functions:</text>
+    <text x="15" y="155" font-family="Arial" font-size="12" fill="#475569">• Email Notifications (SMTP)</text>
+    <text x="15" y="173" font-family="Arial" font-size="12" fill="#475569">• SMS Notifications (optional)</text>
+    <text x="15" y="191" font-family="Arial" font-size="12" fill="#475569">• Application Status Updates</text>
+    <text x="15" y="209" font-family="Arial" font-size="12" fill="#475569">• Approval/Rejection Alerts</text>
+    <text x="15" y="227" font-family="Arial" font-size="12" fill="#475569">• Document Request Reminders</text>
+    
+    <text x="15" y="255" font-family="Arial" font-size="11" fill="#64748b" font-style="italic">📧 Async tasks via Celery</text>
+  </g>
+  
+  <!-- Static/Templates Module (Right Bottom) -->
+  <g transform="translate(960, 680)">
+    <rect x="0" y="0" width="360" height="300" fill="#cbd5e1" stroke="#334155" stroke-width="3" rx="8"/>
+    <rect x="0" y="30" width="360" height="270" fill="white" stroke="#334155" stroke-width="2"/>
+    
+    <text x="180" y="20" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="white">
+      🎨 Frontend Resources
+    </text>
+    
+    <text x="15" y="50" font-family="Arial" font-size="13" font-weight="bold" fill="#1e293b">templates/ (HTML):</text>
+    <text x="15" y="70" font-family="Arial" font-size="12" fill="#475569">• base.html (master template)</text>
+    <text x="15" y="88" font-family="Arial" font-size="12" fill="#475569">• users/ (login, register, dashboard)</text>
+    <text x="15" y="106" font-family="Arial" font-size="12" fill="#475569">• applications/ (forms, tracking)</text>
+    <text x="15" y="124" font-family="Arial" font-size="12" fill="#475569">• admin_panel/ (admin views)</text>
+    
+    <text x="15" y="155" font-family="Arial" font-size="13" font-weight="bold" fill="#1e293b">static/ (Assets):</text>
+    <text x="15" y="175" font-family="Arial" font-size="12" fill="#475569">• css/ (Bootstrap 5 + custom)</text>
+    <text x="15" y="193" font-family="Arial" font-size="12" fill="#475569">• js/ (jQuery + form validation)</text>
+    <text x="15" y="211" font-family="Arial" font-size="12" fill="#475569">• images/ (logos, icons)</text>
+    
+    <text x="15" y="240" font-family="Arial" font-size="13" font-weight="bold" fill="#1e293b">media/ (User Uploads):</text>
+    <text x="15" y="260" font-family="Arial" font-size="12" fill="#475569">• applications/documents/</text>
+  </g>
+  
+  <!-- Relationship Arrows -->
+  <!-- Core to Users -->
+  <line x1="700" y1="230" x2="255" y2="280" stroke="#1e293b" stroke-width="3" marker-end="url(#arrowBlack)" stroke-dasharray="8,4"/>
+  <text x="450" y="250" font-family="Segoe UI" font-size="13" fill="#1e293b">imports</text>
+  
+  <!-- Core to Applications -->
+  <line x1="700" y1="230" x2="700" y2="280" stroke="#1e293b" stroke-width="3" marker-end="url(#arrowBlack)" stroke-dasharray="8,4"/>
+  <text x="710" y="260" font-family="Segoe UI" font-size="13" fill="#1e293b">registers</text>
+  
+  <!-- Core to Schools -->
+  <line x1="900" y1="230" x2="1155" y2="280" stroke="#1e293b" stroke-width="3" marker-end="url(#arrowBlack)" stroke-dasharray="8,4"/>
+  <text x="1000" y="250" font-family="Segoe UI" font-size="13" fill="#1e293b">imports</text>
+  
+  <!-- Core to Admin Panel -->
+  <line x1="600" y1="230" x2="290" y2="680" stroke="#1e293b" stroke-width="3" marker-end="url(#arrowBlack)" stroke-dasharray="8,4"/>
+  
+  <!-- Core to Notifications -->
+  <line x1="800" y1="230" x2="735" y2="680" stroke="#1e293b" stroke-width="3" marker-end="url(#arrowBlack)" stroke-dasharray="8,4"/>
+  
+  <!-- Applications to Users (data flow) -->
+  <line x1="480" y1="450" x2="430" y2="450" stroke="#14b8a6" stroke-width="2.5" marker-end="url(#arrowBlack)"/>
+  <text x="440" y="440" font-family="Segoe UI" font-size="12" fill="#14b8a6">FK: applicant</text>
+  
+  <!-- Applications to Schools -->
+  <line x1="930" y1="450" x2="980" y2="400" stroke="#14b8a6" stroke-width="2.5" marker-end="url(#arrowBlack)"/>
+  <text x="940" y="420" font-family="Segoe UI" font-size="12" fill="#14b8a6">FK: school/program</text>
+  
+  <!-- Admin Panel to Applications -->
+  <line x1="290" y1="680" x2="600" y2="630" stroke="#9333ea" stroke-width="2.5" marker-end="url(#arrowBlack)"/>
+  <text x="400" y="650" font-family="Segoe UI" font-size="12" fill="#9333ea">reviews/approves</text>
+  
+  <!-- Notifications to Applications -->
+  <line x1="735" y1="680" x2="705" y2="630" stroke="#f59e0b" stroke-width="2.5" marker-end="url(#arrowBlack)"/>
+  <text x="710" y="650" font-family="Segoe UI" font-size="12" fill="#f59e0b">sends updates</text>
+  
+  <!-- Legend -->
+  <g transform="translate(70, 1090)">
+    <rect x="0" y="0" width="1260" height="100" fill="white" stroke="#cbd5e1" stroke-width="2" rx="8"/>
+    <text x="630" y="30" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#1e293b">
+      Module Interaction Legend
+    </text>
+    
+    <line x1="50" y1="55" x2="120" y2="55" stroke="#1e293b" stroke-width="3" marker-end="url(#arrowBlack)" stroke-dasharray="8,4"/>
+    <text x="130" y="60" font-family="Arial" font-size="13" fill="#475569">Django URL routing / imports</text>
+    
+    <line x1="400" y1="55" x2="470" y2="55" stroke="#14b8a6" stroke-width="2.5" marker-end="url(#arrowBlack)"/>
+    <text x="480" y="60" font-family="Arial" font-size="13" fill="#475569">Database foreign key relationship</text>
+    
+    <line x1="820" y1="55" x2="890" y2="55" stroke="#9333ea" stroke-width="2.5" marker-end="url(#arrowBlack)"/>
+    <text x="900" y="60" font-family="Arial" font-size="13" fill="#475569">Functional data flow (view calls)</text>
+    
+    <text x="50" y="85" font-family="Arial" font-size="12" fill="#64748b">
+      💡 Each module is a Django app with models.py, views.py, urls.py, templates/ structure
+    </text>
+  </g>
+</svg>

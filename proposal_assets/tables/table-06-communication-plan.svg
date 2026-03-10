@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="650" viewBox="0 0 1500 650">
+  <rect width="1500" height="650" fill="#ffffff"/>
+  <text x="750" y="48" text-anchor="middle" font-family="Arial" font-size="34" font-weight="700" fill="#0f172a">Table 6: Communication and Reporting Plan</text>
+
+  <rect x="60" y="90" width="1380" height="520" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+  <rect x="60" y="90" width="1380" height="90" fill="#0ea5e9"/>
+
+  <line x1="300" y1="90" x2="300" y2="610" stroke="#1e293b" stroke-width="2"/>
+  <line x1="700" y1="90" x2="700" y2="610" stroke="#1e293b" stroke-width="2"/>
+  <line x1="900" y1="90" x2="900" y2="610" stroke="#1e293b" stroke-width="2"/>
+  <line x1="1160" y1="90" x2="1160" y2="610" stroke="#1e293b" stroke-width="2"/>
+
+  <line x1="60" y1="180" x2="1440" y2="180" stroke="#1e293b" stroke-width="2"/>
+  <line x1="60" y1="285" x2="1440" y2="285" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="60" y1="390" x2="1440" y2="390" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="60" y1="495" x2="1440" y2="495" stroke="#cbd5e1" stroke-width="1.5"/>
+
+  <text x="180" y="145" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Audience</text>
+  <text x="500" y="145" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Information</text>
+  <text x="800" y="145" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Frequency</text>
+  <text x="1030" y="145" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Channel</text>
+  <text x="1300" y="145" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Owner</text>
+
+  <text x="80" y="250" font-family="Arial" font-size="22" fill="#0f172a">Project Sponsor</text>
+  <text x="320" y="250" font-family="Arial" font-size="22" fill="#0f172a">Progress, budget, key risks</text>
+  <text x="800" y="250" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">Bi-weekly</text>
+  <text x="920" y="250" font-family="Arial" font-size="22" fill="#0f172a">Review meeting + report</text>
+  <text x="1180" y="250" font-family="Arial" font-size="22" fill="#0f172a">PM</text>
+
+  <text x="80" y="355" font-family="Arial" font-size="22" fill="#0f172a">Supervisor</text>
+  <text x="320" y="355" font-family="Arial" font-size="22" fill="#0f172a">Technical + academic progress</text>
+  <text x="800" y="355" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">Weekly</text>
+  <text x="920" y="355" font-family="Arial" font-size="22" fill="#0f172a">Email + supervision meeting</text>
+  <text x="1180" y="355" font-family="Arial" font-size="22" fill="#0f172a">PM / Tech Lead</text>
+
+  <text x="80" y="460" font-family="Arial" font-size="22" fill="#0f172a">Project Team</text>
+  <text x="320" y="460" font-family="Arial" font-size="22" fill="#0f172a">Tasks, blockers, sprint status</text>
+  <text x="800" y="460" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">Daily</text>
+  <text x="920" y="460" font-family="Arial" font-size="22" fill="#0f172a">Stand-up / Teams / WhatsApp</text>
+  <text x="1180" y="460" font-family="Arial" font-size="22" fill="#0f172a">PM</text>
+
+  <text x="80" y="565" font-family="Arial" font-size="22" fill="#0f172a">End Users</text>
+  <text x="320" y="565" font-family="Arial" font-size="22" fill="#0f172a">UAT schedule and training updates</text>
+  <text x="800" y="565" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">As needed</text>
+  <text x="920" y="565" font-family="Arial" font-size="22" fill="#0f172a">Workshops / notices</text>
+  <text x="1180" y="565" font-family="Arial" font-size="22" fill="#0f172a">PM / Trainer</text>
+</svg>

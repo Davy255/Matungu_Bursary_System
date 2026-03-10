@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="1400" viewBox="0 0 2200 1400">
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 z" fill="#334155"/>
+    </marker>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 40px; font-weight: 700; fill: #0f172a; }
+      .group-title { font-family: Arial, sans-serif; font-size: 22px; font-weight: 700; fill: #0f172a; }
+      .tbl { stroke: #1e293b; stroke-width: 2; rx: 10; }
+      .th { font-family: Arial, sans-serif; font-size: 20px; font-weight: 700; fill: #ffffff; }
+      .txt { font-family: Arial, sans-serif; font-size: 16px; fill: #0f172a; }
+      .rel { font-family: Arial, sans-serif; font-size: 14px; font-weight: 700; fill: #334155; }
+    </style>
+  </defs>
+
+  <rect width="2200" height="1400" fill="#f8fafc"/>
+  <text x="1100" y="52" text-anchor="middle" class="title">Complete Database Structure - Bursary Management System</text>
+
+  <!-- Group panels -->
+  <rect x="40" y="90" width="760" height="1250" fill="#e0f2fe" stroke="#0284c7" stroke-width="2" rx="14"/>
+  <text x="70" y="126" class="group-title">Users Domain</text>
+
+  <rect x="840" y="90" width="620" height="1250" fill="#dcfce7" stroke="#16a34a" stroke-width="2" rx="14"/>
+  <text x="870" y="126" class="group-title">Applications Domain</text>
+
+  <rect x="1500" y="90" width="660" height="780" fill="#fef3c7" stroke="#d97706" stroke-width="2" rx="14"/>
+  <text x="1530" y="126" class="group-title">Schools Domain</text>
+
+  <rect x="1500" y="900" width="660" height="440" fill="#ede9fe" stroke="#7c3aed" stroke-width="2" rx="14"/>
+  <text x="1530" y="936" class="group-title">Notifications Domain</text>
+
+  <!-- users_user -->
+  <rect class="tbl" x="80" y="160" width="680" height="200" fill="#ffffff"/>
+  <rect x="80" y="160" width="680" height="48" fill="#0284c7"/>
+  <text x="420" y="191" text-anchor="middle" class="th">users_user</text>
+  <text x="95" y="232" class="txt">PK id</text>
+  <text x="95" y="258" class="txt">username, email (unique), role</text>
+  <text x="95" y="284" class="txt">phone_number, is_verified</text>
+  <text x="95" y="310" class="txt">password, first_name, last_name</text>
+  <text x="95" y="336" class="txt">created_at, updated_at</text>
+
+  <!-- users_userprofile -->
+  <rect class="tbl" x="80" y="390" width="680" height="220" fill="#ffffff"/>
+  <rect x="80" y="390" width="680" height="48" fill="#0284c7"/>
+  <text x="420" y="421" text-anchor="middle" class="th">users_userprofile</text>
+  <text x="95" y="462" class="txt">PK id</text>
+  <text x="95" y="488" class="txt">FK user_id -> users_user (OneToOne)</text>
+  <text x="95" y="514" class="txt">id_number (unique), date_of_birth, gender</text>
+  <text x="95" y="540" class="txt">address, county, sub_county</text>
+  <text x="95" y="566" class="txt">FK ward_id -> applications_ward</text>
+  <text x="95" y="592" class="txt">guardian_name, guardian_phone, profile_photo</text>
+
+  <!-- users_adminrole -->
+  <rect class="tbl" x="80" y="640" width="680" height="190" fill="#ffffff"/>
+  <rect x="80" y="640" width="680" height="48" fill="#0284c7"/>
+  <text x="420" y="671" text-anchor="middle" class="th">users_adminrole</text>
+  <text x="95" y="712" class="txt">PK id</text>
+  <text x="95" y="738" class="txt">FK user_id -> users_user (OneToOne)</text>
+  <text x="95" y="764" class="txt">role_type, department</text>
+  <text x="95" y="790" class="txt">can_approve, can_review, can_manage_schools</text>
+  <text x="95" y="816" class="txt">assigned_at</text>
+
+  <!-- users_passwordreset -->
+  <rect class="tbl" x="80" y="860" width="680" height="170" fill="#ffffff"/>
+  <rect x="80" y="860" width="680" height="48" fill="#0284c7"/>
+  <text x="420" y="891" text-anchor="middle" class="th">users_passwordreset</text>
+  <text x="95" y="932" class="txt">PK id</text>
+  <text x="95" y="958" class="txt">FK user_id -> users_user</text>
+  <text x="95" y="984" class="txt">token (unique), created_at, expires_at</text>
+  <text x="95" y="1010" class="txt">is_used</text>
+
+  <!-- applications_ward -->
+  <rect class="tbl" x="880" y="160" width="540" height="170" fill="#ffffff"/>
+  <rect x="880" y="160" width="540" height="48" fill="#16a34a"/>
+  <text x="1150" y="191" text-anchor="middle" class="th">applications_ward</text>
+  <text x="895" y="232" class="txt">PK id</text>
+  <text x="895" y="258" class="txt">name, sub_county, county</text>
+  <text x="895" y="284" class="txt">code (unique), created_at</text>
+
+  <!-- applications_application -->
+  <rect class="tbl" x="880" y="360" width="540" height="270" fill="#ffffff"/>
+  <rect x="880" y="360" width="540" height="48" fill="#16a34a"/>
+  <text x="1150" y="391" text-anchor="middle" class="th">applications_application</text>
+  <text x="895" y="432" class="txt">PK id</text>
+  <text x="895" y="458" class="txt">FK applicant_id -> users_user</text>
+  <text x="895" y="484" class="txt">FK school_id -> schools_school</text>
+  <text x="895" y="510" class="txt">FK campus_id -> schools_campus (nullable)</text>
+  <text x="895" y="536" class="txt">FK program_id -> schools_program</text>
+  <text x="895" y="562" class="txt">application_number (unique), year_of_study</text>
+  <text x="895" y="588" class="txt">amount_requested, amount_approved, status</text>
+  <text x="895" y="614" class="txt">submitted_at, reviewed_at, approved_at</text>
+
+  <!-- applications_applicationdocument -->
+  <rect class="tbl" x="880" y="660" width="540" height="170" fill="#ffffff"/>
+  <rect x="880" y="660" width="540" height="48" fill="#16a34a"/>
+  <text x="1150" y="691" text-anchor="middle" class="th">applications_applicationdocument</text>
+  <text x="895" y="732" class="txt">PK id</text>
+  <text x="895" y="758" class="txt">FK application_id -> applications_application</text>
+  <text x="895" y="784" class="txt">document_type, file, file_name, file_size</text>
+  <text x="895" y="810" class="txt">uploaded_at</text>
+
+  <!-- applications_applicationreview -->
+  <rect class="tbl" x="880" y="860" width="540" height="190" fill="#ffffff"/>
+  <rect x="880" y="860" width="540" height="48" fill="#16a34a"/>
+  <text x="1150" y="891" text-anchor="middle" class="th">applications_applicationreview</text>
+  <text x="895" y="932" class="txt">PK id</text>
+  <text x="895" y="958" class="txt">FK application_id -> applications_application</text>
+  <text x="895" y="984" class="txt">FK reviewer_id -> users_user</text>
+  <text x="895" y="1010" class="txt">score, comments, recommendation</text>
+  <text x="895" y="1036" class="txt">reviewed_at</text>
+
+  <!-- applications_applicationapproval -->
+  <rect class="tbl" x="880" y="1080" width="540" height="220" fill="#ffffff"/>
+  <rect x="880" y="1080" width="540" height="48" fill="#16a34a"/>
+  <text x="1150" y="1111" text-anchor="middle" class="th">applications_applicationapproval</text>
+  <text x="895" y="1152" class="txt">PK id</text>
+  <text x="895" y="1178" class="txt">FK application_id -> applications_application (OneToOne)</text>
+  <text x="895" y="1204" class="txt">FK approver_id -> users_user</text>
+  <text x="895" y="1230" class="txt">approved_amount, approval_notes</text>
+  <text x="895" y="1256" class="txt">disbursement_date, disbursement_reference</text>
+  <text x="895" y="1282" class="txt">approved_at</text>
+
+  <!-- schools_school -->
+  <rect class="tbl" x="1540" y="160" width="580" height="210" fill="#ffffff"/>
+  <rect x="1540" y="160" width="580" height="48" fill="#d97706"/>
+  <text x="1830" y="191" text-anchor="middle" class="th">schools_school</text>
+  <text x="1555" y="232" class="txt">PK id</text>
+  <text x="1555" y="258" class="txt">name, school_type, registration_number (unique)</text>
+  <text x="1555" y="284" class="txt">email, phone_number, address, county</text>
+  <text x="1555" y="310" class="txt">is_active, created_at, updated_at</text>
+
+  <!-- schools_campus -->
+  <rect class="tbl" x="1540" y="400" width="580" height="170" fill="#ffffff"/>
+  <rect x="1540" y="400" width="580" height="48" fill="#d97706"/>
+  <text x="1830" y="431" text-anchor="middle" class="th">schools_campus</text>
+  <text x="1555" y="472" class="txt">PK id</text>
+  <text x="1555" y="498" class="txt">FK school_id -> schools_school</text>
+  <text x="1555" y="524" class="txt">name, location, is_main, created_at</text>
+
+  <!-- schools_program -->
+  <rect class="tbl" x="1540" y="600" width="580" height="210" fill="#ffffff"/>
+  <rect x="1540" y="600" width="580" height="48" fill="#d97706"/>
+  <text x="1830" y="631" text-anchor="middle" class="th">schools_program</text>
+  <text x="1555" y="672" class="txt">PK id</text>
+  <text x="1555" y="698" class="txt">FK school_id -> schools_school</text>
+  <text x="1555" y="724" class="txt">name, code, level, duration_years</text>
+  <text x="1555" y="750" class="txt">is_active, created_at</text>
+  <text x="1555" y="776" class="txt">Unique(school_id, code)</text>
+
+  <!-- notifications_notification -->
+  <rect class="tbl" x="1540" y="970" width="580" height="260" fill="#ffffff"/>
+  <rect x="1540" y="970" width="580" height="48" fill="#7c3aed"/>
+  <text x="1830" y="1001" text-anchor="middle" class="th">notifications_notification</text>
+  <text x="1555" y="1042" class="txt">PK id</text>
+  <text x="1555" y="1068" class="txt">FK user_id -> users_user</text>
+  <text x="1555" y="1094" class="txt">notification_type, title, message</text>
+  <text x="1555" y="1120" class="txt">link, is_read, created_at</text>
+
+  <!-- Relationship lines with labels -->
+  <line x1="760" y1="490" x2="880" y2="245" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="810" y="360" class="rel">N:1 ward_id</text>
+
+  <line x1="760" y1="740" x2="760" y2="260" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="640" y="515" class="rel">1:1 user_id</text>
+
+  <line x1="760" y1="950" x2="760" y2="260" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="640" y="740" class="rel">N:1 user_id</text>
+
+  <line x1="760" y1="700" x2="760" y2="220" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="640" y="620" class="rel">1:1 user_id</text>
+
+  <line x1="880" y1="450" x2="760" y2="250" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="780" y="380" class="rel">N:1 applicant_id</text>
+
+  <line x1="1420" y1="450" x2="1540" y2="260" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="1450" y="360" class="rel">N:1 school_id</text>
+
+  <line x1="1420" y1="500" x2="1540" y2="485" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="1460" y="482" class="rel">N:1 campus_id</text>
+
+  <line x1="1420" y1="550" x2="1540" y2="700" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="1450" y="620" class="rel">N:1 program_id</text>
+
+  <line x1="1830" y1="570" x2="1830" y2="370" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="1842" y="478" class="rel">N:1 school_id</text>
+
+  <line x1="1830" y1="810" x2="1830" y2="370" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="1842" y="600" class="rel">N:1 school_id</text>
+
+  <line x1="1150" y1="660" x2="1150" y2="630" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="1160" y="648" class="rel">N:1 application_id</text>
+
+  <line x1="1150" y1="860" x2="1150" y2="630" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="1160" y="760" class="rel">N:1 application_id</text>
+
+  <line x1="1150" y1="1080" x2="1150" y2="630" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="1160" y="980" class="rel">1:1 application_id</text>
+
+  <line x1="1420" y1="965" x2="760" y2="260" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="1160" y="700" class="rel">N:1 reviewer_id</text>
+
+  <line x1="1420" y1="1200" x2="760" y2="260" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="1080" y="860" class="rel">N:1 approver_id</text>
+
+  <line x1="1540" y1="1080" x2="760" y2="260" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="1200" y="640" class="rel">N:1 user_id</text>
+
+  <!-- Legend -->
+  <rect x="40" y="1350" width="2120" height="36" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1"/>
+  <text x="60" y="1374" class="txt">Legend: arrows point from child table (FK holder) to parent table. 1:1 = OneToOne, N:1 = Many-to-One.</text>
+</svg>

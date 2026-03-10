@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Apply for Bursary{% endblock %}
+
+{% block extra_css %}
+<style>
+    .apply-container {
+        max-width: 700px;
+        margin: 30px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .form-control {
+        margin-bottom: 15px;
+        width: 100%;
+    }
+    .btn-primary {
+        padding: 12px 24px;
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .errorlist {
+        color: red;
+        list-style: none;
+        padding: 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="apply-container">
+    <h2>Apply for Bursary</h2>
+    <p>Fill in the details below to apply for financial assistance</p>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div style="padding: 10px; background: {% if message.tags == 'error' %}#f8d7da{% else %}#d4edda{% endif %}; border-radius: 5px; margin-bottom: 15px;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div>
+                <label>{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    {{ field.errors }}
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn-primary">Create Application</button>
+        <a href="{% url 'users:dashboard' %}" style="margin-left: 10px;">Cancel</a>
+    </form>
+</div>
+{% endblock %}

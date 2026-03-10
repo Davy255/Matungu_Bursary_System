@@ -1,0 +1,50 @@
+flowchart TB
+    %% Projection-friendly architecture diagram
+    A[Student Portal] --> B[Authentication]
+    B --> C[Profile Management]
+    C --> D[Bursary Application]
+    D --> E[Review Module]
+    E --> F[Admin Approval]
+    F --> G[Decision and Disbursement]
+
+    D --> H[Notification Module]
+    F --> H
+    H --> I[Email Service SMTP]
+
+    C --> J[(MySQL Database)]
+    D --> J
+    E --> J
+    F --> J
+    K[Reports and Dashboard] --> J
+
+    subgraph L1 [Presentation Layer]
+      A
+      K
+    end
+
+    subgraph L2 [Application Layer]
+      B
+      C
+      D
+      E
+      F
+      H
+    end
+
+    subgraph L3 [Data and External Services]
+      J
+      I
+      G
+    end
+
+    classDef ui fill:#0ea5e9,stroke:#0c4a6e,stroke-width:2px,color:#ffffff;
+    classDef app fill:#14b8a6,stroke:#134e4a,stroke-width:2px,color:#ffffff;
+    classDef data fill:#f59e0b,stroke:#78350f,stroke-width:2px,color:#111827;
+    classDef ext fill:#6366f1,stroke:#312e81,stroke-width:2px,color:#ffffff;
+    classDef final fill:#22c55e,stroke:#14532d,stroke-width:2px,color:#111827;
+
+    class A,K ui;
+    class B,C,D,E,F,H app;
+    class J data;
+    class I ext;
+    class G final;

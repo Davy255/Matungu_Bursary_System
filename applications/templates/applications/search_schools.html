@@ -1,0 +1,348 @@
+{% extends 'base.html' %}
+
+{% block title %}Search Schools{% endblock %}
+
+{% block extra_css %}
+<style>
+    .search-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .page-header {
+        background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
+        padding: 2rem;
+        border-radius: 16px;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    .page-header h2 {
+        font-size: 2rem;
+        color: #0f172a;
+        margin-bottom: 0.5rem;
+        font-weight: 800;
+    }
+    .page-header p {
+        color: #1e293b;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+    .search-form {
+        background: white;
+        padding: 2rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+    }
+    .search-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr auto;
+        gap: 1rem;
+        align-items: end;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #1e293b;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+    .form-control {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 15px;
+        transition: all 0.3s;
+        font-family: 'Inter', sans-serif;
+    }
+    .form-control:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    .btn-search {
+        padding: 12px 32px;
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .btn-search:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    .results-header {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .results-header h3 {
+        font-size: 1.3rem;
+        color: #1e293b;
+        font-weight: 700;
+        margin: 0;
+    }
+    .results-count {
+        background: linear-gradient(135deg, #0891b2, #0e7490);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+    .school-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1.5rem;
+        transition: all 0.3s;
+        border: 2px solid transparent;
+    }
+    .school-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border-color: #2563eb;
+    }
+    .school-header {
+        display: flex;
+        align-items: start;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #e2e8f0;
+    }
+    .school-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #0891b2, #0e7490);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.8rem;
+        flex-shrink: 0;
+    }
+    .school-header h3 {
+        font-size: 1.5rem;
+        color: #1e293b;
+        margin: 0 0 0.5rem 0;
+        font-weight: 700;
+    }
+    .school-type-badge {
+        padding: 6px 12px;
+        background: linear-gradient(135deg, #cffafe, #a5f3fc);
+        color: #164e63;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        display: inline-block;
+    }
+    .school-info {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+    .info-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #1e293b;
+        font-size: 0.95rem;
+        font-weight: 500;
+    }
+    .info-item i {
+        color: #2563eb;
+        width: 20px;
+    }
+    .info-item strong {
+        color: #1e293b;
+    }
+    .programs-section {
+        margin-top: 1.5rem;
+    }
+    .programs-toggle {
+        cursor: pointer;
+        font-weight: 600;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px;
+        background: #f8fafc;
+        border-radius: 8px;
+        transition: all 0.3s;
+    }
+    .programs-toggle:hover {
+        background: #e0e7ff;
+    }
+    .programs-list {
+        margin-top: 1rem;
+        padding: 1.5rem;
+        background: #f8fafc;
+        border-radius: 12px;
+        border-left: 4px solid #2563eb;
+    }
+    .program-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 0;
+        color: #1e293b;
+    }
+    .program-item i {
+        color: #10b981;
+    }
+    .program-level {
+        background: #d1fae5;
+        color: #065f46;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-left: 10px;
+    }
+    .no-results {
+        text-align: center;
+        padding: 3rem;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    .no-results i {
+        font-size: 4rem;
+        color: #cbd5e1;
+        margin-bottom: 1rem;
+    }
+    .no-results p {
+        color: #475569;
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+    @media (max-width: 768px) {
+        .search-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="search-container">
+    <div class="page-header">
+        <h2><i class="fas fa-search"></i> Search Schools</h2>
+        <p>Find the perfect institution for your bursary application</p>
+    </div>
+    
+    <div class="search-form">
+        <form method="get">
+            <div class="search-grid">
+                <div class="form-group">
+                    <label><i class="fas fa-school"></i> School Name</label>
+                    <input type="text" name="q" class="form-control" placeholder="Enter school name..." value="{{ query }}">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-filter"></i> School Type</label>
+                    <select name="type" class="form-control">
+                        <option value="">All Types</option>
+                        <option value="university" {% if school_type == 'university' %}selected{% endif %}>University</option>
+                        <option value="college" {% if school_type == 'college' %}selected{% endif %}>College</option>
+                        <option value="tvet" {% if school_type == 'tvet' %}selected{% endif %}>TVET Institution</option>
+                        <option value="polytechnic" {% if school_type == 'polytechnic' %}selected{% endif %}>Polytechnic</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-search">
+                    <i class="fas fa-search"></i>
+                    Search
+                </button>
+            </div>
+        </form>
+    </div>
+    
+    <div class="results-header">
+        <h3><i class="fas fa-list"></i> Search Results</h3>
+        <span class="results-count">{{ schools.count }} schools found</span>
+    </div>
+    
+    {% if schools %}
+        {% for school in schools %}
+            <div class="school-card">
+                <div class="school-header">
+                    <div class="school-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <h3>{{ school.name }}</h3>
+                        <span class="school-type-badge">{{ school.get_school_type_display }}</span>
+                    </div>
+                </div>
+                
+                <div class="school-info">
+                    <div class="info-item">
+                        <i class="fas fa-id-card"></i>
+                        <span><strong>Reg #:</strong> {{ school.registration_number }}</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span><strong>Location:</strong> {{ school.county }}</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>{{ school.email }}</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>{{ school.phone_number }}</span>
+                    </div>
+                    <div class="info-item" style="grid-column: 1 / -1;">
+                        <i class="fas fa-home"></i>
+                        <span><strong>Address:</strong> {{ school.address }}</span>
+                    </div>
+                </div>
+                
+                <div class="programs-section">
+                    <details>
+                        <summary class="programs-toggle">
+                            <i class="fas fa-book"></i>
+                            <span>View Programs ({{ school.programs.count }})</span>
+                        </summary>
+                        <div class="programs-list">
+                            {% for program in school.programs.all %}
+                                <div class="program-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>{{ program.name }}</span>
+                                    <span class="program-level">{{ program.get_level_display }}</span>
+                                    <span style="color: #475569; font-weight: 500;">• {{ program.duration_years }} years</span>
+                                </div>
+                            {% empty %}
+                                <p style="color: #475569; text-align: center; font-weight: 500;">No programs listed for this institution</p>
+                            {% endfor %}
+                        </div>
+                    </details>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="no-results">
+            <i class="fas fa-search"></i>
+            <p>No schools found matching your criteria. Try adjusting your search filters.</p>
+        </div
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

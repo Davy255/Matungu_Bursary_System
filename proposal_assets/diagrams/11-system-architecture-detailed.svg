@@ -1,0 +1,227 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2200 1800">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#475569"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#16a34a"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="2200" height="1800" fill="#f8fafc"/>
+
+  <!-- Title -->
+  <text x="1100" y="50" font-size="32" font-weight="bold" text-anchor="middle" fill="#1f2937">
+    DETAILED SYSTEM ARCHITECTURE
+  </text>
+  <text x="1100" y="85" font-size="18" text-anchor="middle" fill="#64748b">
+    Matungu Constituency Bursary Management System - Technical Stack
+  </text>
+
+  <!-- ==================== PRESENTATION LAYER ==================== -->
+  <rect x="100" y="140" width="2000" height="220" fill="#eff6ff" stroke="#3b82f6" stroke-width="3" rx="8"/>
+  <text x="120" y="175" font-size="20" font-weight="bold" fill="#1e40af">PRESENTATION LAYER (Frontend)</text>
+
+  <!-- Browser -->
+  <rect x="150" y="200" width="350" height="140" fill="#dbeafe" stroke="#2563eb" stroke-width="2" rx="6"/>
+  <text x="325" y="230" font-size="16" font-weight="bold" text-anchor="middle" fill="#1e40af">Web Browser</text>
+  <text x="170" y="260" font-size="13" fill="#1e3a8a">• HTML5, CSS3, JavaScript</text>
+  <text x="170" y="285" font-size="13" fill="#1e3a8a">• Bootstrap 5 (Responsive UI)</text>
+  <text x="170" y="310" font-size="13" fill="#1e3a8a">• jQuery (DOM manipulation)</text>
+
+  <!-- User Interface Components -->
+  <rect x="550" y="200" width="400" height="140" fill="#dbeafe" stroke="#2563eb" stroke-width="2" rx="6"/>
+  <text x="750" y="230" font-size="16" font-weight="bold" text-anchor="middle" fill="#1e40af">UI Components</text>
+  <text x="570" y="260" font-size="13" fill="#1e3a8a">• Student Portal (Registration, Apply)</text>
+  <text x="570" y="285" font-size="13" fill="#1e3a8a">• Reviewer Dashboard (Review, Score)</text>
+  <text x="570" y="310" font-size="13" fill="#1e3a8a">• Admin Panel (Approve, Reports)</text>
+
+  <!-- Forms & Validation -->
+  <rect x="1000" y="200" width="350" height="140" fill="#dbeafe" stroke="#2563eb" stroke-width="2" rx="6"/>
+  <text x="1175" y="230" font-size="16" font-weight="bold" text-anchor="middle" fill="#1e40af">Forms &amp; Validation</text>
+  <text x="1020" y="260" font-size="13" fill="#1e3a8a">• Django Template Engine</text>
+  <text x="1020" y="285" font-size="13" fill="#1e3a8a">• CSRF Protection</text>
+  <text x="1020" y="310" font-size="13" fill="#1e3a8a">• Client-side Validation</text>
+
+  <!-- File Upload UI -->
+  <rect x="1400" y="200" width="350" height="140" fill="#dbeafe" stroke="#2563eb" stroke-width="2" rx="6"/>
+  <text x="1575" y="230" font-size="16" font-weight="bold" text-anchor="middle" fill="#1e40af">Document Management</text>
+  <text x="1420" y="260" font-size="13" fill="#1e3a8a">• File Upload (PDF, Images)</text>
+  <text x="1420" y="285" font-size="13" fill="#1e3a8a">• Preview &amp; Download</text>
+  <text x="1420" y="310" font-size="13" fill="#1e3a8a">• Size Validation (5MB max)</text>
+
+  <!-- Arrow down -->
+  <line x1="1100" y1="360" x2="1100" y2="420" stroke="#3b82f6" stroke-width="3" marker-end="url(#arrowBlue)"/>
+  <text x="1120" y="395" font-size="12" font-weight="bold" fill="#2563eb">HTTP/HTTPS Requests</text>
+
+  <!-- ==================== APPLICATION LAYER ==================== -->
+  <rect x="100" y="440" width="2000" height="350" fill="#f0fdf4" stroke="#22c55e" stroke-width="3" rx="8"/>
+  <text x="120" y="475" font-size="20" font-weight="bold" fill="#166534">APPLICATION LAYER (Backend - Django 6.0.3)</text>
+
+  <!-- Django Core -->
+  <rect x="150" y="500" width="380" height="260" fill="#dcfce7" stroke="#16a34a" stroke-width="2" rx="6"/>
+  <text x="340" y="530" font-size="16" font-weight="bold" text-anchor="middle" fill="#166534">Django Framework</text>
+  <text x="170" y="560" font-size="13" fill="#14532d">• URL Routing (urls.py)</text>
+  <text x="170" y="585" font-size="13" fill="#14532d">• Views (Class-based &amp; Function)</text>
+  <text x="170" y="610" font-size="13" fill="#14532d">• Middleware (Auth, Session, CSRF)</text>
+  <text x="170" y="635" font-size="13" fill="#14532d">• Template Rendering</text>
+  <text x="170" y="660" font-size="13" fill="#14532d">• Static Files Handler</text>
+  <text x="170" y="685" font-size="13" fill="#14532d">• Admin Interface</text>
+  <text x="170" y="710" font-size="13" fill="#14532d">• ORM (Object-Relational Mapper)</text>
+
+  <!-- Django Apps -->
+  <rect x="570" y="500" width="350" height="260" fill="#dcfce7" stroke="#16a34a" stroke-width="2" rx="6"/>
+  <text x="745" y="530" font-size="16" font-weight="bold" text-anchor="middle" fill="#166534">Django Applications</text>
+  <text x="590" y="560" font-size="13" fill="#14532d">1. users (Authentication, Profiles)</text>
+  <text x="590" y="585" font-size="13" fill="#14532d">2. applications (Apply, Documents)</text>
+  <text x="590" y="610" font-size="13" fill="#14532d">3. schools (Institution Management)</text>
+  <text x="590" y="635" font-size="13" fill="#14532d">4. admin_panel (Dashboards, Reports)</text>
+  <text x="590" y="660" font-size="13" fill="#14532d">5. notifications (Email Alerts)</text>
+  <text x="590" y="685" font-size="13" fill="#14532d"></text>
+  <text x="590" y="710" font-size="12" font-style="italic" fill="#166534">Each app: models.py, views.py,</text>
+  <text x="590" y="730" font-size="12" font-style="italic" fill="#166534">urls.py, forms.py, templates/</text>
+
+  <!-- Business Logic -->
+  <rect x="960" y="500" width="370" height="260" fill="#dcfce7" stroke="#16a34a" stroke-width="2" rx="6"/>
+  <text x="1145" y="530" font-size="16" font-weight="bold" text-anchor="middle" fill="#166534">Business Logic Layer</text>
+  <text x="980" y="560" font-size="13" fill="#14532d">• Role-Based Access Control (RBAC)</text>
+  <text x="980" y="585" font-size="13" fill="#14532d">• Application Workflow Engine</text>
+  <text x="980" y="610" font-size="13" fill="#14532d">• Review &amp; Approval Logic</text>
+  <text x="980" y="635" font-size="13" fill="#14532d">• Document Validation</text>
+  <text x="980" y="660" font-size="13" fill="#14532d">• Report Generation (PDF, Excel)</text>
+  <text x="980" y="685" font-size="13" fill="#14532d">• Email Notification Service</text>
+  <text x="980" y="710" font-size="13" fill="#14532d">• Search &amp; Filter Services</text>
+
+  <!-- Security Layer -->
+  <rect x="1370" y="500" width="380" height="260" fill="#dcfce7" stroke="#16a34a" stroke-width="2" rx="6"/>
+  <text x="1560" y="530" font-size="16" font-weight="bold" text-anchor="middle" fill="#166534">Security Layer</text>
+  <text x="1390" y="560" font-size="13" fill="#14532d">• Authentication (Session-based)</text>
+  <text x="1390" y="585" font-size="13" fill="#14532d">• Authorization (Permissions)</text>
+  <text x="1390" y="610" font-size="13" fill="#14532d">• Password Hashing (PBKDF2)</text>
+  <text x="1390" y="635" font-size="13" fill="#14532d">• CSRF Token Validation</text>
+  <text x="1390" y="660" font-size="13" fill="#14532d">• SQL Injection Prevention (ORM)</text>
+  <text x="1390" y="685" font-size="13" fill="#14532d">• XSS Protection (Auto-escape)</text>
+  <text x="1390" y="710" font-size="13" fill="#14532d">• File Upload Security</text>
+
+  <!-- Arrow down -->
+  <line x1="1100" y1="790" x2="1100" y2="850" stroke="#22c55e" stroke-width="3" marker-end="url(#arrowGreen)"/>
+  <text x="1120" y="825" font-size="12" font-weight="bold" fill="#16a34a">SQL Queries via Django ORM</text>
+
+  <!-- ==================== DATA LAYER ==================== -->
+  <rect x="100" y="870" width="2000" height="280" fill="#fef3c7" stroke="#f59e0b" stroke-width="3" rx="8"/>
+  <text x="120" y="905" font-size="20" font-weight="bold" fill="#92400e">DATA LAYER (Persistence)</text>
+
+  <!-- MySQL Database -->
+  <rect x="150" y="930" width="450" height="200" fill="#fde68a" stroke="#d97706" stroke-width="2" rx="6"/>
+  <text x="375" y="960" font-size="16" font-weight="bold" text-anchor="middle" fill="#92400e">MySQL 8.x Database</text>
+  <text x="170" y="990" font-size="13" fill="#78350f">• 13 Tables (Users, Applications,</text>
+  <text x="170" y="1015" font-size="13" fill="#78350f">  Schools, Notifications)</text>
+  <text x="170" y="1040" font-size="13" fill="#78350f">• Primary Keys, Foreign Keys</text>
+  <text x="170" y="1065" font-size="13" fill="#78350f">• Indexes (email, id_number, status)</text>
+  <text x="170" y="1090" font-size="13" fill="#78350f">• ACID Transactions</text>
+  <text x="170" y="1115" font-size="13" fill="#78350f">• Connection: PyMySQL Driver</text>
+
+  <!-- Django ORM -->
+  <rect x="650" y="930" width="400" height="200" fill="#fde68a" stroke="#d97706" stroke-width="2" rx="6"/>
+  <text x="850" y="960" font-size="16" font-weight="bold" text-anchor="middle" fill="#92400e">Django ORM</text>
+  <text x="670" y="990" font-size="13" fill="#78350f">• Model Classes (Python Objects)</text>
+  <text x="670" y="1015" font-size="13" fill="#78350f">• Query API (filter, get, all)</text>
+  <text x="670" y="1040" font-size="13" fill="#78350f">• Migrations (Schema Changes)</text>
+  <text x="670" y="1065" font-size="13" fill="#78350f">• Relationships (ForeignKey, OneToOne)</text>
+  <text x="670" y="1090" font-size="13" fill="#78350f">• Aggregations &amp; Annotations</text>
+  <text x="670" y="1115" font-size="13" fill="#78350f">• Raw SQL Support</text>
+
+  <!-- File Storage -->
+  <rect x="1100" y="930" width="380" height="200" fill="#fde68a" stroke="#d97706" stroke-width="2" rx="6"/>
+  <text x="1290" y="960" font-size="16" font-weight="bold" text-anchor="middle" fill="#92400e">File Storage</text>
+  <text x="1120" y="990" font-size="13" fill="#78350f">• Media Files (/media/documents/)</text>
+  <text x="1120" y="1015" font-size="13" fill="#78350f">• Application Documents (PDF, PNG)</text>
+  <text x="1120" y="1040" font-size="13" fill="#78350f">• Profile Photos</text>
+  <text x="1120" y="1065" font-size="13" fill="#78350f">• Generated Reports (Excel, PDF)</text>
+  <text x="1120" y="1090" font-size="13" fill="#78350f">• Storage Path: File System</text>
+  <text x="1120" y="1115" font-size="13" fill="#78350f">• Access Control via Django Views</text>
+
+  <!-- Backup -->
+  <rect x="1530" y="930" width="320" height="200" fill="#fde68a" stroke="#d97706" stroke-width="2" rx="6"/>
+  <text x="1690" y="960" font-size="16" font-weight="bold" text-anchor="middle" fill="#92400e">Backup &amp; Recovery</text>
+  <text x="1550" y="990" font-size="13" fill="#78350f">• Daily Automated Backups</text>
+  <text x="1550" y="1015" font-size="13" fill="#78350f">• mysqldump Scripts</text>
+  <text x="1550" y="1040" font-size="13" fill="#78350f">• Off-site Storage</text>
+  <text x="1550" y="1065" font-size="13" fill="#78350f">• Point-in-Time Recovery</text>
+  <text x="1550" y="1090" font-size="13" fill="#78350f">• Retention: 30 days</text>
+
+  <!-- ==================== EXTERNAL SERVICES ==================== -->
+  <rect x="100" y="1190" width="2000" height="180" fill="#fdf4ff" stroke="#a855f7" stroke-width="3" rx="8"/>
+  <text x="120" y="1225" font-size="20" font-weight="bold" fill="#6b21a8">EXTERNAL SERVICES &amp; INTEGRATIONS</text>
+
+  <!-- Email Service -->
+  <rect x="200" y="1250" width="400" height="100" fill="#f3e8ff" stroke="#9333ea" stroke-width="2" rx="6"/>
+  <text x="400" y="1280" font-size="16" font-weight="bold" text-anchor="middle" fill="#6b21a8">Email Service (SMTP)</text>
+  <text x="220" y="1310" font-size="13" fill="#581c87">• Transactional Emails (Status Updates)</text>
+  <text x="220" y="1335" font-size="13" fill="#581c87">• Celery for Async Email Delivery</text>
+
+  <!-- Reporting -->
+  <rect x="650" y="1250" width="400" height="100" fill="#f3e8ff" stroke="#9333ea" stroke-width="2" rx="6"/>
+  <text x="850" y="1280" font-size="16" font-weight="bold" text-anchor="middle" fill="#6b21a8">Report Generation</text>
+  <text x="670" y="1310" font-size="13" fill="#581c87">• PDF (WeasyPrint / ReportLab)</text>
+  <text x="670" y="1335" font-size="13" fill="#581c87">• Excel Export (openpyxl)</text>
+
+  <!-- Logging -->
+  <rect x="1100" y="1250" width="400" height="100" fill="#f3e8ff" stroke="#9333ea" stroke-width="2" rx="6"/>
+  <text x="1300" y="1280" font-size="16" font-weight="bold" text-anchor="middle" fill="#6b21a8">Logging &amp; Monitoring</text>
+  <text x="1120" y="1310" font-size="13" fill="#581c87">• Django Logging Framework</text>
+  <text x="1120" y="1335" font-size="13" fill="#581c87">• Error Tracking, Audit Trails</text>
+
+  <!-- HTTP Server -->
+  <rect x="1550" y="1250" width="350" height="100" fill="#f3e8ff" stroke="#9333ea" stroke-width="2" rx="6"/>
+  <text x="1725" y="1280" font-size="16" font-weight="bold" text-anchor="middle" fill="#6b21a8">Web Server</text>
+  <text x="1570" y="1310" font-size="13" fill="#581c87">• Development: Django Dev Server</text>
+  <text x="1570" y="1335" font-size="13" fill="#581c87">• Production: Gunicorn + Nginx</text>
+
+  <!-- ==================== ACTORS ==================== -->
+  <rect x="100" y="1420" width="2000" height="160" fill="#fecaca" stroke="#dc2626" stroke-width="3" rx="8"/>
+  <text x="120" y="1455" font-size="20" font-weight="bold" fill="#7f1d1d">USER ACTORS</text>
+
+  <!-- Students -->
+  <rect x="250" y="1480" width="300" height="80" fill="#fee2e2" stroke="#dc2626" stroke-width="2" rx="6"/>
+  <text x="400" y="1510" font-size="16" font-weight="bold" text-anchor="middle" fill="#7f1d1d">Students</text>
+  <text x="270" y="1540" font-size="13" fill="#7f1d1d">Register, Apply, Upload Docs, Track</text>
+
+  <!-- Reviewers -->
+  <rect x="600" y="1480" width="300" height="80" fill="#fee2e2" stroke="#dc2626" stroke-width="2" rx="6"/>
+  <text x="750" y="1510" font-size="16" font-weight="bold" text-anchor="middle" fill="#7f1d1d">Reviewers</text>
+  <text x="620" y="1540" font-size="13" fill="#7f1d1d">Review Applications, Score, Comment</text>
+
+  <!-- Admins -->
+  <rect x="950" y="1480" width="300" height="80" fill="#fee2e2" stroke="#dc2626" stroke-width="2" rx="6"/>
+  <text x="1100" y="1510" font-size="16" font-weight="bold" text-anchor="middle" fill="#7f1d1d">Admins</text>
+  <text x="970" y="1540" font-size="13" fill="#7f1d1d">Approve, Disburse, Manage System</text>
+
+  <!-- Super Admin -->
+  <rect x="1300" y="1480" width="350" height="80" fill="#fee2e2" stroke="#dc2626" stroke-width="2" rx="6"/>
+  <text x="1475" y="1510" font-size="16" font-weight="bold" text-anchor="middle" fill="#7f1d1d">Super Admin</text>
+  <text x="1320" y="1540" font-size="13" fill="#7f1d1d">User Management, Schools, Reports</text>
+
+  <!-- Connection Lines -->
+  <line x1="400" y1="1480" x2="400" y2="140" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="750" y1="1480" x2="750" y2="140" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="1100" y1="1480" x2="1100" y2="140" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="1475" y1="1480" x2="1475" y2="140" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,5"/>
+
+  <!-- Arrows from Backend to External Services -->
+  <line x1="850" y1="790" x2="400" y2="1250" stroke="#9333ea" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrow)"/>
+  <line x1="1100" y1="790" x2="850" y2="1250" stroke="#9333ea" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrow)"/>
+  <line x1="1350" y1="790" x2="1300" y2="1250" stroke="#9333ea" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrow)"/>
+
+  <!-- Technology Stack Summary -->
+  <rect x="100" y="1620" width="2000" height="140" fill="#f1f5f9" stroke="#64748b" stroke-width="2" rx="8"/>
+  <text x="120" y="1655" font-size="18" font-weight="bold" fill="#1e293b">TECHNOLOGY STACK SUMMARY</text>
+  <text x="120" y="1685" font-size="13" fill="#334155">• Frontend: HTML5, CSS3, JavaScript (ES6), Bootstrap 5, jQuery</text>
+  <text x="120" y="1710" font-size="13" fill="#334155">• Backend: Django 6.0.3 (Python 3.14.0), Django ORM, Django Templates, Class-Based Views</text>
+  <text x="120" y="1735" font-size="13" fill="#334155">• Database: MySQL 8.x with PyMySQL driver | File Storage: Local File System (media/)</text>
+  <text x="120" y="1760" font-size="13" fill="#334155">• Services: SMTP (Email), Celery (Async Tasks), WeasyPrint/ReportLab (PDF), openpyxl (Excel) | Server: Django Dev Server → Production: Gunicorn + Nginx</text>
+</svg>

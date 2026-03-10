@@ -1,0 +1,16 @@
+flowchart TD
+    A[Student Portal] --> B[Authentication Module]
+    B --> C[Profile Module]
+    C --> D[Application Module]
+    D --> E[Review Module]
+    E --> F[Admin Approval Module]
+    F --> G[Disbursement / Outcome]
+    D --> H[Notification Module]
+    F --> H
+    H --> I[Email Service SMTP]
+
+    D --> J[(MySQL Database)]
+    E --> J
+    F --> J
+    C --> J
+    K[Reports and Dashboard] --> J

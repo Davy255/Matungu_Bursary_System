@@ -1,0 +1,222 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 2000">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#333"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="2400" height="2000" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="1200" y="50" font-size="32" font-weight="bold" text-anchor="middle" fill="#1f2937">
+    BURSARY SYSTEM - DATABASE STRUCTURE (13 TABLES)
+  </text>
+  <text x="1200" y="85" font-size="18" text-anchor="middle" fill="#666">
+    Complete Table Inventory with Relationships
+  </text>
+
+  <!-- ==================== USERS DOMAIN (TEAL) ==================== -->
+  <text x="150" y="140" font-size="18" font-weight="bold" fill="#0d9488">USERS DOMAIN</text>
+
+  <!-- users_user -->
+  <rect x="50" y="160" width="350" height="200" fill="#d1faf0" stroke="#0d9488" stroke-width="3" rx="8"/>
+  <text x="225" y="190" font-size="16" font-weight="bold" text-anchor="middle" fill="#0d9488">users_user</text>
+  <line x1="50" y1="205" x2="400" y2="205" stroke="#0d9488" stroke-width="2"/>
+  <text x="70" y="230" font-size="13" fill="#111">id (PK)</text>
+  <text x="70" y="255" font-size="13" fill="#111">username (unique)</text>
+  <text x="70" y="280" font-size="13" fill="#111">email (unique)</text>
+  <text x="70" y="305" font-size="13" fill="#111">phone_number, role</text>
+  <text x="70" y="330" font-size="13" fill="#111">is_verified, created_at</text>
+
+  <!-- users_userprofile -->
+  <rect x="450" y="160" width="350" height="200" fill="#d1faf0" stroke="#0d9488" stroke-width="3" rx="8"/>
+  <text x="625" y="190" font-size="16" font-weight="bold" text-anchor="middle" fill="#0d9488">users_userprofile</text>
+  <line x1="450" y1="205" x2="800" y2="205" stroke="#0d9488" stroke-width="2"/>
+  <text x="470" y="230" font-size="13" fill="#111">id (PK)</text>
+  <text x="470" y="255" font-size="13" fill="#111">user_id (FK→users_user)</text>
+  <text x="470" y="280" font-size="13" fill="#111">id_number (unique)</text>
+  <text x="470" y="305" font-size="13" fill="#111">DOB, gender, address</text>
+  <text x="470" y="330" font-size="13" fill="#111">county, guardian_name</text>
+
+  <!-- users_adminrole -->
+  <rect x="850" y="160" width="350" height="200" fill="#d1faf0" stroke="#0d9488" stroke-width="3" rx="8"/>
+  <text x="1025" y="190" font-size="16" font-weight="bold" text-anchor="middle" fill="#0d9488">users_adminrole</text>
+  <line x1="850" y1="205" x2="1200" y2="205" stroke="#0d9488" stroke-width="2"/>
+  <text x="870" y="230" font-size="13" fill="#111">id (PK)</text>
+  <text x="870" y="255" font-size="13" fill="#111">user_id (FK→users_user)</text>
+  <text x="870" y="280" font-size="13" fill="#111">role_type (super_admin,</text>
+  <text x="870" y="305" font-size="13" fill="#111">reviewer, finance)</text>
+  <text x="870" y="330" font-size="13" fill="#111">permissions, department</text>
+
+  <!-- users_passwordreset -->
+  <rect x="1250" y="160" width="350" height="200" fill="#d1faf0" stroke="#0d9488" stroke-width="3" rx="8"/>
+  <text x="1425" y="190" font-size="16" font-weight="bold" text-anchor="middle" fill="#0d9488">users_passwordreset</text>
+  <line x1="1250" y1="205" x2="1600" y2="205" stroke="#0d9488" stroke-width="2"/>
+  <text x="1270" y="230" font-size="13" fill="#111">id (PK)</text>
+  <text x="1270" y="255" font-size="13" fill="#111">user_id (FK→users_user)</text>
+  <text x="1270" y="280" font-size="13" fill="#111">token (unique)</text>
+  <text x="1270" y="305" font-size="13" fill="#111">created_at, expires_at</text>
+  <text x="1270" y="330" font-size="13" fill="#111">is_used, used_at</text>
+
+  <!-- ==================== APPLICATIONS DOMAIN (GREEN) ==================== -->
+  <text x="150" y="460" font-size="18" font-weight="bold" fill="#16a34a">APPLICATIONS DOMAIN</text>
+
+  <!-- applications_ward -->
+  <rect x="50" y="480" width="280" height="180" fill="#dcfce7" stroke="#16a34a" stroke-width="3" rx="8"/>
+  <text x="190" y="510" font-size="16" font-weight="bold" text-anchor="middle" fill="#16a34a">applications_ward</text>
+  <line x1="50" y1="525" x2="330" y2="525" stroke="#16a34a" stroke-width="2"/>
+  <text x="70" y="550" font-size="13" fill="#111">id (PK)</text>
+  <text x="70" y="575" font-size="13" fill="#111">name, code (unique)</text>
+  <text x="70" y="600" font-size="13" fill="#111">sub_county, county</text>
+  <text x="70" y="625" font-size="13" fill="#111">created_at, updated_at</text>
+
+  <!-- applications_application -->
+  <rect x="370" y="480" width="320" height="180" fill="#dcfce7" stroke="#16a34a" stroke-width="3" rx="8"/>
+  <text x="530" y="510" font-size="16" font-weight="bold" text-anchor="middle" fill="#16a34a">applications_application</text>
+  <line x1="370" y1="525" x2="690" y2="525" stroke="#16a34a" stroke-width="2"/>
+  <text x="390" y="550" font-size="13" fill="#111">id (PK)</text>
+  <text x="390" y="575" font-size="13" fill="#111">applicant_id (FK→users_user)</text>
+  <text x="390" y="600" font-size="13" fill="#111">application_number, status</text>
+  <text x="390" y="625" font-size="13" fill="#111">amount_requested/approved</text>
+
+  <!-- applications_applicationdocument -->
+  <rect x="730" y="480" width="300" height="180" fill="#dcfce7" stroke="#16a34a" stroke-width="3" rx="8"/>
+  <text x="880" y="510" font-size="16" font-weight="bold" text-anchor="middle" fill="#16a34a">applications_applicationdocument</text>
+  <line x1="730" y1="525" x2="1030" y2="525" stroke="#16a34a" stroke-width="2"/>
+  <text x="750" y="550" font-size="13" fill="#111">id (PK)</text>
+  <text x="750" y="575" font-size="13" fill="#111">application_id (FK)</text>
+  <text x="750" y="600" font-size="13" fill="#111">document_type, file</text>
+  <text x="750" y="625" font-size="13" fill="#111">file_size, uploaded_at</text>
+
+  <!-- applications_applicationreview -->
+  <rect x="1070" y="480" width="300" height="180" fill="#dcfce7" stroke="#16a34a" stroke-width="3" rx="8"/>
+  <text x="1220" y="510" font-size="16" font-weight="bold" text-anchor="middle" fill="#16a34a">applications_applicationreview</text>
+  <line x1="1070" y1="525" x2="1370" y2="525" stroke="#16a34a" stroke-width="2"/>
+  <text x="1090" y="550" font-size="13" fill="#111">id (PK)</text>
+  <text x="1090" y="575" font-size="13" fill="#111">application_id (FK)</text>
+  <text x="1090" y="600" font-size="13" fill="#111">reviewer_id (FK→users_user)</text>
+  <text x="1090" y="625" font-size="13" fill="#111">score, comments, reviewed_at</text>
+
+  <!-- applications_applicationapproval -->
+  <rect x="1410" y="480" width="320" height="180" fill="#dcfce7" stroke="#16a34a" stroke-width="3" rx="8"/>
+  <text x="1570" y="510" font-size="16" font-weight="bold" text-anchor="middle" fill="#16a34a">applications_applicationapproval</text>
+  <line x1="1410" y1="525" x2="1730" y2="525" stroke="#16a34a" stroke-width="2"/>
+  <text x="1430" y="550" font-size="13" fill="#111">id (PK)</text>
+  <text x="1430" y="575" font-size="13" fill="#111">application_id (FK)</text>
+  <text x="1430" y="600" font-size="13" fill="#111">approver_id (FK→users_user)</text>
+  <text x="1430" y="625" font-size="13" fill="#111">approved_amount, approved_at</text>
+
+  <!-- ==================== SCHOOLS DOMAIN (PURPLE) ==================== -->
+  <text x="150" y="780" font-size="18" font-weight="bold" fill="#7c3aed">SCHOOLS DOMAIN</text>
+
+  <!-- schools_school -->
+  <rect x="50" y="800" width="380" height="180" fill="#ede9fe" stroke="#7c3aed" stroke-width="3" rx="8"/>
+  <text x="240" y="830" font-size="16" font-weight="bold" text-anchor="middle" fill="#7c3aed">schools_school</text>
+  <line x1="50" y1="845" x2="430" y2="845" stroke="#7c3aed" stroke-width="2"/>
+  <text x="70" y="870" font-size="13" fill="#111">id (PK)</text>
+  <text x="70" y="895" font-size="13" fill="#111">name, school_type (university,</text>
+  <text x="70" y="920" font-size="13" fill="#111">college, tvet, polytechnic)</text>
+  <text x="70" y="945" font-size="13" fill="#111">registration_number, email, phone</text>
+
+  <!-- schools_campus -->
+  <rect x="470" y="800" width="350" height="180" fill="#ede9fe" stroke="#7c3aed" stroke-width="3" rx="8"/>
+  <text x="645" y="830" font-size="16" font-weight="bold" text-anchor="middle" fill="#7c3aed">schools_campus</text>
+  <line x1="470" y1="845" x2="820" y2="845" stroke="#7c3aed" stroke-width="2"/>
+  <text x="490" y="870" font-size="13" fill="#111">id (PK)</text>
+  <text x="490" y="895" font-size="13" fill="#111">school_id (FK→schools_school)</text>
+  <text x="490" y="920" font-size="13" fill="#111">name, location</text>
+  <text x="490" y="945" font-size="13" fill="#111">is_main (boolean)</text>
+
+  <!-- schools_program -->
+  <rect x="860" y="800" width="350" height="180" fill="#ede9fe" stroke="#7c3aed" stroke-width="3" rx="8"/>
+  <text x="1035" y="830" font-size="16" font-weight="bold" text-anchor="middle" fill="#7c3aed">schools_program</text>
+  <line x1="860" y1="845" x2="1210" y2="845" stroke="#7c3aed" stroke-width="2"/>
+  <text x="880" y="870" font-size="13" fill="#111">id (PK)</text>
+  <text x="880" y="895" font-size="13" fill="#111">school_id (FK→schools_school)</text>
+  <text x="880" y="920" font-size="13" fill="#111">name, code, level</text>
+  <text x="880" y="945" font-size="13" fill="#111">duration_years, is_active</text>
+
+  <!-- ==================== NOTIFICATIONS DOMAIN (PINK) ==================== -->
+  <text x="150" y="1100" font-size="18" font-weight="bold" fill="#ec4899">NOTIFICATIONS DOMAIN</text>
+
+  <!-- notifications_notification -->
+  <rect x="50" y="1120" width="450" height="160" fill="#fce7f3" stroke="#ec4899" stroke-width="3" rx="8"/>
+  <text x="275" y="1150" font-size="16" font-weight="bold" text-anchor="middle" fill="#ec4899">notifications_notification</text>
+  <line x1="50" y1="1165" x2="500" y2="1165" stroke="#ec4899" stroke-width="2"/>
+  <text x="70" y="1190" font-size="13" fill="#111">id (PK)</text>
+  <text x="70" y="1215" font-size="13" fill="#111">user_id (FK→users_user) | notification_type | title, message, link | is_read, created_at</text>
+
+  <!-- ==================== RELATIONSHIP ARROWS ==================== -->
+  <!-- Primary Key/Foreign Key Legend -->
+  <text x="150" y="1350" font-size="16" font-weight="bold" fill="#333">KEY RELATIONSHIPS WITH ARROWS:</text>
+
+  <!-- users_userprofile → users_user -->
+  <path d="M 625 160 L 625 120 L 225 120 L 225 160" stroke="#0d9488" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="400" y="135" font-size="12" fill="#0d9488" font-weight="bold">1:1 Relationship</text>
+
+  <!-- users_adminrole → users_user -->
+  <path d="M 1025 160 L 1025 100 L 225 100 L 225 160" stroke="#0d9488" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="600" y="105" font-size="12" fill="#0d9488" font-weight="bold">1:1 Relationship</text>
+
+  <!-- users_passwordreset → users_user -->
+  <path d="M 1425 160 L 1425 80 L 225 80 L 225 160" stroke="#0d9488" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="800" y="85" font-size="12" fill="#0d9488" font-weight="bold">N:1 Relationship</text>
+
+  <!-- applications_application → users_user (applicant) -->
+  <path d="M 530 480 L 530 380" stroke="#16a34a" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="540" y="430" font-size="12" fill="#16a34a" font-weight="bold">applicant_id FK</text>
+
+  <!-- applications_application → applications_ward -->
+  <path d="M 420 480 L 260 660" stroke="#16a34a" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="280" y="570" font-size="12" fill="#16a34a" font-weight="bold">ward_id FK</text>
+
+  <!-- applications_applicationdocument → applications_application -->
+  <path d="M 730 580 L 690 580" stroke="#16a34a" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="700" y="565" font-size="12" fill="#16a34a" font-weight="bold">application_id FK</text>
+
+  <!-- applications_applicationreview → applications_application -->
+  <path d="M 1070 520 L 690 520" stroke="#16a34a" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="880" y="505" font-size="12" fill="#16a34a" font-weight="bold">application_id FK</text>
+
+  <!-- applications_applicationreview → users_user (reviewer) -->
+  <path d="M 1220 480 L 1220 360" stroke="#16a34a" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="1230" y="420" font-size="12" fill="#16a34a" font-weight="bold">reviewer_id FK</text>
+
+  <!-- applications_applicationapproval → applications_application -->
+  <path d="M 1410 540 L 730 540" stroke="#16a34a" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="1070" y="525" font-size="12" fill="#16a34a" font-weight="bold">application_id FK</text>
+
+  <!-- applications_applicationapproval → users_user (approver) -->
+  <path d="M 1570 480 L 1570 340" stroke="#16a34a" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="1580" y="410" font-size="12" fill="#16a34a" font-weight="bold">approver_id FK</text>
+
+  <!-- schools_campus → schools_school -->
+  <path d="M 470 870 L 430 870" stroke="#7c3aed" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="440" y="855" font-size="12" fill="#7c3aed" font-weight="bold">school_id FK</text>
+
+  <!-- schools_program → schools_school -->
+  <path d="M 860 900 L 430 900" stroke="#7c3aed" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="640" y="885" font-size="12" fill="#7c3aed" font-weight="bold">school_id FK</text>
+
+  <!-- applications_application → schools fields -->
+  <path d="M 550 660 L 550 800" stroke="#d946ef" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead)"/>
+  <text x="560" y="730" font-size="11" fill="#d946ef" font-weight="bold">school_id, campus_id FK</text>
+
+  <!-- notifications_notification → users_user -->
+  <path d="M 275 1120 L 275 360" stroke="#ec4899" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="285" y="740" font-size="12" fill="#ec4899" font-weight="bold">user_id FK</text>
+
+  <!-- ==================== SUMMARY TABLE ==================== -->
+  <rect x="50" y="1380" width="1700" height="120" fill="#f0f4f8" stroke="#334155" stroke-width="2" rx="8"/>
+  <text x="70" y="1410" font-size="14" font-weight="bold" fill="#1f2937">SUMMARY: 13 TABLES TOTAL</text>
+  <text x="70" y="1435" font-size="13" fill="#334155">USERS: 4 tables (users_user, users_userprofile, users_adminrole, users_passwordreset)</text>
+  <text x="70" y="1460" font-size="13" fill="#334155">APPLICATIONS: 5 tables (applications_ward, applications_application, applications_applicationdocument, applications_applicationreview, applications_applicationapproval)</text>
+  <text x="70" y="1485" font-size="13" fill="#334155">SCHOOLS: 3 tables (schools_school, schools_campus, schools_program) | NOTIFICATIONS: 1 table (notifications_notification)</text>
+
+  <!-- ==================== NOTES ==================== -->
+  <rect x="50" y="1540" width="1700" height="100" fill="#fff7ed" stroke="#ea580c" stroke-width="2" rx="8"/>
+  <text x="70" y="1570" font-size="14" font-weight="bold" fill="#7c2d12">RELATIONSHIP TYPES:</text>
+  <text x="70" y="1595" font-size="12" fill="#7c2d12">1:1 (One-to-One): users_user↔users_userprofile, users_user↔users_adminrole, applications_application↔applications_applicationapproval</text>
+  <text x="70" y="1620" font-size="12" fill="#7c2d12">N:1 (Many-to-One): All FK relationships | All tables have: id (PK), created_at, updated_at fields | Status tracking: draft→submitted→under_review→approved→rejected→disbursed</text>
+</svg>

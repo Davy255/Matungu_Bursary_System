@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="700" viewBox="0 0 1500 700">
+  <rect width="1500" height="700" fill="#ffffff"/>
+  <text x="750" y="48" text-anchor="middle" font-family="Arial" font-size="34" font-weight="700" fill="#0f172a">Table 8: Monitoring and Evaluation KPIs</text>
+
+  <rect x="60" y="90" width="1380" height="560" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+  <rect x="60" y="90" width="1380" height="90" fill="#22c55e"/>
+
+  <line x1="620" y1="90" x2="620" y2="650" stroke="#1e293b" stroke-width="2"/>
+  <line x1="900" y1="90" x2="900" y2="650" stroke="#1e293b" stroke-width="2"/>
+
+  <line x1="60" y1="180" x2="1440" y2="180" stroke="#1e293b" stroke-width="2"/>
+  <line x1="60" y1="274" x2="1440" y2="274" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="60" y1="368" x2="1440" y2="368" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="60" y1="462" x2="1440" y2="462" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="60" y1="556" x2="1440" y2="556" stroke="#cbd5e1" stroke-width="1.5"/>
+
+  <text x="340" y="145" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">KPI</text>
+  <text x="760" y="145" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Baseline</text>
+  <text x="1170" y="145" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">Target After Go-Live</text>
+
+  <text x="80" y="240" font-family="Arial" font-size="22" fill="#0f172a">Average application processing time</text>
+  <text x="760" y="240" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">4-8 weeks</text>
+  <text x="1170" y="240" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">1-2 weeks</text>
+
+  <text x="80" y="334" font-family="Arial" font-size="22" fill="#0f172a">Status inquiry visits/calls</text>
+  <text x="760" y="334" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">High</text>
+  <text x="1170" y="334" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">Reduce by 60%</text>
+
+  <text x="80" y="428" font-family="Arial" font-size="22" fill="#0f172a">Lost/missing application records</text>
+  <text x="760" y="428" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">Frequent</text>
+  <text x="1170" y="428" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">Near zero</text>
+
+  <text x="80" y="522" font-family="Arial" font-size="22" fill="#0f172a">User satisfaction score</text>
+  <text x="760" y="522" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">Not measured</text>
+  <text x="1170" y="522" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">>= 80%</text>
+
+  <text x="80" y="616" font-family="Arial" font-size="22" fill="#0f172a">Report generation time</text>
+  <text x="760" y="616" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">Several days</text>
+  <text x="1170" y="616" text-anchor="middle" font-family="Arial" font-size="22" fill="#0f172a">&lt; 30 minutes</text>
+</svg>
