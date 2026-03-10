@@ -123,35 +123,51 @@
     .errorlist li {
         margin: 3px 0;
     }
-    .photo-preview-section {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 2rem;
-        padding: 1.5rem;
-        background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-        border: 2px solid #0284c7;
-        border-radius: 12px;
+    /* ── Profile photo at top ── */
+    .profile-photo-area {
+        margin: 0 auto 1.25rem;
+        position: relative;
+        width: 100px;
+        height: 100px;
     }
-    .current-photo {
-        width: 180px;
-        height: 180px;
-        border-radius: 12px;
+    .profile-photo-frame {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
         overflow: hidden;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        margin-bottom: 1rem;
+        border: 3px solid #fff;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        background: linear-gradient(135deg, #06b6d4, #0284c7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        color: white;
     }
-    .current-photo-img {
+    .profile-photo-frame img {
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
-    .photo-label {
-        color: #0284c7;
-        font-weight: 600;
-        font-size: 0.9rem;
-        margin: 0;
+    .photo-edit-btn {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 30px;
+        height: 30px;
+        background: #0284c7;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border: 2px solid white;
+        color: white;
+        font-size: 0.75rem;
+        transition: background 0.2s;
     }
+    .photo-edit-btn:hover { background: #0369a1; }
+    #id_profile_photo { display: none; }
     .form-actions {
         display: flex;
         gap: 1rem;
@@ -207,8 +223,20 @@
 {% block content %}
 <div class="profile-wrapper">
     <div class="profile-header">
-        <div class="profile-icon">
-            <i class="fas fa-user-edit"></i>
+        <!-- Profile photo at the top -->
+        <div class="profile-photo-area">
+            <div class="profile-photo-frame" id="photoFrame">
+                {% if form.instance.profile_photo %}
+                    <img src="{{ form.instance.profile_photo.url }}" alt="Profile Photo" id="photoPreview">
+                {% else %}
+                    <i class="fas fa-user" id="photoIcon"></i>
+                    <img src="" alt="" id="photoPreview" style="display:none;width:100%;height:100%;object-fit:cover;">
+                {% endif %}
+            </div>
+            <label for="id_profile_photo" class="photo-edit-btn" title="Change photo">
+                <i class="fas fa-camera"></i>
+            </label>
+            {{ form.profile_photo }}
         </div>
         <h2>{% if creating %}Create Your Profile{% else %}Update Profile{% endif %}</h2>
         <p>{% if creating %}Complete your profile to start applying for bursaries{% else %}Keep your information up to date{% endif %}</p>
@@ -270,44 +298,6 @@
                 {% endfor %}
             </div>
             
-            <div class="form-section">
-                <div class="section-title">
-                    <i class="fas fa-image"></i>
-                    <span>Profile Photo</span>
-                </div>
-                
-                {% if form.instance.profile_photo %}
-                <div class="photo-preview-section">
-                    <div class="current-photo">
-                        <img src="{{ form.instance.profile_photo.url }}" alt="Current profile photo" class="current-photo-img">
-                    </div>
-                    <p class="photo-label">Current Photo</p>
-                </div>
-                {% endif %}
-                
-                {% for field in form %}
-                    {% if forloop.counter0 >= 8 %}
-                        <div class="form-group">
-                            <label for="{{ field.id_for_label }}">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                {{ field.label }}
-                            </label>
-                            {{ field }}
-                            {% if field.help_text %}
-                                <span class="helptext">{{ field.help_text }}</span>
-                            {% endif %}
-                            {% if field.errors %}
-                                <ul class="errorlist">
-                                    {% for error in field.errors %}
-                                        <li>{{ error }}</li>
-                                    {% endfor %}
-                                </ul>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-            
             {% if form.non_field_errors %}
                 <ul class="errorlist">
                     {% for error in form.non_field_errors %}
@@ -329,4 +319,22 @@
         </form>
     </div>
 </div>
+
+{% block extra_js %}
+<script>
+document.getElementById('id_profile_photo').addEventListener('change', function () {
+    var file = this.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        var preview = document.getElementById('photoPreview');
+        var icon = document.getElementById('photoIcon');
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+        if (icon) icon.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+});
+</script>
+{% endblock %}
 {% endblock %}
