@@ -1,6 +1,6 @@
 # Bursary Management System
 
-A comprehensive web application for managing bursary applications, built with Django 6.0 and MySQL.
+A comprehensive web and mobile-ready application backend for managing bursary applications, built with Django 6.0 and MySQL.
 
 ## 🚀 Features Implemented
 
@@ -31,6 +31,13 @@ All functionality has been built and is working:
 - **Application Review System** - Reviewers can score and recommend applications
 - **Application Approval** - Approvers can set approved amounts and disbursement details
 - **Notifications** - System for notifying users of application status changes
+
+#### Mobile API (New)
+- **Token Authentication API** - Login/logout and secure token-based access for mobile apps
+- **Profile API** - Fetch logged-in user profile data
+- **Schools API** - Search and filter schools
+- **Applications API** - Create, list, view, and submit applications
+- **Document Upload API** - Upload application documents from mobile clients
 
 ## 📊 Database Schema
 
@@ -137,6 +144,23 @@ Bursary_system/
 ```
 
 ## 🌐 Available URLs
+
+### Web Interface
+- Home: / 
+- Login: /login/
+- Applications: /applications/
+- Admin: /admin/
+
+### Mobile API Endpoints
+- POST /api/auth/login/
+- POST /api/auth/logout/
+- GET /api/auth/me/
+- GET /api/schools/?q=&type=
+- GET /api/applications/
+- POST /api/applications/
+- GET /api/applications/{id}/
+- POST /api/applications/{id}/submit/
+- POST /api/applications/{id}/documents/
 
 ### Public Pages
 - `/` - Homepage
