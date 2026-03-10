@@ -395,8 +395,10 @@
   const schoolSel  = document.getElementById('id_school');
   const schoolSrch = document.getElementById('school-search');
 
-  function populateSchools(category, keepValue) {
-    const list = SCHOOLS[category] || [];
+  // Holds all schools for the currently selected category
+  let allSchoolOptions = [];
+
+  function renderSchoolOptions(list, keepValue) {
     schoolSel.innerHTML = '<option value="">-- Select School --</option>';
     list.forEach(s => {
       const opt = document.createElement('option');
@@ -405,6 +407,12 @@
       if (keepValue && String(s.id) === String(keepValue)) opt.selected = true;
       schoolSel.appendChild(opt);
     });
+  }
+
+  function populateSchools(category, keepValue) {
+    allSchoolOptions = SCHOOLS[category] || [];
+    schoolSrch.value = '';
+    renderSchoolOptions(allSchoolOptions, keepValue);
     schoolRow.classList.add('visible');
   }
 
@@ -413,17 +421,17 @@
       catCards.forEach(c => c.classList.remove('selected'));
       card.classList.add('selected');
       card.querySelector('input').checked = true;
-      schoolSrch.value = '';
       populateSchools(card.dataset.cat, null);
     });
   });
 
   schoolSrch.addEventListener('input', function () {
-    const q = this.value.toLowerCase();
-    Array.from(schoolSel.options).forEach(opt => {
-      if (!opt.value) return;
-      opt.style.display = opt.textContent.toLowerCase().includes(q) ? '' : 'none';
-    });
+    const q = this.value.toLowerCase().trim();
+    const currentVal = schoolSel.value;
+    const filtered = q
+      ? allSchoolOptions.filter(s => s.name.toLowerCase().includes(q))
+      : allSchoolOptions;
+    renderSchoolOptions(filtered, currentVal);
   });
 
   // Restore state on reload after validation error
