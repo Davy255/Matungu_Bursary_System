@@ -5,16 +5,16 @@ class School(models.Model):
     SCHOOL_TYPES = [
         ('university', 'University'),
         ('college', 'College'),
-        ('tvet', 'TVET Institution'),
-        ('polytechnic', 'Polytechnic'),
+        ('ttc', 'Teachers Training College'),
+        ('polytechnic', 'National Polytechnic'),
     ]
     
     name = models.CharField(max_length=200)
     school_type = models.CharField(max_length=20, choices=SCHOOL_TYPES)
     registration_number = models.CharField(max_length=50, unique=True)
-    email = models.EmailField()
-    phone_number = models.CharField(max_length=20)
-    address = models.TextField()
+    email = models.EmailField(blank=True, default='')
+    phone_number = models.CharField(max_length=20, blank=True, default='')
+    address = models.TextField(blank=True, default='')
     county = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
