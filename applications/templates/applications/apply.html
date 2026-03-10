@@ -102,6 +102,7 @@
   /* ── School picker ── */
   #school-row { display: none; margin-top: 1.2rem; }
   #school-row.visible { display: block; }
+  .school-autocomplete { position: relative; }
   .school-search-wrap { position: relative; }
   .school-search-wrap .search-icon {
     position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
@@ -110,16 +111,31 @@
   #school-search {
     width: 100%; padding: 12px 16px 12px 40px;
     border: 2px solid #e2e8f0; border-radius: 10px;
-    font-size: .95rem; transition: border-color .2s;
+    font-size: .95rem; transition: border-color .2s; box-sizing: border-box;
   }
   #school-search:focus { outline: none; border-color: #0ea5e9; box-shadow: 0 0 0 3px rgba(14,165,233,.12); }
-  #id_school {
-    width: 100%; padding: 12px 16px;
-    border: 2px solid #e2e8f0; border-radius: 10px;
-    font-size: .95rem; margin-top: .6rem;
-    transition: border-color .2s; background: #fff;
+  .school-dropdown {
+    position: absolute; top: 100%; left: 0; right: 0;
+    max-height: 260px; overflow-y: auto;
+    background: #fff; border: 2px solid #0ea5e9; border-top: none;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.12);
+    z-index: 200; display: none;
   }
-  #id_school:focus { outline: none; border-color: #0ea5e9; box-shadow: 0 0 0 3px rgba(14,165,233,.12); }
+  .school-dropdown.open { display: block; }
+  .dd-item {
+    padding: 11px 16px; cursor: pointer; font-size: .9rem;
+    color: #1e293b; border-bottom: 1px solid #f1f5f9;
+  }
+  .dd-item:hover { background: #f0f9ff; color: #0284c7; }
+  .dd-empty { padding: 12px 16px; color: #94a3b8; font-size: .85rem; font-style: italic; }
+  .school-selected-badge {
+    margin-top: .5rem; padding: 9px 14px;
+    background: #dcfce7; border-radius: 8px;
+    font-size: .87rem; color: #15803d; font-weight: 600;
+    display: none;
+  }
+  .school-selected-badge.visible { display: block; }
   .school-hint { font-size: .8rem; color: #64748b; margin-top: .4rem; }
 
   /* ── Generic form-group ── */
@@ -267,18 +283,21 @@
 
       <!-- School dropdown (revealed after category pick) -->
       <div id="school-row">
-        <div class="school-search-wrap" style="margin-bottom:.6rem;">
-          <span class="search-icon"><i class="fas fa-search"></i></span>
-          <input type="text" id="school-search" placeholder="Type to search school name…" autocomplete="off">
-        </div>
-
         <div class="fg" style="margin-bottom:0">
-          <label for="id_school">Select School <span class="req">*</span></label>
-          {{ form.school }}
+          <label>Select School <span class="req">*</span></label>
           {% if form.school.errors %}
             <ul class="errorlist">{% for e in form.school.errors %}<li>{{ e }}</li>{% endfor %}</ul>
           {% endif %}
-          <p class="school-hint"><i class="fas fa-info-circle"></i> Type in the search box above to narrow down the list.</p>
+          <div class="school-autocomplete">
+            <div class="school-search-wrap">
+              <span class="search-icon"><i class="fas fa-search"></i></span>
+              <input type="text" id="school-search" placeholder="Type to search school name…" autocomplete="off">
+            </div>
+            <div class="school-dropdown" id="school-dropdown"></div>
+          </div>
+          <input type="hidden" name="school" id="id_school" value="{{ form.school.value|default:'' }}">
+          <div class="school-selected-badge" id="school-selected-badge"></div>
+          <p class="school-hint"><i class="fas fa-info-circle"></i> Type any part of the school name to search.</p>
         </div>
       </div>
 
@@ -390,29 +409,51 @@
 <script>
   const SCHOOLS = {{ schools_json|safe }};
 
-  const catCards   = document.querySelectorAll('.cat-card');
-  const schoolRow  = document.getElementById('school-row');
-  const schoolSel  = document.getElementById('id_school');
-  const schoolSrch = document.getElementById('school-search');
+  const catCards    = document.querySelectorAll('.cat-card');
+  const schoolRow   = document.getElementById('school-row');
+  const schoolInput = document.getElementById('id_school');      // hidden input
+  const schoolSrch  = document.getElementById('school-search');  // text search box
+  const schoolDD    = document.getElementById('school-dropdown');
+  const schoolBadge = document.getElementById('school-selected-badge');
 
-  // Holds all schools for the currently selected category
   let allSchoolOptions = [];
 
-  function renderSchoolOptions(list, keepValue) {
-    schoolSel.innerHTML = '<option value="">-- Select School --</option>';
-    list.forEach(s => {
-      const opt = document.createElement('option');
-      opt.value = s.id;
-      opt.textContent = s.name;
-      if (keepValue && String(s.id) === String(keepValue)) opt.selected = true;
-      schoolSel.appendChild(opt);
-    });
+  function showDropdown(list) {
+    schoolDD.innerHTML = '';
+    if (!list.length) {
+      schoolDD.innerHTML = '<div class="dd-empty">No schools found. Try a different spelling.</div>';
+    } else {
+      list.slice(0, 120).forEach(s => {
+        const item = document.createElement('div');
+        item.className = 'dd-item';
+        item.textContent = s.name;
+        item.addEventListener('mousedown', function(e) {
+          e.preventDefault();
+          selectSchool(s.id, s.name);
+        });
+        schoolDD.appendChild(item);
+      });
+    }
+    schoolDD.classList.add('open');
   }
 
-  function populateSchools(category, keepValue) {
+  function selectSchool(id, name) {
+    schoolInput.value = id;
+    schoolSrch.value  = name;
+    schoolBadge.textContent = '\u2713 Selected: ' + name;
+    schoolBadge.classList.add('visible');
+    schoolDD.classList.remove('open');
+  }
+
+  function populateSchools(category, keepId, keepName) {
     allSchoolOptions = SCHOOLS[category] || [];
-    schoolSrch.value = '';
-    renderSchoolOptions(allSchoolOptions, keepValue);
+    if (!keepId) {
+      schoolSrch.value = '';
+      schoolInput.value = '';
+      schoolBadge.classList.remove('visible');
+    } else if (keepName) {
+      selectSchool(keepId, keepName);
+    }
     schoolRow.classList.add('visible');
   }
 
@@ -421,25 +462,36 @@
       catCards.forEach(c => c.classList.remove('selected'));
       card.classList.add('selected');
       card.querySelector('input').checked = true;
-      populateSchools(card.dataset.cat, null);
+      populateSchools(card.dataset.cat, null, null);
     });
   });
 
   schoolSrch.addEventListener('input', function () {
     const q = this.value.toLowerCase().trim();
-    const currentVal = schoolSel.value;
-    const filtered = q
-      ? allSchoolOptions.filter(s => s.name.toLowerCase().includes(q))
-      : allSchoolOptions;
-    renderSchoolOptions(filtered, currentVal);
+    if (!q) { schoolDD.classList.remove('open'); return; }
+    showDropdown(allSchoolOptions.filter(s => s.name.toLowerCase().includes(q)));
   });
 
-  // Restore state on reload after validation error
+  schoolSrch.addEventListener('blur', function () {
+    setTimeout(() => schoolDD.classList.remove('open'), 200);
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.school-autocomplete')) schoolDD.classList.remove('open');
+  });
+
+  // Restore state on page reload after validation error
   const checked = document.querySelector('.cat-card input[type=radio]:checked');
   if (checked) {
     checked.closest('.cat-card').classList.add('selected');
-    const savedSchool = '{{ form.school.value|default:"" }}';
-    populateSchools(checked.value, savedSchool);
+    const savedId = '{{ form.school.value|default:"" }}';
+    if (savedId) {
+      allSchoolOptions = SCHOOLS[checked.value] || [];
+      const saved = allSchoolOptions.find(s => String(s.id) === String(savedId));
+      populateSchools(checked.value, savedId, saved ? saved.name : '');
+    } else {
+      populateSchools(checked.value, null, null);
+    }
   }
 
   function setAmount(val) {
