@@ -6,7 +6,7 @@
       .usecase-label { font-size: 14px; text-anchor: middle; fill: #000; font-weight: bold; }
       .boundary-label { font-size: 18px; fill: #000; font-style: italic; font-weight: bold; }
       .relationship-line { stroke: #333; stroke-width: 2.5; fill: none; }
-      .arrow-label { font-size: 11px; fill: #333; font-weight: bold; }
+      .arrow-label { font-size: 13px; fill: #000; font-weight: bold; }
     </style>
     <!-- Arrow marker - solid triangle -->
     <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
@@ -137,62 +137,76 @@
   <!-- STUDENT Associations -->
   <!-- Student -> Register -->
   <line x1="155" y1="220" x2="360" y2="190" class="relationship-line" marker-end="url(#arrowhead)"/>
-  <text x="245" y="205" class="arrow-label">creates account</text>
+  <rect x="215" y="160" width="80" height="20" fill="#ffffff" stroke="#000" stroke-width="1" rx="3"/>
+  <text x="255" y="174" class="arrow-label" text-anchor="middle">creates account</text>
 
   <!-- Student -> Login -->
   <line x1="155" y1="200" x2="560" y2="190" class="relationship-line" marker-end="url(#arrowhead)"/>
-  <text x="350" y="185" class="arrow-label">authenticates</text>
+  <rect x="310" y="142" width="80" height="20" fill="#ffffff" stroke="#000" stroke-width="1" rx="3"/>
+  <text x="350" y="156" class="arrow-label" text-anchor="middle">authenticates</text>
 
   <!-- Student -> Submit Application -->
   <line x1="155" y1="250" x2="360" y2="310" class="relationship-line" marker-end="url(#arrowhead)"/>
-  <text x="225" y="285" class="arrow-label">submits</text>
+  <rect x="180" y="265" width="70" height="20" fill="#ffffff" stroke="#000" stroke-width="1" rx="3"/>
+  <text x="215" y="279" class="arrow-label" text-anchor="middle">submits</text>
 
   <!-- Student -> Upload Documents -->
   <line x1="165" y1="270" x2="560" y2="320" class="relationship-line" marker-end="url(#arrowhead)"/>
-  <text x="330" y="290" class="arrow-label">uploads</text>
+  <rect x="300" y="280" width="70" height="20" fill="#ffffff" stroke="#000" stroke-width="1" rx="3"/>
+  <text x="335" y="294" class="arrow-label" text-anchor="middle">uploads</text>
 
   <!-- Student -> Track Status -->
   <line x1="175" y1="290" x2="760" y2="310" class="relationship-line" marker-end="url(#arrowhead)"/>
-  <text x="450" y="295" class="arrow-label">views status</text>
+  <rect x="420" y="265" width="80" height="20" fill="#ffffff" stroke="#000" stroke-width="1" rx="3"/>
+  <text x="460" y="279" class="arrow-label" text-anchor="middle">views status</text>
 
   <!-- REVIEWER Associations -->
   <!-- Reviewer -> Review Applications -->
   <line x1="155" y1="520" x2="360" y2="480" class="relationship-line" marker-end="url(#arrowhead)"/>
-  <text x="230" y="505" class="arrow-label">reviews</text>
+  <rect x="200" y="490" width="65" height="20" fill="#ffffff" stroke="#000" stroke-width="1" rx="3"/>
+  <text x="232" y="504" class="arrow-label" text-anchor="middle">reviews</text>
 
   <!-- Reviewer -> Approve/Reject -->
   <line x1="165" y1="540" x2="560" y2="485" class="relationship-line" marker-end="url(#arrowhead)"/>
-  <text x="340" y="520" class="arrow-label">decides</text>
+  <rect x="320" y="520" width="60" height="20" fill="#ffffff" stroke="#000" stroke-width="1" rx="3"/>
+  <text x="350" y="534" class="arrow-label" text-anchor="middle">decides</text>
 
   <!-- Reviewer -> Send Notifications -->
   <line x1="175" y1="560" x2="760" y2="500" class="relationship-line" marker-end="url(#arrowhead)"/>
-  <text x="450" y="545" class="arrow-label">triggers</text>
+  <rect x="430" y="555" width="65" height="20" fill="#ffffff" stroke="#000" stroke-width="1" rx="3"/>
+  <text x="462" y="569" class="arrow-label" text-anchor="middle">triggers</text>
 
   <!-- ADMIN Associations -->
   <!-- Admin -> Manage Users -->
   <line x1="1280" y1="310" x2="500" y2="640" class="relationship-line" marker-end="url(#arrowhead)"/>
-  <text x="850" y="480" class="arrow-label">administers</text>
+  <rect x="800" y="450" width="90" height="20" fill="#ffffff" stroke="#000" stroke-width="1" rx="3"/>
+  <text x="845" y="464" class="arrow-label" text-anchor="middle">administers</text>
 
   <!-- Admin -> Manage Schools -->
   <line x1="1280" y1="320" x2="690" y2="650" class="relationship-line" marker-end="url(#arrowhead)"/>
-  <text x="950" y="490" class="arrow-label">configures</text>
+  <rect x="920" y="460" width="80" height="20" fill="#ffffff" stroke="#000" stroke-width="1" rx="3"/>
+  <text x="960" y="474" class="arrow-label" text-anchor="middle">configures</text>
 
   <!-- Admin -> Generate Reports -->
   <line x1="1280" y1="335" x2="880" y2="655" class="relationship-line" marker-end="url(#arrowhead)"/>
-  <text x="1050" y="495" class="arrow-label">produces</text>
+  <rect x="1010" y="470" width="75" height="20" fill="#ffffff" stroke="#000" stroke-width="1" rx="3"/>
+  <text x="1047" y="484" class="arrow-label" text-anchor="middle">produces</text>
 
   <!-- Admin -> Review Applications (additional) -->
   <line x1="1275" y1="300" x2="500" y2="460" class="relationship-line" marker-end="url(#arrowhead)"/>
-  <text x="850" y="365" class="arrow-label">oversees</text>
+  <rect x="800" y="370" width="70" height="20" fill="#ffffff" stroke="#000" stroke-width="1" rx="3"/>
+  <text x="835" y="384" class="arrow-label" text-anchor="middle">oversees</text>
 
   <!-- SUPER ADMIN Associations -->
   <!-- Super Admin -> System Configuration -->
   <line x1="1280" y1="680" x2="555" y2="795" class="relationship-line" marker-end="url(#arrowhead)"/>
-  <text x="950" y="740" class="arrow-label">configures system</text>
+  <rect x="880" y="720" width="110" height="20" fill="#ffffff" stroke="#000" stroke-width="1" rx="3"/>
+  <text x="935" y="734" class="arrow-label" text-anchor="middle">configures system</text>
 
   <!-- Super Admin -> Audit Logs -->
   <line x1="1280" y1="650" x2="795" y2="770" class="relationship-line" marker-end="url(#arrowhead)"/>
-  <text x="1000" y="705" class="arrow-label">monitors</text>
+  <rect x="990" y="690" width="70" height="20" fill="#ffffff" stroke="#000" stroke-width="1" rx="3"/>
+  <text x="1025" y="704" class="arrow-label" text-anchor="middle">monitors</text>
 
   <!-- ========== LEGEND ========== -->
   <rect x="290" y="850" width="920" height="85" fill="#fffef0" stroke="#000" stroke-width="2" rx="8"/>
