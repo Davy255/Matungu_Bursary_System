@@ -8,11 +8,13 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         self.stdout.write('Populating sample data...')
         
-        # Create Wards
+        # Create Wards - Matungu Constituency, Kakamega County
         wards_data = [
-            {'name': 'Matungu', 'sub_county': 'Matungu', 'county': 'Kakamega', 'code': 'KKG-MTG-001'},
+            {'name': 'Khalaba', 'sub_county': 'Matungu', 'county': 'Kakamega', 'code': 'KKG-MTG-001'},
             {'name': 'Koyonzo', 'sub_county': 'Matungu', 'county': 'Kakamega', 'code': 'KKG-MTG-002'},
-            {'name': 'Kholera', 'sub_county': 'Matungu', 'county': 'Kakamega', 'code': 'KKG-MTG-003'},
+            {'name': 'Mayoni', 'sub_county': 'Matungu', 'county': 'Kakamega', 'code': 'KKG-MTG-003'},
+            {'name': 'Kholera', 'sub_county': 'Matungu', 'county': 'Kakamega', 'code': 'KKG-MTG-004'},
+            {'name': 'Namamali', 'sub_county': 'Matungu', 'county': 'Kakamega', 'code': 'KKG-MTG-005'},
         ]
         
         for ward_data in wards_data:
